@@ -1,3 +1,7 @@
 .containerBackground {
     background: linear-gradient(180deg, #F6BB46 0%, rgba(248, 94, 241, 0.36) 100%);
 }
+
+.rounded1 {
+    border-radius: 130px;
+}

@@ -3,7 +3,8 @@ export default {
     'pages/index/index',
     'pages/RoomDetail/RoomDetail',
     'pages/RoomDetailBooking/RoomDetailBooking',
-    'pages/EditRoom/EditRoom'
+    'pages/EditRoom/EditRoom',
+    'pages/EditAdmin/EditAdmin'
   ],
   window: {
     backgroundTextStyle: 'light',

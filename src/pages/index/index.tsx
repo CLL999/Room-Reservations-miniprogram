@@ -28,7 +28,9 @@ export default function Index() {
     }
 
     function toPerson() {
-        console.log(1)
+        Taro.navigateTo({
+            url: '../EditAdmin/EditAdmin'
+        })
     }
 
     return (
