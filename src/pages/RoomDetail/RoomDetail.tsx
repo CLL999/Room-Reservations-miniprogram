@@ -39,7 +39,7 @@ export default function RoomDetail() {
             <View className=' bg-purple-600 fixed rounded-full -bottom-15 w-screen h-46'>
                 <Text className=' font-medium text-2xl text-white top-6 left-15 absolute'>学生活动中心</Text>
                 <Text className=' font-bold text-2xl text-white top-18 left-24 absolute'>204室</Text>
-                <Button className=' rounded-full py-0 px-4 absolute bg-green-400 w-28 h-12 text-center font-bold border-separate right-10 top-11' onClick={toBook}>现在预定</Button>
+                <Button className=' rounded-full py-0 px-4 absolute primaryButtom w-28 h-12 text-center font-bold border-separate right-10 top-11' onClick={toBook}>现在预定</Button>
             </View>
         </View>
     )

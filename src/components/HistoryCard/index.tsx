@@ -1,9 +1,17 @@
 import { Image, View } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 
 import reject from '../../assets/images/reject.png'
 import agree from '../../assets/images/agree.png'
 
+
 export default function HistoryCard(props) {
+
+    function toSuggest() {
+        Taro.navigateTo({
+            url: `../Suggest/Suggest?data=${JSON.stringify(props)}`
+        })
+    }
 
     return (
         <View className=' w-screen min-h-80'>
@@ -27,7 +35,10 @@ export default function HistoryCard(props) {
                     {   props.admin ? props.background ?
                         <View className='w-full h-full'>
                             <View className='underline font-semibold text-xl float-left text-blue-300 my-2'>下载申请表</View>
-                            <View className=' w-10 h-10 float-right bg-orange-600 right-12 relative top-1 rounded-full'>
+                            <View 
+                                className=' w-10 h-10 float-right bg-orange-600 right-12 relative top-1 rounded-full'
+                                onClick={toSuggest}
+                            >
                                 <Image
                                     src={reject}
                                     className=' w-6 h-6 m-2'
@@ -43,7 +54,7 @@ export default function HistoryCard(props) {
                         <View className='w-full h-full'>
                             {   props.success ?
                                 <View className='h-9 bg-green-400 w-24 my-2 float-right text-center font-medium text-xl'>已通过</View> :
-                                <View className='h-9 bg-orange-700 w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
+                                <View className='h-9 rejectColor w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
                             }
                         <View className='font-semibold text-xl float-left mt-2 mb-1'>审批人：</View>
                         <View className='font-semibold text-x1 float-left truncate w-32'>{props.auditor}</View>
@@ -53,7 +64,7 @@ export default function HistoryCard(props) {
                         props.success ?
                         <View className='h-9 bg-green-400 w-24 my-2 float-right text-center font-medium text-xl'>已通过</View> :
                         <View className='w-full h-full'>
-                            <View className='h-9 bg-orange-700 w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
+                            <View className='h-9 rejectColor w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
                             <View className='underline font-semibold text-xl float-left text-blue-300 my-2'>查看指引</View>
                         </View>
                     }

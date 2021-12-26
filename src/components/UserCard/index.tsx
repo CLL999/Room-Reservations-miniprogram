@@ -29,7 +29,7 @@ export default function UserCard(props) {
                         onChange={choosePicker}
                         className='float-right -top-17 w-full relative'
                     >
-                        <Button className=' bg-green-400 font-bold rounded-full w-26 h-12 shadow-2xl relative right-5 float-right'>
+                        <Button className=' primaryButtom font-bold rounded-full w-26 h-12 shadow-2xl relative right-5 float-right'>
                             授权管理
                         </Button>
                     </Picker>

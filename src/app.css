@@ -5,3 +5,19 @@
 .rounded1 {
     border-radius: 130px;
 }
+
+.confirmButtom {
+    background-color: #F5987B;
+}
+
+.guideCard {
+    background-color: #EEE0E0;
+}
+
+.rejectColor {
+    background-color: #EA6B6B;
+}
+
+.primaryButtom {
+    background-color: #45CFC9;
+}

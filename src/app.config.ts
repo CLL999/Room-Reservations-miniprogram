@@ -5,7 +5,9 @@ export default {
     'pages/RoomDetailBooking/RoomDetailBooking',
     'pages/EditRoom/EditRoom',
     'pages/EditAdmin/EditAdmin',
-    'pages/History/History'
+    'pages/History/History',
+    'pages/Background/Background',
+    'pages/Suggest/Suggest'
   ],
   window: {
     backgroundTextStyle: 'light',

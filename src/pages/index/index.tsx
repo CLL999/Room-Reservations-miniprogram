@@ -26,7 +26,9 @@ export default function Index() {
     }
 
     function toBackground() {
-        console.log(1)
+        Taro.navigateTo({
+            url: '../Background/Background'
+        })
     }
 
     function toPerson() {
