@@ -20,7 +20,9 @@ export default function Index() {
     })
 
     function toHistory() {
-        console.log(1)
+        Taro.navigateTo({
+            url: '../History/History?isAdmin=0'
+        })
     }
 
     function toBackground() {

@@ -4,7 +4,8 @@ export default {
     'pages/RoomDetail/RoomDetail',
     'pages/RoomDetailBooking/RoomDetailBooking',
     'pages/EditRoom/EditRoom',
-    'pages/EditAdmin/EditAdmin'
+    'pages/EditAdmin/EditAdmin',
+    'pages/History/History'
   ],
   window: {
     backgroundTextStyle: 'light',
