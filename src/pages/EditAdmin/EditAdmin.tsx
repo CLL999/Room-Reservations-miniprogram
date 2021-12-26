@@ -1,17 +1,19 @@
 import { Image, Input, View } from '@tarojs/components';
 import { useState } from 'react';
 
+import { UserCard } from '../../components'
+
 import img from '../../assets/images/personEdit.png'
 import search from '../../assets/images/search.png'
+
 
 export default function EditAdmin() {
 
     const [key, setKey] = useState('')
-
-
+    const [refresh, setRefresh] = useState(1)
 
     return (
-        <View className='w-screen min-h-0 containerBackground'>
+        <View className='w-screen min-h-screen containerBackground'>
             <View className='w-screen h-45'>
                 <View className='bg-white z-10 w-screen h-90 rounded1 relative -top-45'>
                     <View className='w-screen relative top-33'>
@@ -22,7 +24,7 @@ export default function EditAdmin() {
                     </View>
                 </View>
             </View>
-            <View className='w-screen h-30 bg-gray-400'>
+            <View className='w-screen h-20'>
                 <View className=' bg-gray-200 w-60 h-9 rounded-xl relative mx-auto top-3 '>
                     <Input
                         placeholder='搜索曾使用过的用户'
@@ -37,6 +39,9 @@ export default function EditAdmin() {
                     />
                 </View>
             </View>
+
+            <UserCard Refresh={setRefresh} />
+            <UserCard Refresh={setRefresh} />
         </View>
     )
 }
