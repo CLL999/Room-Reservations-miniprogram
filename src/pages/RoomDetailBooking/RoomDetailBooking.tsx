@@ -174,7 +174,7 @@ export default function RoomDetailBooking() {
 
                     <View className='w-screen absolute'>
                         <Button
-                            className='mx-auto w-48 h-12 py-2 bg-purple-600 relative top-130 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
+                            className='mx-auto w-48 h-12 py-2 purpleButtom relative top-130 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
                             onClick={BackToHome}
                         >
                             提交
