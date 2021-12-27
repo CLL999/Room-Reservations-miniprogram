@@ -1,12 +1,17 @@
 import { Button, Image, Text, View } from '@tarojs/components';
-import Taro from '@tarojs/taro';
-import { useState } from 'react';
+import Taro, { useRouter } from '@tarojs/taro'
+import { useEffect, useState } from 'react';
 
 export default function RoomDetail() {
 
-    let photoUrl = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/204室.png'
+    const router = useRouter()
+
+   // let photoUrl = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/204室.png'
 
     const [isAdmin, setisAdmin] = useState(true)
+    const [photoUrl, setphotoUrl] = useState('')
+    const [content, setContent] = useState('')
+    const [name, setName] = useState(router.params.name)
 
     function toBook() {
         Taro.navigateTo({
@@ -19,6 +24,16 @@ export default function RoomDetail() {
             url:'../EditRoom/EditRoom'
         })
     }
+
+    useEffect(() => {
+        console.log(name)
+        Taro.cloud.callFunction({
+            name: 'feedRoomDetail',
+            data: { roomName: name }
+        }).then(res => {
+            console.log(res)
+        })
+    }, [name])
 
     return (
         <View className=' h-screen overflow-hidden'>
@@ -39,7 +54,7 @@ export default function RoomDetail() {
             <View className=' bg-purple-600 fixed rounded-full -bottom-22 w-screen h-46'>
                 <Text className=' font-medium text-2xl text-white top-4 left-15 absolute'>学生活动中心</Text>
                 <Text className=' font-bold text-2xl text-white top-13 left-24 absolute'>204室</Text>
-                <Button className=' rounded-full py-0 px-4 absolute primaryButtom w-28 h-12 text-center font-bold border-separate right-10 top-8' onClick={toBook}>现在预定</Button>
+                <Button className=' rounded-full py-0 px-4 absolute primarybutton w-28 h-12 text-center font-bold border-separate right-10 top-8' onClick={toBook}>现在预定</Button>
             </View>
         </View>
     )

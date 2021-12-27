@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 import { Image, Input, View } from '@tarojs/components';
 import { useState } from 'react';
 
@@ -10,7 +11,19 @@ import search from '../../assets/images/search.png'
 export default function EditAdmin() {
 
     const [key, setKey] = useState('')
-    const [refresh, setRefresh] = useState(1)
+    const [data, setData] = useState([])
+
+    function find() {
+        setKey('')
+        Taro.showLoading()
+        Taro.cloud.callFunction({
+            name: 'searchUser',
+            data: { key }
+        }).then(res => {
+            Taro.hideLoading()
+            setData(res.result.record.data)
+        })
+    }
 
     return (
         <View className='w-screen min-h-screen containerBackground'>
@@ -35,13 +48,21 @@ export default function EditAdmin() {
                     <Image
                         src={search}
                         className='relative -top-9 w-10 h-10 float-right right-1'
-                        onClick={() => console.log(key)}
+                        onClick={find}
                     />
                 </View>
             </View>
-
-            <UserCard Refresh={setRefresh} />
-            <UserCard Refresh={setRefresh} />
+            {   
+                data.map((item, index) => 
+                    <UserCard 
+                        clearData={setData}
+                        key={index}
+                        nickName={item.nickName}
+                        avatar={item.avatar}
+                        openid={item.openid}
+                    />
+                )
+            }
         </View>
     )
 }

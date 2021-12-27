@@ -11,7 +11,7 @@ export default function EditRoom() {
     return (
         <View className=' w-screen min-h-screen containerBackground'>
             <Image src={key} className=' w-36 h-36 relative float-right top-2 right-3'></Image>
-            { router.params.isAdmin === '0' ?
+            { router.params.isAdmin === 'false' ?
                 <View className='w-screen h-43'>
                     <Text className=' relative font-extrabold text-3xl left-17 top-8'>申请记录</Text> 
                 </View> :

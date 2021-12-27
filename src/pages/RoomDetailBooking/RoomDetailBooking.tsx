@@ -35,19 +35,19 @@ export default function RoomDetailBooking() {
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                     <View className='h-30 w-screen flex'>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primaryButtom': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
                             onClick={() => setDayOrder(1)}
                         >
                             <View className=' m-5 font-bold text-xl text-white'>{firstDay}</View>
                         </View>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primaryButtom': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
                             onClick={() => setDayOrder(2)}
                         >
                             <View className=' m-5 font-bold text-xl text-white'>{secondDay}</View>
                         </View>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primaryButtom': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
                             onClick={() => setDayOrder(3)}
                         >
                             <View className=' m-5 font-bold text-xl text-white'>{thirdDay}</View>
@@ -183,7 +183,7 @@ export default function RoomDetailBooking() {
 
                     <View className='w-screen h-30'>
                         <Button
-                            className='mx-auto w-48 h-12 py-2 purpleButtom relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
+                            className='mx-auto w-48 h-12 py-2 purplebutton relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
                             onClick={BackToHome}
                         >
                             提交

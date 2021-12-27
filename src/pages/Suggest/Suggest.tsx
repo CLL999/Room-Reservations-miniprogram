@@ -50,7 +50,7 @@ export default function Suggest() {
                         </View>
                     </View>
                     <View className='w-full h-20 pt-5'>
-                        <Button className='mx-auto font-bold text-xl shadow-2xl confirmButtom h-10 w-35 pt-1'>发送</Button>
+                        <Button className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'>发送</Button>
                     </View>
                 </View>
             </View>
