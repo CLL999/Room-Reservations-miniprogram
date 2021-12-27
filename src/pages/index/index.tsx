@@ -140,9 +140,14 @@ export default function Index() {
                             scrollWithAnimation
                             scrollLeft={0}
                         >
-                            <RoomCard name='204室' />
+                            <RoomCard name='201室' />
                             <RoomCard name='202室' />
-                            <RoomCard name='203室' />
+                            <RoomCard name='204室' />
+                            <RoomCard name='205室' />
+                            <RoomCard name='206室' />
+                            <RoomCard name='207室' />
+                            <RoomCard name='208室' />
+                            <RoomCard name='209室' />
                         </ScrollView>
 
                     </View>
