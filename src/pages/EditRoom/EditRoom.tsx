@@ -2,7 +2,6 @@ import Taro from '@tarojs/taro'
 import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
 
 import editRoom from '../../assets/images/editRoom.png'
-import room from '../../assets/images/204.png'
 import update from '../../assets/images/update.png'
 
 
@@ -11,6 +10,7 @@ export default function EditRoom() {
 
     let name = '204室'
     let content = '22座，有两列四排双人座桌椅和六个单人座沙发，配有投影仪，可供自习和中小型课演示。'
+    let photoUrl = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/204室.png'
 
     function BackToHome() {
         Taro.showLoading()
@@ -46,7 +46,7 @@ export default function EditRoom() {
             <View className=' w-screen h-110'>
                 <View className='mx-auto w-25 whitespace-nowrap font-semibold text-xl text-black '>活动室图片</View>
                 <Image
-                    src={room}
+                    src={photoUrl}
                     mode='aspectFill'
                     className='w-55 h-50 relative top-5 shadow-2xl'
                 />
