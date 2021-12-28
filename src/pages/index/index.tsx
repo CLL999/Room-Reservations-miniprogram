@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { RoomCard } from '../../components'
@@ -9,17 +9,24 @@ import history from "../../assets/images/history.png"
 import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 
-import {
-    SET_USERINFO
-} from '../../constants'
+import { SET_USERINFO } from '../../constants'
 
 export default function Index() {
 
     const dispatch = useDispatch()
 
+    const [roomList, setRoomList] = useState([])
     const [isLogin, setIsLogin] = useState(typeof Taro.getStorageSync('userInfo') == 'object')
     const [isAdmin, setIsAdmin] = useState(() => {
         let info = Taro.getStorageSync('userInfo')
+
+        Taro.cloud.init()
+
+        Taro.showLoading()
+        Taro.cloud.callFunction({ name: 'feedRoom' })
+                  .then(res => setRoomList(res.result.rooms.data))
+                  .then(() => Taro.hideLoading())
+
         if (info.admin || info.superAdmin) return true
         else return false
     })
@@ -28,15 +35,6 @@ export default function Index() {
         if (info.superAdmin) return true
         else return false
     })
-
-    useEffect(() => {
-        const WeappEnv = Taro.getEnv() === Taro.ENV_TYPE.WEAPP
-
-        if (WeappEnv) {
-            Taro.cloud.init()
-        }
-    })
-
 
     function toHistory() {
         Taro.navigateTo({
@@ -140,14 +138,19 @@ export default function Index() {
                             scrollWithAnimation
                             scrollLeft={0}
                         >
-                            <RoomCard name='201室' />
-                            <RoomCard name='202室' />
-                            <RoomCard name='204室' />
-                            <RoomCard name='205室' />
-                            <RoomCard name='206室' />
-                            <RoomCard name='207室' />
-                            <RoomCard name='208室' />
-                            <RoomCard name='209室' />
+                               
+                            {   
+                                roomList.map((item, index) => 
+                                    <RoomCard 
+                                        name={item.name}
+                                        content={item.content}
+                                        photoUrl={item.photoUrl}
+                                        id={item._id} 
+                                        key={index}
+                                    />
+                                )
+                            }
+
                         </ScrollView>
 
                     </View>

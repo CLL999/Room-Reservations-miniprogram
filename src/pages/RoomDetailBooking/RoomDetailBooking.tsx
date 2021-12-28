@@ -1,11 +1,11 @@
 import { Button, Checkbox, CheckboxGroup, Image, Input, Text, View } from '@tarojs/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Taro from '@tarojs/taro';
+import Taro, { useRouter } from '@tarojs/taro';
 
 export default function RoomDetailBooking() {
 
-    let photoUrl = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/204室.png'
+    const router = useRouter()
 
     let firstDay = `${new Date().getMonth()+1}月${new Date().getDate()}日`
     let secondDay = `${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`
@@ -13,23 +13,69 @@ export default function RoomDetailBooking() {
 
     const [DayOrder, setDayOrder] = useState(1)
 
-    const [isUpdateForm, setIsUpdateForm] = useState(false)
+    useEffect(() => {
+        console.log("更换日期", firstDay)
+    }, [DayOrder])
 
-    function BackToHome() {
-        Taro.showLoading()
-        Taro.hideLoading()
+    const [time, setTime] = useState([])
+    const [student, setStudent] = useState('')
+    const [id, setId] = useState('')
+    const [department, setDepartment] = useState('')
+    const [unit, setUnit] = useState('')
+    const [studentPhone, setStudentPhone] = useState('')
+    const [teacher, setTeacher] = useState('')
+    const [teacherPhone, setTeacherPhone] = useState('')
+    const [sheet, setSheet] = useState('')
+
+    function submit() {
+
 
         Taro.navigateBack({
             delta: 2
         })
     }
 
+    function chooseTime(e) {
+        console.log(e.detail.value)
+        setTime(e.detail.value)
+    }
+
+    function downloadSheet() {
+        // Taro.setClipboardData({ data: 'https://qianchen.ink/sourse/%E6%AD%A3%E4%B9%89%E4%B9%A6%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E7%A9%BA%E9%97%B4%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx'})
+        //     .then(() => { 
+        //         Taro.showToast({
+        //             title: '链接已复制到剪贴板',
+        //             duration: 500
+        //         }).then(() => 
+        //             setTimeout(() => 
+        //                 Taro.showModal({ title: '请前往浏览器粘贴链接', content: '下载申请表填写并上传', showCancel: false })
+        //             , 500)
+        //     )})
+
+        Taro.cloud.downloadFile({ fileID: 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/正义书院学生活动空间申请表.xlsx' })
+                  .then(res => {
+                      console.log(res.tempFilePath)
+                      Taro.openDocument({
+                          filePath: res.tempFilePath
+                      }).then(res => console.log(res))
+                    })
+            
+    }
+
+    function uploadSheet() {
+        Taro.chooseMessageFile({
+            count: 1,
+            type: 'file',
+            extension: ['xlsx']
+        }).then(res => setSheet(res.tempFiles[0].path))
+    }
+
     return (
         <View className=' h-screen overflow-hidden'>
-            <Image src={photoUrl} mode='aspectFill' className='absolute right-0 top-5 w-70 h-58 shadow-2xl'></Image>
-            <Text className=' text-6xl absolute right-7 top-70 font-bold'>204室</Text>
+            <Image src={router.params.photoUrl} mode='aspectFill' className='absolute right-0 top-5 w-70 h-58 shadow-2xl'></Image>
+            <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
             <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
-            <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>22座，有两列四排双人座桌椅和六个单人座沙发，配有投影仪，可供自习和中小型课演示。</View>
+            <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
             <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute rounded-3xl top-160 w-screen h-200'>
                 <View className='h-40 w-screen'>
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
@@ -56,7 +102,7 @@ export default function RoomDetailBooking() {
                 </View>
 
                 <View className='h-65 w-screen '>
-                    <CheckboxGroup className='relative top-8' onChange={(e) => console.log(e)}>
+                    <CheckboxGroup className='relative top-8' onChange={chooseTime}>
                         <Checkbox
                             value='08:30-10:00'
                             className=' font-semibold float-left ml-6 '
@@ -125,16 +171,25 @@ export default function RoomDetailBooking() {
                 <View className=' w-screen h-80 '>
                     <View className='w-screen h-16 '>
                         <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
-                        <Text className=' text-blue-800 font-bold text-lg underline relative float-right right-9'>下载申请表</Text>
+                        <Text 
+                            className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
+                            onClick={downloadSheet}
+                        >
+                            下载申请表
+                        </Text>
                     </View>
 
                     <View className='w-screen h-12 '>
                         <Input
                             placeholder='申请人姓名'
+                            value={student}
+                            onInput={e => setStudent(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
                         <Input
                             placeholder='申请人学号'
+                            value={id}
+                            onInput={e => setId(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
                         />
                     </View>
@@ -142,10 +197,14 @@ export default function RoomDetailBooking() {
                     <View className='w-screen h-12 '>
                         <Input
                             placeholder='申请学院'
+                            value={department}
+                            onInput={e => setDepartment(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
                         <Input
                             placeholder='申请单位名称'
+                            value={unit}
+                            onInput={e => setUnit(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
                         />
                     </View>
@@ -153,10 +212,14 @@ export default function RoomDetailBooking() {
                     <View className='w-screen h-12 '>
                         <Input
                             placeholder='联系电话'
+                            value={studentPhone}
+                            onInput={e => setStudentPhone(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
                         <Input
                             placeholder='负责老师姓名'
+                            value={teacher}
+                            onInput={e => setTeacher(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
                         />
                     </View>
@@ -164,12 +227,14 @@ export default function RoomDetailBooking() {
                     <View className='w-screen h-12 '>
                         <Input
                             placeholder='负责老师电话'
+                            value={teacherPhone}
+                            onInput={e => setTeacherPhone(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
-                        { !isUpdateForm ?
+                        { !sheet ?
                             <Button
                                 className='w-38 h-8 bg-yellow-200 relative right-6 rounded-lg font-bold text-lg float-right'
-                                onClick={() => setIsUpdateForm(true)}
+                                onClick={uploadSheet}
                             >
                                 上传申请表
                             </Button> :
@@ -184,7 +249,7 @@ export default function RoomDetailBooking() {
                     <View className='w-screen h-30'>
                         <Button
                             className='mx-auto w-48 h-12 py-2 purplebutton relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
-                            onClick={BackToHome}
+                            onClick={submit}
                         >
                             提交
                         </Button>

@@ -1,25 +1,51 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
+import { useState } from 'react'
 
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'
-
-
 
 export default function EditRoom() {
 
     const router = useRouter()
     console.log(router.params)
 
-    let { name, content, photoUrl } = router.params 
+    const [photoUrl, setPhotoUrl] = useState(router.params.photoUrl)
+    const [name, setName] = useState(router.params.name)
+    const [content, setContent] = useState(router.params.content)
     
-    function BackToHome() {
+    function updateDetail() {
         Taro.showLoading()
-        Taro.hideLoading()
-
-        Taro.navigateBack({
-            delta: 2
+        let id = router.params.id
+        Taro.cloud.uploadFile({
+            cloudPath: `${name}预览图`,
+            filePath: `${photoUrl}`
+        }).then(res => {
+            let fileId = res.fileID
+            Taro.cloud.callFunction({
+                name: 'updateRoomDetail',
+                data: { id, name, content, photoUrl: fileId }
+            }).then(() => {
+                Taro.navigateBack({ delta: 2 })
+                Taro.hideLoading()
+            })
+        }).catch(() => {
+            Taro.cloud.callFunction({
+                name: 'updateRoomDetail',
+                data: { id, name, content, photoUrl }
+            }).then(() => {
+                Taro.navigateBack({ delta: 2 })
+                Taro.hideLoading()
+            })
         })
+
+    }
+
+    function chooseImg() {
+        Taro.chooseImage({
+            count: 1,
+            sizeType: ['compressed']
+        }).then(res => setPhotoUrl(res.tempFilePaths[0]))
     }
 
     return (
@@ -31,8 +57,9 @@ export default function EditRoom() {
             <View className=' w-screen h-30'>
                 <View className='mx-auto w-25 whitespace-nowrap font-semibold text-xl text-black'>活动室名称</View>
                 <Input
-                    placeholder='请填写活动室信息'
+                    placeholder='请填写活动室名称（三字以内）'
                     value={name}
+                    onInput={(e) => setName(e.detail.value)}
                     className=' mx-auto w-56 bg-gray-100 rounded-xl h-7 py-1 font-semibold relative top-3 px-5'
                 />
             </View>
@@ -41,6 +68,7 @@ export default function EditRoom() {
                 <Textarea
                     placeholder='请填写相关介绍'
                     value={content}
+                    onInput={(e) => setContent(e.detail.value)}
                     className=' mx-auto w-51 bg-gray-100 rounded-2xl h-50 py-7 font-semibold relative top-3 px-7 leading-7 text-lg'
                 />
             </View>
@@ -55,12 +83,13 @@ export default function EditRoom() {
                     <Image 
                         src={update}
                         className='w-8 h-8 m-2'
+                        onClick={chooseImg}
                     />
                 </View>
                 
                 <Button 
                     className=' font-bold w-54 mx-auto text-lg relative top-17 bg-orange-300 h-15 py-3 shadow-2xl rounded-xl'
-                    onClick={BackToHome}
+                    onClick={updateDetail}
                 >
                     确认修改
                 </Button>
