@@ -13,8 +13,63 @@ export default function RoomDetailBooking() {
 
     const [DayOrder, setDayOrder] = useState(1)
 
+    const [cb1, setCb1] = useState(false) 
+    const [cb2, setCb2] = useState(false)
+    const [cb3, setCb3] = useState(false)
+    const [cb4, setCb4] = useState(false)
+    const [cb5, setCb5] = useState(false)
+    const [cb6, setCb6] = useState(false)
+    const [cb7, setCb7] = useState(false)
+    const [cb8, setCb8] = useState(false)
+    const [cb9, setCb9] = useState(false)
+
     useEffect(() => {
-        console.log("更换日期", firstDay)
+
+        setCb1(false)
+        setCb2(false)
+        setCb3(false)
+        setCb4(false)
+        setCb5(false)
+        setCb6(false)
+        setCb7(false)
+        setCb8(false)
+        setCb9(false)
+
+
+        let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
+        Taro.showLoading()
+        Taro.cloud.callFunction({
+            name: 'setCheckbox',
+            data: { room: router.params.name, date }
+        }).then(res => {
+            console.log(res.result.data)
+            res.result.data.map(record => 
+                record.time.map(item => {
+                    switch (item) {
+                        case '08:30-10:00': setCb1(true)
+                                            break
+                        case '16:10-17:40': setCb2(true) 
+                                            break
+                        case '10:10-12:30': setCb3(true) 
+                                            break
+                        case '17:50-18:50': setCb4(true) 
+                                            break
+                        case '12:40-14:20': setCb5(true) 
+                                            break
+                        case '19:00-20:20': setCb6(true) 
+                                            break
+                        case '14:30-16:00': setCb7(true) 
+                                            break
+                        case '20:30-21:50': setCb8(true) 
+                                            break
+                        case '22:00-23:00': setCb9(true) 
+                                            break
+                        default: break;
+                    }
+                })
+            )
+            Taro.hideLoading()
+        })
     }, [DayOrder])
 
     const [time, setTime] = useState([])
@@ -29,14 +84,35 @@ export default function RoomDetailBooking() {
 
     function submit() {
 
+        if (!sheet) 
+            {
+                Taro.showModal({title: '提示', content: '请上传申请表', showCancel: false}) 
+                return 
+            }
+        
+        let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
 
-        Taro.navigateBack({
-            delta: 2
+        Taro.showLoading()
+        Taro.cloud.callFunction({
+            name: 'submit',
+            data: {
+                date, department, id, student, studentPhone,
+                teacher, teacherPhone, time, unit,
+                room: router.params.name, 
+                state: 'waiting'
+            }
+        }).then(() => {
+            Taro.navigateBack({
+                delta: 2
+            })
+
+            Taro.hideLoading()
         })
+
     }
 
     function chooseTime(e) {
-        console.log(e.detail.value)
+        console.log(e)
         setTime(e.detail.value)
     }
 
@@ -52,11 +128,15 @@ export default function RoomDetailBooking() {
         //             , 500)
         //     )})
 
+        Taro.showLoading()
+
         Taro.cloud.downloadFile({ fileID: 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/正义书院学生活动空间申请表.xlsx' })
                   .then(res => {
                       console.log(res.tempFilePath)
+                      Taro.hideLoading()
                       Taro.openDocument({
-                          filePath: res.tempFilePath
+                          filePath: res.tempFilePath,
+                          showMenu: true
                       }).then(res => console.log(res))
                     })
             
@@ -105,6 +185,7 @@ export default function RoomDetailBooking() {
                     <CheckboxGroup className='relative top-8' onChange={chooseTime}>
                         <Checkbox
                             value='08:30-10:00'
+                            disabled={cb1 ? true : false}
                             className=' font-semibold float-left ml-6 '
                         >
                             08:30-10:00
@@ -112,6 +193,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='16:10-17:40'
+                            disabled={cb2 ? true : false}
                             className=' font-semibold float-right mr-6 '
                         >
                             16:10-17:40
@@ -119,6 +201,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='10:10-12:30'
+                            disabled={cb3 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             10:10-12:30
@@ -126,6 +209,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='17:50-18:50'
+                            disabled={cb4 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             17:50-18:50
@@ -133,6 +217,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='12:40-14:20'
+                            disabled={cb5 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             12:40-14:20
@@ -140,6 +225,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='19:00-20:20'
+                            disabled={cb6 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             19:00-20:20
@@ -147,6 +233,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='14:30-16:00'
+                            disabled={cb7 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             14:30-16:00
@@ -154,6 +241,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='20:30-21:50'
+                            disabled={cb8 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             20:30-21:50
@@ -161,6 +249,7 @@ export default function RoomDetailBooking() {
 
                         <Checkbox
                             value='22:00-23:00'
+                            disabled={cb9 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             22:00-23:00
