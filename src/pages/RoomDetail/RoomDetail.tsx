@@ -24,10 +24,16 @@ export default function RoomDetail() {
         })
     }
 
+    Taro.showLoading()
+
     return (
         <View className=' h-screen overflow-hidden'>
             {   router.params.photoUrl ?
-                <Image src={router.params.photoUrl} mode='aspectFill' className='absolute right-0 top-5 w-70 h-58 shadow-2xl'></Image> : ''
+                <Image 
+                    src={router.params.photoUrl} mode='aspectFill' 
+                    className='absolute right-0 top-5 w-70 h-58 shadow-2xl'
+                    onLoad={() => Taro.hideLoading()}
+                />: ''
             }
             <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
             <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>

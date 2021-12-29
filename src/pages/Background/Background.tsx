@@ -34,16 +34,17 @@ export default function EditRoom() {
                     <HistoryCard
                         key={item._id}
                         _id={item._id}
-                        title={item.room}
+                        room={item.room}
                         time={item.time}
-                        name={item.student}
-                        studentId={item.id}
+                        student={item.student}
+                        id={item.id}
                         department={item.department}
                         studentPhone={item.studentPhone}
-                        teacherName={item.teacher}
+                        teacher={item.teacher}
                         teacherPhone={item.teacherPhone}
                         unit={item.unit}
                         date={item.date}
+                        sheet={item.sheet}
                         auditor={userInfo.nickName}
                         refresh={setFirstTime}
                         admin

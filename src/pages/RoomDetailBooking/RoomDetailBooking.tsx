@@ -8,6 +8,13 @@ export default function RoomDetailBooking() {
 
     const router = useRouter()
 
+    const [firstTime, setFirstTime] = useState(true)
+
+    if (firstTime) {
+        setFirstTime(false)
+        Taro.showLoading()
+    }
+
     let firstDay = `${new Date().getFullYear()}年${new Date().getMonth()+1}月${new Date().getDate()}日`
     let secondDay = `${(new Date(new Date().getTime() + 24*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`
     let thirdDay = `${(new Date(new Date().getTime() + 48*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 48*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 48*60*60*1000)).getDate()}日`
@@ -146,7 +153,7 @@ export default function RoomDetailBooking() {
                                     duration: 600
                                 }).then(() => 
                                     setTimeout(() => 
-                                        Taro.showModal({ title: '若操作不便，也可前往浏览器粘贴链接下载', content: '申请表文件修改好后\r\n请发送给文件传输助手\r\n再在文件传输助手中选择申请表', showCancel: false })
+                                        Taro.showModal({ title: '提示', content: '若操作不便，也可前往浏览器粘贴链接下载\r\n申请表文件修改好后\r\n请发送给文件传输助手\r\n再在文件传输助手中选择申请表', showCancel: false })
                                     , 600)
                             )})
                       })
@@ -165,7 +172,12 @@ export default function RoomDetailBooking() {
 
     return (
         <View className=' h-screen overflow-hidden'>
-            <Image src={router.params.photoUrl} mode='aspectFill' className='absolute right-0 top-5 w-70 h-58 shadow-2xl'></Image>
+            <Image 
+                src={router.params.photoUrl} 
+                mode='aspectFill' 
+                onLoad={() => Taro.hideLoading()}
+                className='absolute right-0 top-5 w-70 h-58 shadow-2xl'
+            />
             <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
             <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
             <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
@@ -174,22 +186,22 @@ export default function RoomDetailBooking() {
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                     <View className='h-30 w-screen flex'>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl ', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
                             onClick={() => setDayOrder(1)}
                         >
-                            <View className=' m-3 font-bold text-lg text-white'>{firstDay}</View>
+                            <View className=' m-2 my-4 font-bold text-lg text-white'>{firstDay}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
                             onClick={() => setDayOrder(2)}
                         >
-                            <View className=' m-3 font-bold text-lg text-white'>{secondDay}</View>
+                            <View className=' m-2 my-4 font-bold text-lg text-white'>{secondDay}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
                             onClick={() => setDayOrder(3)}
                         >
-                            <View className=' m-3 font-bold text-lg text-white'>{thirdDay}</View>
+                            <View className=' m-2 my-4 font-bold text-lg text-white'>{thirdDay}</View>
                         </View>
                     </View>
                 </View>

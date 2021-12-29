@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro, { useTabItemTap } from '@tarojs/taro'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
@@ -8,6 +8,7 @@ import { RoomCard } from '../../components'
 import history from "../../assets/images/history.png"
 import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
+import add from "../../assets/images/add.png"
 
 import { SET_USERINFO } from '../../constants'
 
@@ -72,6 +73,15 @@ export default function Index() {
         })
     }
 
+    function addRoom() {
+        Taro.showLoading()
+        Taro.cloud.callFunction({ name: 'addRoom' })
+                  .then(() => {
+                      Taro.showToast({title: '添加房间成功', duration: 1000})
+                      setTimeout(() => setRefresh(true), 1000)
+                  })
+    }
+
     function Login() {
         Taro.getUserProfile({
             desc: "注册成为用户"
@@ -127,15 +137,24 @@ export default function Index() {
                             </View> : ''
                         }
 
-                        {   isSuperAdmin ?
-                            <View 
-                                className='relative rounded-full bg-white h-10 w-10 right-15 top-5 float-right'
-                                onClick={toEditAdmin}
-                            >
-                                <Image src={person} className='w-6 h-6 m-2'></Image>
-                            </View> : ''
+                        {   isSuperAdmin ?             
+                                <View 
+                                    className='relative rounded-full bg-white h-10 w-10 right-15 top-5 float-right'
+                                    onClick={toEditAdmin}
+                                >
+                                    <Image src={person} className='w-6 h-6 m-2'></Image>
+                                </View>  : ''
                         }
 
+                        {   isSuperAdmin ?
+                                <View 
+                                className='relative rounded-full bg-white h-10 w-10 right-20 top-5 float-right'
+                                onClick={addRoom}
+                                >
+                                    <Image src={add} className='w-4 h-4 m-3'></Image>
+                                </View>  : ''
+
+                        }
 
                         <View className='absolute top-23 w-screen'>
                             <View className='relative w-70 h-53 bg-white shadow-xl rounded-2xl mx-auto'>

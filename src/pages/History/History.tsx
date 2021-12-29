@@ -41,14 +41,14 @@ export default function EditRoom() {
                                 date={item.date}
                                 department={item.department}
                                 time={item.time}
-                                title={item.room}
-                                studentId={item.id}
+                                room={item.room}
+                                id={item.id}
                                 unit={item.unit}
                                 sheet={item.sheet}
                                 state={item.state}
-                                name={item.student}
+                                student={item.student}
                                 studentPhone={item.studentPhone}
-                                teacherName={item.teacher}
+                                teacher={item.teacher}
                                 teacherPhone={item.teacherPhone}                                
                             />
                     )}
@@ -66,14 +66,14 @@ export default function EditRoom() {
                                 date={item.date}
                                 department={item.department}
                                 time={item.time}
-                                title={item.room}
-                                studentId={item.id}
+                                room={item.room}
+                                id={item.id}
                                 unit={item.unit}
                                 sheet={item.sheet}
                                 state={item.state}
-                                name={item.student}
+                                student={item.student}
                                 studentPhone={item.studentPhone}
-                                teacherName={item.teacher}
+                                teacher={item.teacher}
                                 teacherPhone={item.teacherPhone}
                             />
                     )}

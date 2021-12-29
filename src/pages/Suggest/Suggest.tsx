@@ -46,18 +46,18 @@ export default function Suggest() {
                 <View className='w-70 mx-auto guideCard min-h-180 shadow-2xl rounded-2xl'>
                     <View className='h-3'></View>
                     <View className=' w-60 min-h-60 mx-auto'>
-                        <View className=' font-semibold text-4xl text-black w-full h-11'>{data.title}</View>
+                        <View className=' font-semibold text-4xl text-black w-full h-11'>{data.room}</View>
                         { data.time.map((item, index) => 
                         <View key={index} className=' font-semibold text-4xl text-black w-full h-11 text-center'>{item}</View> )
                         }
                         <View className='w-full '>
                             <View className=' h-3'></View>
-                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人姓名：${data.name}`}</View>
-                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人学号：${data.studentId}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人姓名：${data.student}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人学号：${data.id}`}</View>
                             <View className=' font-medium text-lg h-7 w-full truncate'>{`申请学院：${data.department}`}</View>
                             <View className=' font-medium text-lg h-7 w-full truncate'>{`申请单位名称：${data.unit}`}</View>
                             <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${data.studentPhone}`}</View>
-                            <View className=' font-medium text-lg h-7 w-full truncate'>{`负责老师： ${data.teacherName}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`负责老师： ${data.teacher}`}</View>
                             <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${data.teacherPhone}`}</View>
                         </View>
                     </View>

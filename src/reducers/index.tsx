@@ -1,27 +1,23 @@
 import { combineReducers } from 'redux'
 
 import {
-    SET_USERINFO
+    SET_USERINFO,
+    SET_REFRESHROOM
 } from '../constants'
 
 const INITIAL_STATE = {
-    userInfo : {}
+    userInfo : {},
+    refreshRoom : function() {}
 }
 
 function index(state = INITIAL_STATE, action) {
     switch (action.type) {
-        // case SET_AVATAR:
-        //     const {avatar} = action.payload
-        //     return {...state, avatar}
-        // case SET_NICKNAME:
-        //     const {nickName} = action.payload
-        //     return {...state, nickName}
-        // case SET_OPENID:
-        //     const {openid} = action.payload
-        //     return {...state, openid}
         case SET_USERINFO:
-               const {userInfo} = action.payload
-               return {...state, userInfo}
+            const { userInfo } = action.payload
+            return { ...state, userInfo }
+        case SET_REFRESHROOM:
+            const { refreshRoom } = action.payload
+            return { ...state, refreshRoom }
         default: 
             return state
     }
