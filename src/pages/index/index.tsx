@@ -112,27 +112,27 @@ export default function Index() {
                     <View className='w-screen h-80'>
                         <Text className='relative left-8 top-13 font-bold text-white text-xl'>注意事项</Text>
                         <View 
-                            className='relative rounded-full bg-white h-12 w-12 right-5 top-5 float-right'
+                            className='relative rounded-full bg-white h-10 w-10 right-5 top-5 float-right'
                             onClick={toHistory}
                         >
-                            <Image src={history} className='w-10 h-10 m-1'></Image>
+                            <Image src={history} className='w-6 h-6 m-2'></Image>
                         </View>
 
                         {   (isAdmin || isSuperAdmin)?
                             <View 
-                                className='relative rounded-full bg-white h-12 w-12 right-10 top-5 float-right'
+                                className='relative rounded-full bg-white h-10 w-10 right-10 top-5 float-right'
                                 onClick={toBackground}
                             >
-                                <Image src={background} className='w-10 h-10 m-1'></Image>
+                                <Image src={background} className='w-6 h-6 m-2'></Image>
                             </View> : ''
                         }
 
                         {   isSuperAdmin ?
                             <View 
-                                className='relative rounded-full bg-white h-12 w-12 right-15 top-5 float-right'
+                                className='relative rounded-full bg-white h-10 w-10 right-15 top-5 float-right'
                                 onClick={toEditAdmin}
                             >
-                                <Image src={person} className='w-10 h-10 m-1'></Image>
+                                <Image src={person} className='w-6 h-6 m-2'></Image>
                             </View> : ''
                         }
 
