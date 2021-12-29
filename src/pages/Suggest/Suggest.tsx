@@ -1,14 +1,16 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Image, Textarea, View } from '@tarojs/components'
 
 import suggest from '../../assets/images/suggest.png'
 import suggest2 from '../../assets/images/suggest2.png'
 
-
 export default function Suggest() {
 
     const router: any = useRouter()
+
+    const refreshBackground = useSelector((state: any) => state.background).refreshBackground
     
     const [data, setData] = useState(JSON.parse(router.params.data))
     const [guide, setGuide] = useState('')
@@ -22,12 +24,15 @@ export default function Suggest() {
         }).then(() => 
             {
                 Taro.hideLoading()
+                refreshBackground(true)
                 Taro.showToast({
                     title: '发送指引成功',
                     icon: 'success',
                     duration: 1000
                 })
-                setTimeout(() => Taro.navigateBack({ delta: 2 }), 1000)
+                setTimeout(() => {
+                    Taro.navigateBack({ delta: 1 })
+                }, 1000)
             })
     }
 

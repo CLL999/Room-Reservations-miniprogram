@@ -1,22 +1,22 @@
-import Taro, { useTabItemTap } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
 
 import { RoomCard } from '../../components'
+import { SET_USERINFO, SET_REFRESHROOM } from '../../constants'
 
 import history from "../../assets/images/history.png"
 import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
 
-import { SET_USERINFO, SET_REFRESHROOM } from '../../constants'
-
 export default function Index() {
 
     const dispatch = useDispatch()
 
     const [refresh, setRefresh] = useState(true)
+    const [firstTime, setFirstTime] = useState(true)
 
     const [roomList, setRoomList] = useState([])
     const [isLogin, setIsLogin] = useState(typeof Taro.getStorageSync('userInfo') == 'object')
@@ -34,14 +34,18 @@ export default function Index() {
         else return false
     })
 
+    if (firstTime) {
+
+        setFirstTime(false)
+        dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
+    }
+
     if (refresh) {
         setRefresh(false)
         Taro.showLoading()
         Taro.cloud.callFunction({ name: 'feedRoom' })
                   .then((res: any) => setRoomList(res.result.rooms.data))
                   .then(() => Taro.hideLoading())
-    
-        dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
     }
 
     function toHistory() {
@@ -164,7 +168,6 @@ export default function Index() {
                             scrollWithAnimation
                             scrollLeft={0}
                         >
-                               
                             {   
                                 roomList.map((item: roomType, index) => 
                                     <RoomCard 
@@ -173,10 +176,10 @@ export default function Index() {
                                         photoUrl={item.photoUrl}
                                         id={item._id} 
                                         key={index}
+                                        index={index}
                                     />
                                 )
                             }
-
                         </ScrollView>
 
                     </View>

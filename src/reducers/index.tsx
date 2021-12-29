@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
 
+import background from './background'
+
 import {
     SET_USERINFO,
     SET_REFRESHROOM
@@ -24,5 +26,5 @@ function index(state = INITIAL_STATE, action) {
 }
 
 export default combineReducers({
-    index
+    index, background
 })

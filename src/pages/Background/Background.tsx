@@ -1,28 +1,39 @@
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Image, View } from '@tarojs/components'
 
 import { HistoryCard } from '../../components'
 import key from '../../assets/images/key.png'
 
+import { SET_REFRESHBACKGROUND } from '../../constants'
+
+
 export default function EditRoom() {
 
-    const [data, setData] = useState([])
-    const [userInfo, setUserInfo] = useState<userInfoType>({avatar: '',nickName: '', openid: ''})
-    const [fristTime, setFirstTime] = useState(true)
+    const dispatch = useDispatch()
 
-    if (fristTime)
-        {
-            Taro.showLoading()
-            setFirstTime(false)
-            Taro.cloud.callFunction({
-                name: 'feedRecord'
-            }).then((res: any) => {
-                setData(res.result.data)
-                setUserInfo(Taro.getStorageSync('userInfo'))
-                Taro.hideLoading()
-            })
-        }
+    const [data, setData] = useState([])
+    const [firstTime, setFirstTime] = useState(true)
+    const [userInfo, setUserInfo] = useState<userInfoType>({avatar: '',nickName: '', openid: ''})
+    const [refreshBackground, setRefreshBackground] = useState(true)
+
+    if (firstTime) {
+        setFirstTime(false)
+        dispatch({ type: SET_REFRESHBACKGROUND, payload: { refreshBackground: setRefreshBackground}})
+    }
+
+    if (refreshBackground) {
+        Taro.showLoading()
+        setRefreshBackground(false)
+        Taro.cloud.callFunction({
+            name: 'feedRecord'
+        }).then((res: any) => {
+            setData(res.result.data)
+            setUserInfo(Taro.getStorageSync('userInfo'))
+            Taro.hideLoading()
+        })
+    }
 
     return (
         <View className=' w-screen min-h-screen containerBackground'>
@@ -46,7 +57,7 @@ export default function EditRoom() {
                         date={item.date}
                         sheet={item.sheet}
                         auditor={userInfo.nickName}
-                        refresh={setFirstTime}
+                        refresh={setRefreshBackground}
                         admin
                         background
                     />
