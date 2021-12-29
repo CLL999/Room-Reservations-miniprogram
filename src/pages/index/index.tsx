@@ -36,6 +36,19 @@ export default function Index() {
         else return false
     })
 
+    // const [userInfo, setUserInfo] = useState(() => 
+    //     {
+    //         // Taro.cloud.init()
+
+    //         // Taro.showLoading()
+    //         // Taro.cloud.callFunction({ name: 'feedRoom' })
+    //         //           .then(res => setRoomList(res.result.rooms.data))
+    //         //           .then(() => Taro.hideLoading())
+
+    //         return Taro.getStorageSync('userInfo')
+    //     })
+
+
     function toHistory() {
         Taro.navigateTo({
             url: `../History/History?isAdmin=${isAdmin}`

@@ -8,6 +8,8 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
 
+    const wxContext = cloud.getWXContext()
+
     db.collection('record').add({
         data: {
             date: event.date,
@@ -19,8 +21,10 @@ exports.main = async (event, context) => {
             teacherPhone: event.teacherPhone, 
             time: event.time, 
             unit: event.unit,
-            room: event.room, 
-            state: event.state
+            room: event.room,
+            sheet: event.sheet, 
+            state: event.state,
+            applicantOpenid: wxContext.OPENID
         }
     })
 

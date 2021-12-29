@@ -1,5 +1,5 @@
 import { Button, Image, Textarea, View } from '@tarojs/components'
-import { useRouter } from '@tarojs/taro'
+import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 
 import suggest from '../../assets/images/suggest.png'
@@ -11,7 +11,30 @@ export default function Suggest() {
     const router = useRouter()
     
     const [data, setData] = useState(JSON.parse(router.params.data))
+    const [guide, setGuide] = useState('')
 
+    function sendGuide() {
+        Taro.showLoading()
+
+        Taro.cloud.callFunction({
+            name: 'reject',
+            data: { _id : data._id, guide, auditor: data.auditor }
+        }).then(() => 
+            {
+                Taro.hideLoading()
+                Taro.showToast({
+                    title: '发送指引成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+                setTimeout(() => Taro.navigateBack({ delta: 2 }), 1000)
+            })
+    }
+
+    function goBack() {
+        Taro.navigateBack({ delta: 1 })
+        Taro.hideLoading()
+    }
 
     return (
         <View className=' w-screen min-h-screen containerBackground'>
@@ -23,17 +46,19 @@ export default function Suggest() {
                 <View className='w-70 mx-auto guideCard min-h-180 shadow-2xl rounded-2xl'>
                     <View className='h-3'></View>
                     <View className=' w-60 min-h-60 mx-auto'>
-                        <View className=' font-semibold text-4xl text-black w-full h-11'>{data.title}</View>
+                        <View className=' font-semibold text-4xl text-black w-full h-11'>{data.room}</View>
                         { data.time.map((item, index) => 
                         <View key={index} className=' font-semibold text-4xl text-black w-full h-11 text-center'>{item}</View> )
                         }
                         <View className='w-full '>
                             <View className=' h-3'></View>
-                            <View className=' font-medium text-lg h-7 w-full'>{`${data.name}  ${data.studentId}`}</View>
-                            <View className=' font-medium text-lg h-7 w-full'>{data.department}</View>
-                            <View className=' font-medium text-lg h-7 w-full'>{`联系电话： ${data.studentPhone}`}</View>
-                            <View className=' font-medium text-lg h-7 w-full'>{`负责老师： ${data.teacherName}`}</View>
-                            <View className=' font-medium text-lg h-7 w-full'>{`联系电话： ${data.teacherPhone}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人姓名：${data.student}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请人学号：${data.id}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请学院：${data.department}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`申请单位名称：${data.unit}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${data.studentPhone}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`负责老师： ${data.teacher}`}</View>
+                            <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${data.teacherPhone}`}</View>
                         </View>
                     </View>
                     <View className='w-full h-10'>
@@ -45,15 +70,40 @@ export default function Suggest() {
                     <View className='w-full h-75'>
                         <View className='mx-4 h-70 rounded-2xl bg-white'>
                             <View className='w-full h-15'></View>
-                            <Textarea className='mx-6 h-45 w-50 text-xl font-semibold'></Textarea>
+                            {   router.params.user === 'true' ?
+                                <View 
+                                    className='mx-6 h-45 w-50 text-xl font-semibold -top-5'
+                                >
+                                    {data.guide}
+                                </View> :
+                                <Textarea 
+                                    className='mx-6 h-45 w-50 text-xl font-semibold -top-5'
+                                    onInput={(e) => setGuide(e.detail.value)}
+                                    value={guide}
+                                />
+                            }
                             <View className='w-full h-10'></View>
                         </View>
                     </View>
                     <View className='w-full h-20 pt-5'>
-                        <Button className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'>发送</Button>
+                        {   router.params.user === 'true' ?
+                            <Button 
+                                className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'
+                                onClick={goBack}
+                            >
+                            确定
+                            </Button> :
+                            <Button 
+                                className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'
+                                onClick={sendGuide}
+                            >
+                            发送
+                            </Button>
+                        }
                     </View>
                 </View>
             </View>
+            <View className=' w-screen h-26'></View>
         </View>
     )
 }

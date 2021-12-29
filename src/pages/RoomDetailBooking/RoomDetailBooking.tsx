@@ -7,9 +7,9 @@ export default function RoomDetailBooking() {
 
     const router = useRouter()
 
-    let firstDay = `${new Date().getMonth()+1}月${new Date().getDate()}日`
-    let secondDay = `${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`
-    let thirdDay = `${(new Date(new Date().getTime() + 48*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 48*60*60*1000)).getDate()}日`
+    let firstDay = `${new Date().getFullYear()}年${new Date().getMonth()+1}月${new Date().getDate()}日`
+    let secondDay = `${(new Date(new Date().getTime() + 24*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`
+    let thirdDay = `${(new Date(new Date().getTime() + 48*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 48*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 48*60*60*1000)).getDate()}日`
 
     const [DayOrder, setDayOrder] = useState(1)
 
@@ -90,24 +90,30 @@ export default function RoomDetailBooking() {
                 return 
             }
         
-        let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
+        Taro.showModal({
+            title: '核对信息',
+            content: `活动室：${router.params.name}\r\n时间${time.map((item) => item+'\r\n')}`
+        }).then(res => {
+            if (res.confirm) {
+                let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
 
-        Taro.showLoading()
-        Taro.cloud.callFunction({
-            name: 'submit',
-            data: {
-                date, department, id, student, studentPhone,
-                teacher, teacherPhone, time, unit,
-                room: router.params.name, 
-                state: 'waiting'
-            }
-        }).then(() => {
-            Taro.navigateBack({
-                delta: 2
-            })
-
-            Taro.hideLoading()
-        })
+                Taro.showLoading()
+                Taro.cloud.callFunction({
+                    name: 'submit',
+                    data: {
+                        date, department, id, student, studentPhone,
+                        teacher, teacherPhone, time, unit,
+                        room: router.params.name, sheet, 
+                        state: 'waiting'
+                    }
+                }).then(() => {
+                    Taro.navigateBack({
+                        delta: 2
+                    })
+        
+                    Taro.hideLoading()
+                })     
+        }})
 
     }
 
@@ -164,19 +170,19 @@ export default function RoomDetailBooking() {
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
                             onClick={() => setDayOrder(1)}
                         >
-                            <View className=' m-5 font-bold text-xl text-white'>{firstDay}</View>
+                            <View className=' m-3 font-bold text-lg text-white'>{firstDay}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
                             onClick={() => setDayOrder(2)}
                         >
-                            <View className=' m-5 font-bold text-xl text-white'>{secondDay}</View>
+                            <View className=' m-3 font-bold text-lg text-white'>{secondDay}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
                             onClick={() => setDayOrder(3)}
                         >
-                            <View className=' m-5 font-bold text-xl text-white'>{thirdDay}</View>
+                            <View className=' m-3 font-bold text-lg text-white'>{thirdDay}</View>
                         </View>
                     </View>
                 </View>
