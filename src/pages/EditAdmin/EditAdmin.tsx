@@ -21,7 +21,7 @@ export default function EditAdmin() {
             data: { key }
         }).then((res: any) => {
             Taro.hideLoading()
-            setData(res.result.record.data)
+            setData(res.result.data)
         })
     }
 
@@ -42,6 +42,7 @@ export default function EditAdmin() {
                     <Input
                         placeholder='搜索曾使用过的用户'
                         value={key}
+                        onConfirm={find}
                         className=' font-semibold mx-3 my-2 h-6 w-40 relative top-1'
                         onInput={(e) => setKey(e.detail.value)}
                     />

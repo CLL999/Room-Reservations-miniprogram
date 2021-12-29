@@ -9,9 +9,11 @@ const db = cloud.database()
 exports.main = async ( event ) => {
 
     const record = await db.collection('users')
-                           .where({ nickName: event.key })
-                           .get()
-
-    return 
-      record
+                           .where({ 
+                              nickName: db.RegExp({
+                                regexp: event.key,
+                                options: 'i'
+                              })
+                           }).get()
+    return record
 }

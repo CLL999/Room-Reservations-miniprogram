@@ -20,24 +20,17 @@ export default function Index() {
 
     const [roomList, setRoomList] = useState([])
     const [isLogin, setIsLogin] = useState(typeof Taro.getStorageSync('userInfo') == 'object')
-    const [isAdmin, setIsAdmin] = useState(() => {
-        let info = Taro.getStorageSync('userInfo')
-
-        Taro.cloud.init()
-
-        if (info.admin || info.superAdmin) return true
-        else return false
-    })
-    const [isSuperAdmin, setIsSuperAdmin] = useState(() => {
-        let info = Taro.getStorageSync('userInfo')
-        if (info.superAdmin) return true
-        else return false
-    })
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
 
     if (firstTime) {
-
+        Taro.cloud.init()
         setFirstTime(false)
+        let userInfo = Taro.getStorageSync('userInfo')
+        if (userInfo.admin || userInfo.superAdmin) setIsAdmin(true)
+        if (userInfo.superAdmin) setIsSuperAdmin(true)
         dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
+        dispatch({ type: SET_USERINFO, payload: { userInfo }})
     }
 
     if (refresh) {
@@ -96,10 +89,7 @@ export default function Index() {
                                     info = {...info, superAdmin: true}
                                     setIsSuperAdmin(true)
                                 }
-                            Taro.setStorage({
-                                key: 'userInfo',
-                                data: info
-                            })
+                            Taro.setStorage({ key: 'userInfo', data: info })
                             dispatch({ type: SET_USERINFO, payload: { userInfo: info }})
                       })
             

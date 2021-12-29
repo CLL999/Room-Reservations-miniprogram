@@ -118,7 +118,7 @@ export default function RoomDetailBooking() {
                             date, department, id, student, studentPhone,
                             teacher, teacherPhone, time, unit,
                             room: router.params.name, sheet: res.fileID, 
-                            state: 'waiting'
+                            state: 'waiting', submitDate: firstDay
                         }
                     }).then(() => {
                         Taro.hideLoading()

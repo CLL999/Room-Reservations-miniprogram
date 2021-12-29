@@ -29,7 +29,7 @@ export default function EditRoom() {
         Taro.cloud.callFunction({
             name: 'feedRecord'
         }).then((res: any) => {
-            setData(res.result.data)
+            setData(res.result.record)
             setUserInfo(Taro.getStorageSync('userInfo'))
             Taro.hideLoading()
         })

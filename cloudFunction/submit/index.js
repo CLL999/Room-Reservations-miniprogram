@@ -24,6 +24,7 @@ exports.main = async (event, context) => {
             room: event.room,
             sheet: event.sheet, 
             state: event.state,
+            submitDate: event.submitDate,
             applicantOpenid: wxContext.OPENID
         }
     })
