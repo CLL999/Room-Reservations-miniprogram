@@ -10,7 +10,7 @@ import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
 
-import { SET_USERINFO } from '../../constants'
+import { SET_USERINFO, SET_REFRESHROOM } from '../../constants'
 
 export default function Index() {
 
@@ -40,20 +40,9 @@ export default function Index() {
         Taro.cloud.callFunction({ name: 'feedRoom' })
                   .then((res: any) => setRoomList(res.result.rooms.data))
                   .then(() => Taro.hideLoading())
+    
+        dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
     }
-
-    // const [userInfo, setUserInfo] = useState(() => 
-    //     {
-    //         // Taro.cloud.init()
-
-    //         // Taro.showLoading()
-    //         // Taro.cloud.callFunction({ name: 'feedRoom' })
-    //         //           .then(res => setRoomList(res.result.rooms.data))
-    //         //           .then(() => Taro.hideLoading())
-
-    //         return Taro.getStorageSync('userInfo')
-    //     })
-
 
     function toHistory() {
         Taro.navigateTo({

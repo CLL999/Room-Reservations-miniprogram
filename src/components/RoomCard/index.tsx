@@ -1,5 +1,6 @@
-import { Button, Image, Text, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import { Button, Image, Text, View } from '@tarojs/components';
+
 
 import pot from "../../assets/images/pot.png"
 

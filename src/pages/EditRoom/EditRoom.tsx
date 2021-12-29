@@ -1,14 +1,17 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
 
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'
 
+
 export default function EditRoom() {
 
     const router = useRouter()
-    console.log(router.params)
+    
+    const refresh = useSelector((state: any) => state.index).refreshRoom
 
     const [photoUrl, setPhotoUrl] = useState(router.params.photoUrl)
     const [name, setName] = useState(router.params.name)
@@ -48,6 +51,28 @@ export default function EditRoom() {
         }).then(res => setPhotoUrl(res.tempFilePaths[0]))
     }
 
+    function deleteRoom() {
+        Taro.showModal({
+            title: '提示',
+            content: '确定要删除该活动室吗',
+            showCancel: false
+        }).then(() => {
+            Taro.showLoading()
+            Taro.cloud.callFunction({
+                name: 'deleteRoom',
+                data: { id: router.params.id }
+            }).then(() => {
+                Taro.showToast({title: '删除成功', duration: 1000})
+                setTimeout(() => {
+                    Taro.navigateBack({ delta: 2})
+                    refresh(true)
+                    Taro.hideLoading()
+                }, 1000)
+            })
+        })
+
+    }
+
     return (
         <View className=' w-screen min-h-screen containerBackground'>
             <View className=' w-screen h-34 '>
@@ -72,7 +97,7 @@ export default function EditRoom() {
                     className=' mx-auto w-51 bg-gray-100 rounded-2xl h-50 py-7 font-semibold relative top-3 px-7 leading-7 text-lg'
                 />
             </View>
-            <View className=' w-screen h-110'>
+            <View className=' w-screen h-130'>
                 <View className='mx-auto w-25 whitespace-nowrap font-semibold text-xl text-black '>活动室图片</View>
                 <Image
                     src={photoUrl}
@@ -92,6 +117,13 @@ export default function EditRoom() {
                     onClick={updateDetail}
                 >
                     确认修改
+                </Button>
+
+                <Button 
+                    className=' font-bold w-54 mx-auto text-lg relative top-23 bg-red-600 h-15 py-3 shadow-2xl rounded-xl'
+                    onClick={deleteRoom}
+                >
+                    删除活动室
                 </Button>
             </View>
         </View>
