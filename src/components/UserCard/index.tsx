@@ -1,6 +1,5 @@
 import { Button, Image, Picker, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import { useState } from 'react';
 
 export default function UserCard(props) {
 

@@ -15,10 +15,11 @@ export default function HistoryCard(props) {
 
     function previewGuide() {
         Taro.showLoading()
+
         Taro.cloud.callFunction({
             name: 'feedGuide',
             data: { _id : props._id }
-        }).then(res => 
+        }).then((res:any) => 
             {
                 Taro.navigateTo({
                     url: `../Suggest/Suggest?data=${JSON.stringify(res.result.data)}&user=true`

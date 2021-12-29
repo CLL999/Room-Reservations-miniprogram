@@ -19,7 +19,7 @@ export default function EditAdmin() {
         Taro.cloud.callFunction({
             name: 'searchUser',
             data: { key }
-        }).then(res => {
+        }).then((res: any) => {
             Taro.hideLoading()
             setData(res.result.record.data)
         })
@@ -53,7 +53,7 @@ export default function EditAdmin() {
                 </View>
             </View>
             {   
-                data.map((item, index) => 
+                data.map((item: userInfoType, index) => 
                     <UserCard 
                         clearData={setData}
                         key={index}

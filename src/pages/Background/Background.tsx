@@ -12,7 +12,7 @@ import key from '../../assets/images/key.png'
 export default function EditRoom() {
 
     const [data, setData] = useState([])
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState<userInfoType>({avatar: '',nickName: '', openid: ''})
     const [fristTime, setFirstTime] = useState(true)
 
     if (fristTime)
@@ -21,7 +21,7 @@ export default function EditRoom() {
             setFirstTime(false)
             Taro.cloud.callFunction({
                 name: 'feedRecord'
-            }).then(res => {
+            }).then((res: any) => {
                 setData(res.result.data)
                 setUserInfo(Taro.getStorageSync('userInfo'))
                 Taro.hideLoading()
@@ -34,7 +34,7 @@ export default function EditRoom() {
             <View className='w-screen h-43'>
                 <View className=' relative font-extrabold text-3xl left-17 top-8'>审批申请</View> 
             </View>
-            {   data.map(item => 
+            {   data.map((item: historyItemType) => 
                     <HistoryCard
                         key={item._id}
                         _id={item._id}

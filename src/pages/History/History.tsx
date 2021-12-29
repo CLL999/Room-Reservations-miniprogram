@@ -1,5 +1,5 @@
 import { Image, Text, View } from '@tarojs/components'
-import Taro, { useRouter, useTabItemTap } from '@tarojs/taro'
+import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 
 import { HistoryCard } from '../../components'
@@ -17,14 +17,12 @@ export default function EditRoom() {
             setFirstTime(false)
             Taro.showLoading()
             Taro.cloud.callFunction({ name: 'history' })
-                      .then(res => 
+                      .then((res: any) => 
                         {
                             setData(res.result.data)
                             Taro.hideLoading()
                         })
         }
-
-    // console.log(data)
 
     return (
         <View className=' w-screen min-h-screen containerBackground'>
@@ -34,7 +32,7 @@ export default function EditRoom() {
                     <View className='w-screen h-43'>
                         <Text className=' relative font-extrabold text-3xl left-17 top-8'>申请记录</Text> 
                     </View>
-                    {   data.map(item => 
+                    {   data.map((item: historyItemType) => 
                             <HistoryCard
                                 history
                                 key={item._id}
@@ -59,7 +57,7 @@ export default function EditRoom() {
                     <View className='w-screen h-43'>
                         <View className=' relative font-extrabold text-3xl left-17 top-8'>审批记录</View> 
                     </View>
-                    {   data.map(item => 
+                    {   data.map((item: historyItemType) => 
                             <HistoryCard
                                 admin
                                 history
@@ -81,34 +79,6 @@ export default function EditRoom() {
                     )}
                 </View>
             }
-             {/* <HistoryCard
-                title='204室'
-                time={['15:50-17:50', '15:50-17:50']}
-                name='张三'
-                studentId='2021000000'
-                department='建筑与城市规划学院'
-                studentPhone='123456789'
-                teacherName='李四'
-                teacherPhone='123456789'
-                success
-                admin
-                history
-                auditor='张三1234678999999'
-            />
-             <HistoryCard
-                title='204室'
-                time={['15:50-17:50', '15:50-17:50']}
-                name='张三'
-                studentId='2021000000'
-                department='建筑与城市规划学院'
-                studentPhone='123456789'
-                teacherName='李四'
-                teacherPhone='123456789'
-                fail
-                history
-                admin
-                auditor='张三1234678999999'
-            /> */}
         </View>
     )
 }

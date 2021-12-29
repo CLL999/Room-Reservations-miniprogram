@@ -24,7 +24,7 @@ export default function Index() {
 
         Taro.showLoading()
         Taro.cloud.callFunction({ name: 'feedRoom' })
-                  .then(res => setRoomList(res.result.rooms.data))
+                  .then((res: any) => setRoomList(res.result.rooms.data))
                   .then(() => Taro.hideLoading())
 
         if (info.admin || info.superAdmin) return true
@@ -75,9 +75,9 @@ export default function Index() {
             let nickName = res.userInfo.nickName
 
             Taro.cloud.callFunction({name: 'login', data: {avatar, nickName}})
-                      .then(res => {
+                      .then((res: any) => {
                             let openid = res.result.event.userInfo.openId
-                            let info = { avatar, nickName, openid }
+                            let info: object = { avatar, nickName, openid }
                             if (res.result.admin.data.length)
                                 {
                                     info = {...info, admin: true}
@@ -153,7 +153,7 @@ export default function Index() {
                         >
                                
                             {   
-                                roomList.map((item, index) => 
+                                roomList.map((item: roomType, index) => 
                                     <RoomCard 
                                         name={item.name}
                                         content={item.content}

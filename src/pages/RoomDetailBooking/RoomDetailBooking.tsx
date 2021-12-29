@@ -41,7 +41,7 @@ export default function RoomDetailBooking() {
         Taro.cloud.callFunction({
             name: 'setCheckbox',
             data: { room: router.params.name, date }
-        }).then(res => {
+        }).then((res: any) => {
             console.log(res.result.data)
             res.result.data.map(record => 
                 record.time.map(item => {

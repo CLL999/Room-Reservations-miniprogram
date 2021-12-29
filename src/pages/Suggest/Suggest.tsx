@@ -8,7 +8,7 @@ import suggest2 from '../../assets/images/suggest2.png'
 
 export default function Suggest() {
 
-    const router = useRouter()
+    const router: any = useRouter()
     
     const [data, setData] = useState(JSON.parse(router.params.data))
     const [guide, setGuide] = useState('')
