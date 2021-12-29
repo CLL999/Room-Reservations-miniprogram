@@ -146,7 +146,7 @@ export default function RoomDetailBooking() {
                                     duration: 600
                                 }).then(() => 
                                     setTimeout(() => 
-                                        Taro.showModal({ title: '若操作不便，也可前往浏览器下载', content: '申请表文件填好后\r\n请发送给文件传输助手', showCancel: false })
+                                        Taro.showModal({ title: '若操作不便，也可前往浏览器粘贴链接下载', content: '申请表文件修改好后\r\n请发送给文件传输助手\r\n再在文件传输助手中选择申请表', showCancel: false })
                                     , 600)
                             )})
                       })

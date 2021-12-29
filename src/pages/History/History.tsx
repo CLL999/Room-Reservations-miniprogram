@@ -19,7 +19,7 @@ export default function EditRoom() {
             Taro.cloud.callFunction({ name: 'history' })
                       .then((res: any) => 
                         {
-                            setData(res.result.data)
+                            setData(res.result.data.reverse())
                             Taro.hideLoading()
                         })
         }

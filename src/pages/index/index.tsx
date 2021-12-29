@@ -15,17 +15,14 @@ export default function Index() {
 
     const dispatch = useDispatch()
 
+    const [refresh, setRefresh] = useState(true)
+
     const [roomList, setRoomList] = useState([])
     const [isLogin, setIsLogin] = useState(typeof Taro.getStorageSync('userInfo') == 'object')
     const [isAdmin, setIsAdmin] = useState(() => {
         let info = Taro.getStorageSync('userInfo')
 
         Taro.cloud.init()
-
-        Taro.showLoading()
-        Taro.cloud.callFunction({ name: 'feedRoom' })
-                  .then((res: any) => setRoomList(res.result.rooms.data))
-                  .then(() => Taro.hideLoading())
 
         if (info.admin || info.superAdmin) return true
         else return false
@@ -35,6 +32,14 @@ export default function Index() {
         if (info.superAdmin) return true
         else return false
     })
+
+    if (refresh) {
+        setRefresh(false)
+        Taro.showLoading()
+        Taro.cloud.callFunction({ name: 'feedRoom' })
+                  .then((res: any) => setRoomList(res.result.rooms.data))
+                  .then(() => Taro.hideLoading())
+    }
 
     // const [userInfo, setUserInfo] = useState(() => 
     //     {
