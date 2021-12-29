@@ -1,6 +1,6 @@
-import { Image, Text, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
+import { Image, Text, View } from '@tarojs/components'
 
 import { HistoryCard } from '../../components'
 import key from '../../assets/images/key.png'

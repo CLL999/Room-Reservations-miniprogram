@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
-import { Image, Input, View } from '@tarojs/components';
 import { useState } from 'react';
+import { Image, Input, View } from '@tarojs/components';
 
 import { UserCard } from '../../components'
 

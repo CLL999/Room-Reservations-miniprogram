@@ -1,7 +1,8 @@
+import Taro, { useRouter } from '@tarojs/taro';
 import { Button, Checkbox, CheckboxGroup, Image, Input, Text, View } from '@tarojs/components';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import Taro, { useRouter } from '@tarojs/taro';
+
 
 export default function RoomDetailBooking() {
 
@@ -89,30 +90,35 @@ export default function RoomDetailBooking() {
                 Taro.showModal({title: '提示', content: '请上传申请表', showCancel: false}) 
                 return 
             }
-        
+
         Taro.showModal({
             title: '核对信息',
-            content: `活动室：${router.params.name}\r\n时间${time.map((item) => item+'\r\n')}`
+            content: `活动室：${router.params.name}\n时间\n${time.join().replace(/,/g,'\r\n')}`
         }).then(res => {
             if (res.confirm) {
+
                 let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
+                let { openid } = Taro.getStorageSync('userInfo')
 
                 Taro.showLoading()
-                Taro.cloud.callFunction({
-                    name: 'submit',
-                    data: {
-                        date, department, id, student, studentPhone,
-                        teacher, teacherPhone, time, unit,
-                        room: router.params.name, sheet, 
-                        state: 'waiting'
-                    }
-                }).then(() => {
-                    Taro.navigateBack({
-                        delta: 2
-                    })
-        
-                    Taro.hideLoading()
-                })     
+                Taro.cloud.uploadFile({
+                    cloudPath: `sheets/${openid}${+new Date()}.xlsx`,
+                    filePath: sheet
+                }).then(res => {
+                    Taro.cloud.callFunction({
+                        name: 'submit',
+                        data: {
+                            date, department, id, student, studentPhone,
+                            teacher, teacherPhone, time, unit,
+                            room: router.params.name, sheet: res.fileID, 
+                            state: 'waiting'
+                        }
+                    }).then(() => {
+                        Taro.hideLoading()
+                        Taro.showToast({title: '上传成功', duration: 500})
+                        setTimeout(() => Taro.navigateBack({ delta: 2 }), 500)
+                    })   
+                })  
         }})
 
     }
@@ -123,17 +129,6 @@ export default function RoomDetailBooking() {
     }
 
     function downloadSheet() {
-        // Taro.setClipboardData({ data: 'https://qianchen.ink/sourse/%E6%AD%A3%E4%B9%89%E4%B9%A6%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E7%A9%BA%E9%97%B4%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx'})
-        //     .then(() => { 
-        //         Taro.showToast({
-        //             title: '链接已复制到剪贴板',
-        //             duration: 500
-        //         }).then(() => 
-        //             setTimeout(() => 
-        //                 Taro.showModal({ title: '请前往浏览器粘贴链接', content: '下载申请表填写并上传', showCancel: false })
-        //             , 500)
-        //     )})
-
         Taro.showLoading()
 
         Taro.cloud.downloadFile({ fileID: 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/正义书院学生活动空间申请表.xlsx' })
@@ -143,7 +138,18 @@ export default function RoomDetailBooking() {
                       Taro.openDocument({
                           filePath: res.tempFilePath,
                           showMenu: true
-                      }).then(res => console.log(res))
+                      }).then(() => {
+                            Taro.setClipboardData({ data: 'https://qianchen.ink/sourse/%E6%AD%A3%E4%B9%89%E4%B9%A6%E9%99%A2%E5%AD%A6%E7%94%9F%E6%B4%BB%E5%8A%A8%E7%A9%BA%E9%97%B4%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx'})
+                                .then(() => { 
+                                Taro.showToast({
+                                    title: '下载链接已复制',
+                                    duration: 600
+                                }).then(() => 
+                                    setTimeout(() => 
+                                        Taro.showModal({ title: '若操作不便，也可前往浏览器下载', content: '申请表文件填好后\r\n请发送给文件传输助手', showCancel: false })
+                                    , 600)
+                            )})
+                      })
                     })
             
     }
@@ -154,6 +160,7 @@ export default function RoomDetailBooking() {
             type: 'file',
             extension: ['xlsx']
         }).then(res => setSheet(res.tempFiles[0].path))
+
     }
 
     return (
@@ -284,6 +291,7 @@ export default function RoomDetailBooking() {
                         <Input
                             placeholder='申请人学号'
                             value={id}
+                            type='digit'
                             onInput={e => setId(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
                         />
@@ -308,6 +316,7 @@ export default function RoomDetailBooking() {
                         <Input
                             placeholder='联系电话'
                             value={studentPhone}
+                            type='digit'
                             onInput={e => setStudentPhone(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
@@ -323,6 +332,7 @@ export default function RoomDetailBooking() {
                         <Input
                             placeholder='负责老师电话'
                             value={teacherPhone}
+                            type='digit'
                             onInput={e => setTeacherPhone(e.detail.value)}
                             className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
                         />
@@ -336,7 +346,7 @@ export default function RoomDetailBooking() {
                             <Button
                                 className='w-38 h-8 bg-green-300 relative right-6 rounded-lg font-medium text-lg float-right'
                             >
-                                已上传申请表
+                                已选择申请表
                             </Button>
                         }
                     </View>

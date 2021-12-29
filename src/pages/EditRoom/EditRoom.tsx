@@ -1,6 +1,6 @@
 import Taro, { useRouter } from '@tarojs/taro'
-import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
 import { useState } from 'react'
+import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
 
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'

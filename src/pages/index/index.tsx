@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
-import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
 
 import { RoomCard } from '../../components'
 

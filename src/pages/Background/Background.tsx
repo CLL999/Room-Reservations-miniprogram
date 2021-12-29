@@ -1,13 +1,9 @@
-import { Image, View } from '@tarojs/components'
-import { useState } from 'react'
 import Taro from '@tarojs/taro'
+import { useState } from 'react'
+import { Image, View } from '@tarojs/components'
+
 import { HistoryCard } from '../../components'
-
-
 import key from '../../assets/images/key.png'
-
-
-
 
 export default function EditRoom() {
 

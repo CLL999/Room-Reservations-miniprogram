@@ -1,6 +1,6 @@
-import { Button, Image, Textarea, View } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
+import { Button, Image, Textarea, View } from '@tarojs/components'
 
 import suggest from '../../assets/images/suggest.png'
 import suggest2 from '../../assets/images/suggest2.png'
