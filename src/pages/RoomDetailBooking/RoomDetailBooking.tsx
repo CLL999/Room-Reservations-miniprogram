@@ -13,14 +13,15 @@ export default function RoomDetailBooking() {
 
     const [firstTime, setFirstTime] = useState(true)
 
+    const [firstDay, setFirstDay] = useState(`${new Date().getFullYear()}年${new Date().getMonth()+1}月${new Date().getDate()}日`)
+    const [secondDay, setSecondDay] = useState(`${(new Date(new Date().getTime() + 24*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`)
+    const [thirdDay, setThirdDay] = useState(`${(new Date(new Date().getTime() + 48*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 48*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 48*60*60*1000)).getDate()}日`)
+    const [fourthDay, setFourthDay] = useState(`${(new Date(new Date().getTime() + 72*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 72*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 72*60*60*1000)).getDate()}日`)
+
     if (firstTime) {
         setFirstTime(false)
         Taro.showLoading()
     }
-
-    let firstDay = `${new Date().getFullYear()}年${new Date().getMonth()+1}月${new Date().getDate()}日`
-    let secondDay = `${(new Date(new Date().getTime() + 24*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 24*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 24*60*60*1000)).getDate()}日`
-    let thirdDay = `${(new Date(new Date().getTime() + 48*60*60*1000)).getFullYear()}年${(new Date(new Date().getTime() + 48*60*60*1000)).getMonth()+1}月${(new Date(new Date().getTime() + 48*60*60*1000)).getDate()}日`
 
     const [DayOrder, setDayOrder] = useState(1)
 
@@ -78,7 +79,7 @@ export default function RoomDetailBooking() {
 
         if (DayOrder === 1) setToday()
 
-        let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
+        let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : DayOrder === 3 ? thirdDay : fourthDay)
         Taro.showLoading()
         Taro.cloud.callFunction({
             name: 'setCheckbox',
@@ -246,38 +247,45 @@ export default function RoomDetailBooking() {
             <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose top-160 w-screen min-h-210'>
                 <View className='h-40 w-screen'>
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
-                    <View className='h-30 w-screen flex'>
-                        <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl ', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
-                            onClick={() => {
-                                resetCk()
-                                setDayOrder(1)
-                            }}
-                        >
-                            <View className='mx-1 my-5 w-full h-14'>
-                                <Text className='font-bold text-lg text-white'>{firstDay.replace('年','年\r\n')}</Text>
+                    <View className='h-28 w-screen pt-5 pb-3'>
+                        <View className='min-w-screen h-12 relative'>
+                            <View 
+                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -left-20', {'w-60 primarybutton': DayOrder === 1, 'w-50': DayOrder !== 1 })}
+                                onClick={() => {
+                                    resetCk()
+                                    setDayOrder(1)
+                                }}
+                            >
+                                <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{firstDay.slice(5)}</View>
+                            </View>
+                            <View 
+                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -right-20 float-right', {'w-60 primarybutton': DayOrder === 2, 'w-50': DayOrder !==2 })}
+                                onClick={() => {
+                                    resetCk()
+                                    setDayOrder(2)
+                                }}
+                            >
+                                <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{thirdDay.slice(5)}</View>
                             </View>
                         </View>
-                        <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
-                            onClick={() => {
-                                resetCk()
-                                setDayOrder(2)
-                            }}
-                        >
-                            <View className='mx-1 my-5 w-full h-14'>
-                                <Text className='font-bold text-lg text-white'>{secondDay.replace('年','年\r\n')}</Text>
+                        <View className='min-w-screen h-12 relative'>
+                            <View 
+                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -left-20', {'w-60 primarybutton': DayOrder === 3, 'w-50': DayOrder !== 3 })}
+                                onClick={() => {
+                                    resetCk()
+                                    setDayOrder(3)
+                                }}
+                            >
+                                <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{secondDay.slice(5)}</View>
                             </View>
-                        </View>
-                        <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
-                            onClick={() => {
-                                resetCk()
-                                setDayOrder(3)
-                            }}
-                        >
-                            <View className='mx-1 my-5 w-full h-14'>
-                                <Text className='font-bold text-lg text-white'>{thirdDay.replace('年','年\r\n')}</Text>
+                            <View 
+                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -right-20 float-right', {'w-60 primarybutton': DayOrder === 4, 'w-50': DayOrder !== 4 })}
+                                onClick={() => {
+                                    resetCk()
+                                    setDayOrder(4)
+                                }}
+                            >
+                                <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{fourthDay.slice(5)}</View>
                             </View>
                         </View>
                     </View>
