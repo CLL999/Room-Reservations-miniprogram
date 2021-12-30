@@ -243,7 +243,7 @@ export default function RoomDetailBooking() {
             <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
             <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
             <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
-            <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute rounded-3xl top-160 w-screen h-200'>
+            <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose top-160 w-screen min-h-210'>
                 <View className='h-40 w-screen'>
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                     <View className='h-30 w-screen flex'>
@@ -287,87 +287,105 @@ export default function RoomDetailBooking() {
                     {   flag ?
                         <View className='h-px absolute'></View> : ''
                     }
-                    <CheckboxGroup className='relative top-8' onChange={chooseTime}>
-                        <Checkbox
-                            value='08:30-10:00'
-                            disabled={cb1 ? true : false}
-                            checked={ck1 ? true : false}
-                            className=' font-semibold float-left ml-6 '
-                        >
-                            08:30-10:00
-                        </Checkbox> 
-
-                        <Checkbox
-                            value='17:50-18:50'
-                            disabled={cb2 ? true : false}
-                            checked={ck2 ? true : false}
-                            className=' font-semibold float-left ml-16 '
-                        >
-                            17:50-18:50
-                        </Checkbox>
-
-                        <Checkbox
-                            value='10:10-12:30'
-                            disabled={cb3 ? true : false}
-                            checked={ck3 ? true : false}
-                            className=' font-semibold float-left ml-6 mt-5'
-                        >
-                            10:10-12:30
-                        </Checkbox>
-
-                        <Checkbox
-                            value='19:00-20:20'
-                            disabled={cb4 ? true : false}
-                            checked={ck4 ? true : false}
-                            className=' font-semibold float-left ml-16 mt-5'
-                        >
-                            19:00-20:20
-                        </Checkbox>
-
-                        <Checkbox
-                            value='12:40-14:20'
-                            disabled={cb5 ? true : false}
-                            checked={ck5 ? true : false}
-                            className=' font-semibold float-left ml-6 mt-5'
-                        >
-                            12:40-14:20
-                        </Checkbox>
-
-                        <Checkbox
-                            value='20:30-21:50'
-                            disabled={cb6 ? true : false}
-                            checked={ck6 ? true : false}
-                            className=' font-semibold float-left ml-16 mt-5'
-                        >
-                            20:30-21:50
-                        </Checkbox>
-
-                        <Checkbox
-                            value='14:30-16:00'
-                            disabled={cb7 ? true : false}
-                            checked={ck7 ? true: false}
-                            className=' font-semibold float-left ml-6 mt-5'
-                        >
-                            14:30-16:00
-                        </Checkbox>
-
-                        <Checkbox
-                            value='22:00-23:00'
-                            disabled={cb8 ? true : false}
-                            checked={ck8 ? true: false}
-                            className=' font-semibold float-left ml-16 mt-5'
-                        >
-                            22:00-23:00
-                        </Checkbox>
-
-                        <Checkbox
-                            value='16:10-17:40'
-                            disabled={cb9 ? true : false}
-                            checked={ck9 ? true : false}
-                            className=' font-semibold float-left ml-6 mt-5'
-                        >
-                            16:10-17:40
-                        </Checkbox>
+                    <CheckboxGroup className='relative top-3' onChange={chooseTime}>
+                        <View className='w-screen h-7'>
+                            <View className='float-left ml-6 w-35'>
+                                <Checkbox
+                                    value='08:30-10:00'
+                                    disabled={cb1 ? true : false}
+                                    checked={ck1 ? true : false}
+                                    className=' font-semibold '
+                                >
+                                    08:30-10:00
+                                </Checkbox>
+                            </View>
+                            <View className='float-right mr-6 w-35'>
+                                <Checkbox
+                                    value='17:50-18:50'
+                                    disabled={cb2 ? true : false}
+                                    checked={ck2 ? true : false}
+                                    className=' font-semibold float-left'
+                                >
+                                    17:50-18:50
+                                </Checkbox>
+                            </View>
+                        </View>
+                        <View className='w-screen h-7 mt-5'>
+                            <View className='float-left ml-6 w-35'>
+                                <Checkbox
+                                    value='10:10-12:30'
+                                    disabled={cb3 ? true : false}
+                                    checked={ck3 ? true : false}
+                                    className=' font-semibold '
+                                >
+                                    10:10-12:30
+                                </Checkbox>
+                            </View>
+                            <View className='float-right mr-6 w-35'>
+                                <Checkbox
+                                    value='19:00-20:20'
+                                    disabled={cb4 ? true : false}
+                                    checked={ck4 ? true : false}
+                                    className=' font-semibold float-left'
+                                >
+                                    19:00-20:20
+                                </Checkbox>
+                            </View>
+                        </View>
+                        <View className='w-screen h-7 mt-5'>
+                            <View className='float-left ml-6 w-35'>
+                                <Checkbox
+                                    value='12:40-14:20'
+                                    disabled={cb5 ? true : false}
+                                    checked={ck5 ? true : false}
+                                    className=' font-semibold'
+                                >
+                                    12:40-14:20
+                                </Checkbox>
+                            </View>
+                            <View className='float-right mr-6 w-35'>
+                                <Checkbox
+                                    value='20:30-21:50'
+                                    disabled={cb6 ? true : false}
+                                    checked={ck6 ? true : false}
+                                    className=' font-semibold float-left'
+                                >
+                                    20:30-21:50
+                                </Checkbox>
+                            </View>
+                        </View>
+                        <View className='w-screen h-7 mt-5'>
+                            <View className='float-left ml-6 w-35'>
+                                <Checkbox
+                                    value='14:30-16:00'
+                                    disabled={cb7 ? true : false}
+                                    checked={ck7 ? true: false}
+                                    className=' font-semibold'
+                                >
+                                    14:30-16:00
+                                </Checkbox>
+                            </View>
+                            <View className='float-right mr-6 w-35'>
+                                <Checkbox
+                                    value='22:00-23:00'
+                                    disabled={cb8 ? true : false}
+                                    checked={ck8 ? true: false}
+                                    className=' font-semibold float-left'
+                                >
+                                    22:00-23:00
+                                </Checkbox>
+                            </View>
+                        </View>
+                        <View className='w-screen h-7 mt-5'>
+                            <Checkbox
+                                value='16:10-17:40'
+                                disabled={cb9 ? true : false}
+                                checked={ck9 ? true : false}
+                                className=' font-semibold float-left ml-6'
+                            >
+                                16:10-17:40
+                            </Checkbox>
+                        </View>
                     </CheckboxGroup>
                 </View>
 
