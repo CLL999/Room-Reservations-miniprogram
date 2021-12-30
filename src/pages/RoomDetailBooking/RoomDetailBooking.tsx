@@ -76,6 +76,8 @@ export default function RoomDetailBooking() {
 
         resetCb()
 
+        if (DayOrder === 1) setToday()
+
         let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
         Taro.showLoading()
         Taro.cloud.callFunction({
@@ -88,21 +90,21 @@ export default function RoomDetailBooking() {
                     switch (item) {
                         case '08:30-10:00': setCb1(true)
                                             break
-                        case '16:10-17:40': setCb2(true) 
+                        case '17:50-18:50': setCb2(true) 
                                             break
                         case '10:10-12:30': setCb3(true) 
                                             break
-                        case '17:50-18:50': setCb4(true) 
+                        case '19:00-20:20': setCb4(true) 
                                             break
                         case '12:40-14:20': setCb5(true) 
                                             break
-                        case '19:00-20:20': setCb6(true) 
+                        case '20:30-21:50': setCb6(true) 
                                             break
                         case '14:30-16:00': setCb7(true) 
                                             break
-                        case '20:30-21:50': setCb8(true) 
+                        case '22:00-23:00': setCb8(true) 
                                             break
-                        case '22:00-23:00': setCb9(true) 
+                        case '16:10-17:40': setCb9(true) 
                                             break
                         default: break;
                     }
@@ -171,16 +173,6 @@ export default function RoomDetailBooking() {
     function chooseTime(e) {
         console.log(e)
         setTime(e.detail.value)
-
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 8.5 * 60 * 60 * 1000).toLocaleString(), '八点半')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 10.16 * 60 * 60 * 1000).toLocaleString(), '十点十分')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 12.66 * 60 * 60 * 1000).toLocaleString(), '十二点四十分')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 14.5 * 60 * 60 * 1000).toLocaleString(), '两点半')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 16.16 * 60 * 60 * 1000).toLocaleString(), '四点十分')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 17.83 * 60 * 60 * 1000).toLocaleString(), '五点五十')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 19 * 60 * 60 * 1000).toLocaleString(), '七点')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 20.5 * 60 * 60 * 1000).toLocaleString(), '八点半')
-        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 22 * 60 * 60 * 1000).toLocaleString(), '十点')
     }
 
     function downloadSheet() {
@@ -216,6 +208,28 @@ export default function RoomDetailBooking() {
             extension: ['xlsx']
         }).then(res => setSheet(res.tempFiles[0].path))
 
+    }
+
+    function setToday() {
+        let nowTime = +new Date()
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 8.5 * 60 * 60 * 1000)
+            setCb1(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 10.16 * 60 * 60 * 1000)
+            setCb3(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 12.66 * 60 * 60 * 1000)
+            setCb5(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 14.5 * 60 * 60 * 1000)
+            setCb7(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 16.16 * 60 * 60 * 1000)
+            setCb9(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 17.83 * 60 * 60 * 1000)
+            setCb2(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 19 * 60 * 60 * 1000)
+            setCb4(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 20.5 * 60 * 60 * 1000)
+            setCb6(true)
+        if (nowTime > +new Date(new Date().toLocaleDateString()) + 22 * 60 * 60 * 1000)
+            setCb8(true)
     }
 
     return (
@@ -284,12 +298,12 @@ export default function RoomDetailBooking() {
                         </Checkbox> 
 
                         <Checkbox
-                            value='16:10-17:40'
+                            value='17:50-18:50'
                             disabled={cb2 ? true : false}
                             checked={ck2 ? true : false}
                             className=' font-semibold float-left ml-16 '
                         >
-                            16:10-17:40
+                            17:50-18:50
                         </Checkbox>
 
                         <Checkbox
@@ -302,12 +316,12 @@ export default function RoomDetailBooking() {
                         </Checkbox>
 
                         <Checkbox
-                            value='17:50-18:50'
+                            value='19:00-20:20'
                             disabled={cb4 ? true : false}
                             checked={ck4 ? true : false}
                             className=' font-semibold float-left ml-16 mt-5'
                         >
-                            17:50-18:50
+                            19:00-20:20
                         </Checkbox>
 
                         <Checkbox
@@ -320,12 +334,12 @@ export default function RoomDetailBooking() {
                         </Checkbox>
 
                         <Checkbox
-                            value='19:00-20:20'
+                            value='20:30-21:50'
                             disabled={cb6 ? true : false}
                             checked={ck6 ? true : false}
                             className=' font-semibold float-left ml-16 mt-5'
                         >
-                            19:00-20:20
+                            20:30-21:50
                         </Checkbox>
 
                         <Checkbox
@@ -338,21 +352,21 @@ export default function RoomDetailBooking() {
                         </Checkbox>
 
                         <Checkbox
-                            value='20:30-21:50'
+                            value='22:00-23:00'
                             disabled={cb8 ? true : false}
                             checked={ck8 ? true: false}
                             className=' font-semibold float-left ml-16 mt-5'
                         >
-                            20:30-21:50
+                            22:00-23:00
                         </Checkbox>
 
                         <Checkbox
-                            value='22:00-23:00'
+                            value='16:10-17:40'
                             disabled={cb9 ? true : false}
                             checked={ck9 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
-                            22:00-23:00
+                            16:10-17:40
                         </Checkbox>
                     </CheckboxGroup>
                 </View>
