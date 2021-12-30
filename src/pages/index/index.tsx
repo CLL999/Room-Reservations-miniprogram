@@ -163,6 +163,7 @@ export default function Index() {
                                         id={item._id} 
                                         key={index}
                                         index={index}
+                                        refresh={setRefresh}
                                     />
                                 )
                             }

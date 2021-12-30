@@ -25,7 +25,7 @@ export default function EditRoom() {
                     admin: router.params.isAdmin === 'true' 
                 }
             }).then((res: any) => {
-                setIdList(res.result.data.reverse())
+                if (res.result.data.length) setIdList(res.result.data.reverse())
                 Taro.hideLoading()
             })
         }

@@ -15,6 +15,7 @@ exports.main = async (event, context) => {
     if (event.admin) {
         let count = await db.collection('record').where({ state: _.neq('waiting') }).count()
         count = count.total
+        if (!count) return { data: [] }
 
         for (let i = 0; i < count; i+=100) {
             let list = await db.collection('record')
@@ -28,6 +29,7 @@ exports.main = async (event, context) => {
     else {
         let count = await db.collection('record').where({ applicantOpenid: wxContext.OPENID }).count()
         count = count.total
+        if (!count) return { data: [] }
 
         for (let i = 0; i < count; i+=100) {
             let list = await db.collection('record')

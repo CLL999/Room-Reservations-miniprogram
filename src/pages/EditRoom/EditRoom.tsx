@@ -64,7 +64,7 @@ export default function EditRoom() {
             }).then(() => {
                 Taro.showToast({title: '删除成功', duration: 1000})
                 setTimeout(() => {
-                    Taro.navigateBack({ delta: 2})
+                    Taro.navigateBack({ delta: 2 })
                     refresh(true)
                     Taro.hideLoading()
                 }, 1000)
