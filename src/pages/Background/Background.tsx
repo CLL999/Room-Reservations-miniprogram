@@ -56,6 +56,7 @@ export default function EditRoom() {
                         unit={item.unit}
                         date={item.date}
                         sheet={item.sheet}
+                        submitDate={item.submitDate}
                         auditor={userInfo.index.nickName}
                         refresh={setRefreshBackground}
                         admin

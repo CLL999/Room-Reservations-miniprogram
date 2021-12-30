@@ -24,7 +24,7 @@ export default function RoomDetailBooking() {
 
     const [DayOrder, setDayOrder] = useState(1)
 
-    const [cb1, setCb1] = useState(false) 
+    const [cb1, setCb1] = useState(false)
     const [cb2, setCb2] = useState(false)
     const [cb3, setCb3] = useState(false)
     const [cb4, setCb4] = useState(false)
@@ -130,6 +130,12 @@ export default function RoomDetailBooking() {
                 return 
             }
 
+        if (!time.length) 
+            {
+                Taro.showModal({title: '提示', content: '至少选择一个时段', showCancel: false}) 
+                return 
+            }
+
         Taro.showModal({
             title: '核对信息',
             content: `活动室：${router.params.name}\n时间\n${time.join().replace(/,/g,'\r\n')}`
@@ -165,6 +171,16 @@ export default function RoomDetailBooking() {
     function chooseTime(e) {
         console.log(e)
         setTime(e.detail.value)
+
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 8.5 * 60 * 60 * 1000).toLocaleString(), '八点半')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 10.16 * 60 * 60 * 1000).toLocaleString(), '十点十分')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 12.66 * 60 * 60 * 1000).toLocaleString(), '十二点四十分')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 14.5 * 60 * 60 * 1000).toLocaleString(), '两点半')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 16.16 * 60 * 60 * 1000).toLocaleString(), '四点十分')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 17.83 * 60 * 60 * 1000).toLocaleString(), '五点五十')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 19 * 60 * 60 * 1000).toLocaleString(), '七点')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 20.5 * 60 * 60 * 1000).toLocaleString(), '八点半')
+        console.log(new Date(+new Date(new Date().toLocaleDateString()) + 22 * 60 * 60 * 1000).toLocaleString(), '十点')
     }
 
     function downloadSheet() {
@@ -255,7 +271,7 @@ export default function RoomDetailBooking() {
 
                 <View className='h-65 w-screen '>
                     {   flag ?
-                        <View className='h-px'></View> : ''
+                        <View className='h-px absolute'></View> : ''
                     }
                     <CheckboxGroup className='relative top-8' onChange={chooseTime}>
                         <Checkbox
