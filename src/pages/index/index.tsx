@@ -164,6 +164,7 @@ export default function Index() {
                                         key={index}
                                         index={index}
                                         refresh={setRefresh}
+                                        showDelete={isAdmin || isSuperAdmin}
                                     />
                                 )
                             }

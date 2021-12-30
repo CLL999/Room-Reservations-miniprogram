@@ -16,7 +16,8 @@ export default function RoomCard(props) {
     const [hide, setHide] = useState(true)
 
     function showMore() {
-        setHide(!hide)
+        if (props.showDelete) 
+            setHide(!hide)
     }
 
     function deleteRoom() {
