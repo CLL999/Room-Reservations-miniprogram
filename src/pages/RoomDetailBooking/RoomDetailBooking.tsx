@@ -1,12 +1,15 @@
 import Taro, { useRouter } from '@tarojs/taro';
-import { Button, Checkbox, CheckboxGroup, Image, Input, Text, View } from '@tarojs/components';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { Button, Checkbox, CheckboxGroup, Image, Input, Text, View } from '@tarojs/components';
 import classNames from 'classnames';
 
 
 export default function RoomDetailBooking() {
 
     const router = useRouter()
+
+    const userInfo : any = useSelector(state => state)
 
     const [firstTime, setFirstTime] = useState(true)
 
@@ -134,7 +137,7 @@ export default function RoomDetailBooking() {
             if (res.confirm) {
 
                 let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
-                let { openid } = Taro.getStorageSync('userInfo')
+                let openid = userInfo.index.openid 
 
                 Taro.showLoading()
                 Taro.cloud.uploadFile({

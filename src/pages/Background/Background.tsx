@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Image, View } from '@tarojs/components'
 
 import { HistoryCard } from '../../components'
@@ -13,9 +13,10 @@ export default function EditRoom() {
 
     const dispatch = useDispatch()
 
+    const userInfo: any = useSelector(state => state)
+
     const [data, setData] = useState([])
     const [firstTime, setFirstTime] = useState(true)
-    const [userInfo, setUserInfo] = useState<userInfoType>({avatar: '',nickName: '', openid: ''})
     const [refreshBackground, setRefreshBackground] = useState(true)
 
     if (firstTime) {
@@ -30,7 +31,6 @@ export default function EditRoom() {
             name: 'feedRecord'
         }).then((res: any) => {
             setData(res.result.record)
-            setUserInfo(Taro.getStorageSync('userInfo'))
             Taro.hideLoading()
         })
     }
@@ -56,7 +56,7 @@ export default function EditRoom() {
                         unit={item.unit}
                         date={item.date}
                         sheet={item.sheet}
-                        auditor={userInfo.nickName}
+                        auditor={userInfo.index.nickName}
                         refresh={setRefreshBackground}
                         admin
                         background

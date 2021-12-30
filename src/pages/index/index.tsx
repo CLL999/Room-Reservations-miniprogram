@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux'
 import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
 
 import { RoomCard } from '../../components'
-import { SET_USERINFO, SET_REFRESHROOM } from '../../constants'
+import { SET_USEROPENID,
+         SET_ISADMIN,
+         SET_ISSUPERADMIN,
+         SET_REFRESHROOM, 
+         SET_NICKNAME } from '../../constants'
 
 import history from "../../assets/images/history.png"
 import background from "../../assets/images/background.png"
@@ -26,19 +30,27 @@ export default function Index() {
     if (firstTime) {
         Taro.cloud.init()
         setFirstTime(false)
-        let userInfo = Taro.getStorageSync('userInfo')
-        if (userInfo.admin || userInfo.superAdmin) setIsAdmin(true)
-        if (userInfo.superAdmin) setIsSuperAdmin(true)
+        let nickName = Taro.getStorageSync('userInfo').nickName
+        if (nickName) dispatch({ type: SET_NICKNAME, payload: { nickName }})
         dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
-        dispatch({ type: SET_USERINFO, payload: { userInfo }})
     }
 
     if (refresh) {
         setRefresh(false)
         Taro.showLoading()
-        Taro.cloud.callFunction({ name: 'feedRoom' })
-                  .then((res: any) => setRoomList(res.result.rooms.data))
-                  .then(() => Taro.hideLoading())
+        Taro.cloud.callFunction({
+            name: 'check'
+        }).then((res: any) => 
+            {
+                let { openid, admin, superAdmin} = res.result
+                dispatch({ type: SET_USEROPENID, payload: { openid }})
+                dispatch({ type: SET_ISADMIN, payload: { admin }})
+                dispatch({ type: SET_ISSUPERADMIN, payload: { superAdmin }})
+                setIsAdmin(admin)
+                setIsSuperAdmin(superAdmin)
+            }).then(() => Taro.cloud.callFunction({ name: 'feedRoom' })
+                                    .then((res: any) => setRoomList(res.result.rooms.data))
+                                    .then(() => Taro.hideLoading()))
     }
 
     function toHistory() {
@@ -74,25 +86,9 @@ export default function Index() {
         }).then(res => {
             let avatar = res.userInfo.avatarUrl
             let nickName = res.userInfo.nickName
-
+            dispatch({type: SET_NICKNAME, payload: { nickName }})
             Taro.cloud.callFunction({name: 'login', data: {avatar, nickName}})
-                      .then((res: any) => {
-                            let openid = res.result.event.userInfo.openId
-                            let info: object = { avatar, nickName, openid }
-                            if (res.result.admin.data.length)
-                                {
-                                    info = {...info, admin: true}
-                                    setIsAdmin(true)
-                                }
-                            if (res.result.superAdmin.data.length) 
-                                {
-                                    info = {...info, superAdmin: true}
-                                    setIsSuperAdmin(true)
-                                }
-                            Taro.setStorage({ key: 'userInfo', data: info })
-                            dispatch({ type: SET_USERINFO, payload: { userInfo: info }})
-                      })
-            
+                      .then((res: any) => Taro.setStorage({ key: 'userInfo', data: { openid: res.result.openid, nickName } }))
         }).then(() => setIsLogin(true)).catch(() => Taro.showToast({title: '请授权信息继续使用', icon:'none'}))
     }
 

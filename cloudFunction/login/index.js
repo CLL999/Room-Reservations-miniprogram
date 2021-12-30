@@ -19,18 +19,8 @@ exports.main = async (event, context) => {
                 .add({data:{ avatar: event.avatar, 
                              nickName: event.nickName, 
                              openid: wxContext.OPENID }})
-    
-    const admin = await db.collection('admin')
-                          .where({openid: wxContext.OPENID})
-                          .get()
-        
-    const superAdmin = await db.collection('superAdmin')
-                               .where({openid: wxContext.OPENID})
-                               .get()
 
     return {
-        admin, 
-        superAdmin,
-        event
+        openid: wxContext.OPENID
     }
 }

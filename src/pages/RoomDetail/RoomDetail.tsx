@@ -1,16 +1,17 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Image, Text, View } from '@tarojs/components';
+
 
 
 export default function RoomDetail() {
 
     const router = useRouter()
 
-    const [isAdmin, setisAdmin] = useState(() => {
-        let userInfo = Taro.getStorageSync('userInfo')
-        return (userInfo.admin || userInfo.superAdmin)
-    })
+    const userInfo: any = useSelector(state => state)
+
+    const [isAdmin, setisAdmin] = useState(() => (userInfo.index.admin || userInfo.index.superAdmin))
 
     function toBook() {
         Taro.navigateTo({
