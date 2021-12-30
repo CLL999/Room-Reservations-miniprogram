@@ -1,5 +1,5 @@
 import Taro, { useRouter } from '@tarojs/taro'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Image, ScrollView, Text, View } from '@tarojs/components'
 
 import { HistoryCard } from '../../components'
@@ -25,19 +25,27 @@ export default function EditRoom() {
                     admin: router.params.isAdmin === 'true' 
                 }
             }).then((res: any) => {
-                setIdList(res.result.data)
+                setIdList(res.result.data.reverse())
                 Taro.hideLoading()
             })
-            update()
         }
 
-    function update() {
+    useEffect(() => {
+        if (idList.length) updateData()
+    }, [idList])
+
+    function updateData() {
+        let newData = idList.slice(0 + page * 20, 20 + page * 20)
+        if (!newData.length) 
+            {
+                Taro.showToast({ title: '已经到底了哦', icon: 'none'})
+                return ;
+            }
         Taro.showLoading()
-        Taro.cloud.callFunction({ name: 'searchHistory' , data: { admin: router.params.isAdmin === 'true', page }})
+        Taro.cloud.callFunction({ name: 'searchHistory' , data: { newData }})
         .then((res: any) => 
           {
-              if (res.result.data.length) setData(data.concat(res.result.data.reverse()))
-              else Taro.showToast({ title: '已经到底了哦', icon: 'none'})
+              setData(data.concat(res.result))
               Taro.hideLoading()
           })
         setPage(page+1)
@@ -53,9 +61,10 @@ export default function EditRoom() {
                     </View>
                     <ScrollView
                         scrollY
-                        onScrollToLower={update}
+                        onScrollToLower={updateData}
                     >
-                    {   data.map((item: historyItemType) => 
+                    {   data.map((item: historyItemType, index) => {
+                            // item._id === idList[index] ?
                             <HistoryCard
                                 history
                                 key={item._id}
@@ -74,7 +83,7 @@ export default function EditRoom() {
                                 teacher={item.teacher}
                                 teacherPhone={item.teacherPhone}                                
                             />
-                    )}
+                        })}
                     </ScrollView>
                     <View className='w-screen h-3'></View>
                 </View> :
@@ -85,7 +94,7 @@ export default function EditRoom() {
                     <ScrollView
                         scrollY
                         scrollTop={0}
-                        onScrollToLower={update}
+                        onScrollToLower={updateData}
                         className=' h-150'
                     >
                     {   data.map((item: historyItemType) => 

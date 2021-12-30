@@ -6,21 +6,20 @@ cloud.init()
 const db = cloud.database()
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-    const wxContext = cloud.getWXContext()
-    const _ = db.command
+exports.main = async ( event ) => {
 
-    const record = event.admin ? 
-                   await db.collection('record')
-                           .where({ state: _.neq('waiting') })
-                           .skip(event.page*20)
-                           .limit(20)
-                           .get() : 
-                   await db.collection('record')
-                           .where({ applicantOpenid: wxContext.OPENID })
-                           .skip(event.page*20)
-                           .limit(20)
+    let record = []
+    let res = []
+    let len = event.newData.length
+
+    for (let i = 0; i < len ; i++) {
+        let list = await db.collection('record')
+                           .where({ _id: event.newData[i]._id })
                            .get()
+        record.push(list)
+    }
 
-    return record
+    let c = await Promise.all(record)
+    c.forEach(item => res.push(...item.data))
+    return res
 }
