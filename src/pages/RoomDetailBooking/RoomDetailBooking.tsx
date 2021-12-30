@@ -268,7 +268,7 @@ export default function RoomDetailBooking() {
                             value='16:10-17:40'
                             disabled={cb2 ? true : false}
                             checked={ck2 ? true : false}
-                            className=' font-semibold float-right mr-6 '
+                            className=' font-semibold float-left ml-16 '
                         >
                             16:10-17:40
                         </Checkbox>
@@ -286,7 +286,7 @@ export default function RoomDetailBooking() {
                             value='17:50-18:50'
                             disabled={cb4 ? true : false}
                             checked={ck4 ? true : false}
-                            className=' font-semibold float-right mr-6 mt-5'
+                            className=' font-semibold float-left ml-16 mt-5'
                         >
                             17:50-18:50
                         </Checkbox>
@@ -304,7 +304,7 @@ export default function RoomDetailBooking() {
                             value='19:00-20:20'
                             disabled={cb6 ? true : false}
                             checked={ck6 ? true : false}
-                            className=' font-semibold float-right mr-6 mt-5'
+                            className=' font-semibold float-left ml-16 mt-5'
                         >
                             19:00-20:20
                         </Checkbox>
@@ -322,7 +322,7 @@ export default function RoomDetailBooking() {
                             value='20:30-21:50'
                             disabled={cb8 ? true : false}
                             checked={ck8 ? true: false}
-                            className=' font-semibold float-right mr-6 mt-5'
+                            className=' font-semibold float-left ml-16 mt-5'
                         >
                             20:30-21:50
                         </Checkbox>
@@ -331,7 +331,7 @@ export default function RoomDetailBooking() {
                             value='22:00-23:00'
                             disabled={cb9 ? true : false}
                             checked={ck9 ? true : false}
-                            className=' font-semibold float-right mr-6 mt-5'
+                            className=' font-semibold float-left ml-6 mt-5'
                         >
                             22:00-23:00
                         </Checkbox>

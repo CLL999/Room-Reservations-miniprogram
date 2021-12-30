@@ -66,7 +66,7 @@ export default function HistoryCard(props) {
                 <View className='h-3'></View>
                 <View className=' w-60 min-h-60 mx-auto'>
                     <View className=' font-semibold text-4xl text-black w-full h-11'>{props.room}</View>
-                    <View className=' font-semibold text-3xl w-full h-10 text-center'>{props.date}</View>
+                    <View className=' font-semibold text-3xl w-full h-10 text-center'>{props.date ? props.date.slice(5) : ''}</View>
                     { props.time.map((item, index) => 
                        <View key={index} className=' font-semibold text-4xl text-black w-full h-11 text-center'>{item}</View> )
                     }
