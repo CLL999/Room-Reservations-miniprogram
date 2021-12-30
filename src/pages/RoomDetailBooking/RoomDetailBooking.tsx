@@ -245,7 +245,7 @@ export default function RoomDetailBooking() {
             <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
             <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
             <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
-            <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose top-160 w-screen min-h-210'>
+            <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose top-160 w-screen min-h-230'>
                 <View className='h-40 w-screen'>
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                     <View className='h-28 w-screen pt-5 pb-3'>
