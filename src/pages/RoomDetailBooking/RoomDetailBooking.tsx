@@ -80,6 +80,7 @@ export default function RoomDetailBooking() {
         if (DayOrder === 1) setToday()
 
         let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : DayOrder === 3 ? thirdDay : fourthDay)
+        console.log(date)
         Taro.showLoading()
         Taro.cloud.callFunction({
             name: 'setCheckbox',
@@ -145,7 +146,7 @@ export default function RoomDetailBooking() {
         }).then(res => {
             if (res.confirm) {
 
-                let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
+                let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : DayOrder === 3 ? thirdDay : fourthDay)
                 let openid = userInfo.index.openid 
 
                 Taro.showLoading()
