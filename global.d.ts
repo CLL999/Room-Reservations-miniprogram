@@ -29,6 +29,7 @@ interface historyItemType {
     teacherPhone: string
     unit: string
     date: string
+    submitDate: string
     admin?: any
     background?: any
     history?: any

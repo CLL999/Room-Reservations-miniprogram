@@ -82,6 +82,7 @@ export default function EditRoom() {
                                 student={item.student}
                                 studentPhone={item.studentPhone}
                                 teacher={item.teacher}
+                                submitDate={item.submitDate}
                                 teacherPhone={item.teacherPhone}                                
                             />
                         )}

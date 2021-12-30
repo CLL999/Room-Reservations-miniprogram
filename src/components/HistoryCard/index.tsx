@@ -79,7 +79,7 @@ export default function HistoryCard(props) {
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${props.studentPhone}`}</View>
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`负责老师： ${props.teacher}`}</View>
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${props.teacherPhone}`}</View>
-                        <View className=' font-medium text-lg h-7 w-full truncate'>{`申请提交日期：${props.submitDate}`}</View>
+                        <View className=' font-medium text-lg h-7 w-full truncate'>{`申请提交日期：${props.submitDate ? props.submitDate.slice(5) : ''}`}</View>
                     </View>
                 </View>
                 <View className='h-13 w-60 mx-auto'>

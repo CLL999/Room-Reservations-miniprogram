@@ -31,8 +31,7 @@ export default function RoomDetailBooking() {
     const [cb8, setCb8] = useState(false)
     const [cb9, setCb9] = useState(false)
 
-    useEffect(() => {
-
+    function resetCb() {
         setCb1(false)
         setCb2(false)
         setCb3(false)
@@ -42,7 +41,37 @@ export default function RoomDetailBooking() {
         setCb7(false)
         setCb8(false)
         setCb9(false)
+    }
 
+    const [ck1, setCk1] = useState(false)
+    const [ck2, setCk2] = useState(false)
+    const [ck3, setCk3] = useState(false)
+    const [ck4, setCk4] = useState(false)
+    const [ck5, setCk5] = useState(false)
+    const [ck6, setCk6] = useState(false)
+    const [ck7, setCk7] = useState(false)
+    const [ck8, setCk8] = useState(false)
+    const [ck9, setCk9] = useState(false)
+
+    function resetCk() {
+        setCk1(false)
+        setCk2(false)
+        setCk3(false)
+        setCk4(false)
+        setCk5(false)
+        setCk6(false)
+        setCk7(false)
+        setCk8(false)
+        setCk9(false)
+    }
+
+    const [flag, setFlag] = useState(false)
+
+    useEffect(() => {
+
+        setFlag(!flag)
+
+        resetCb()
 
         let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : thirdDay)
         Taro.showLoading()
@@ -186,39 +215,59 @@ export default function RoomDetailBooking() {
                     <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                     <View className='h-30 w-screen flex'>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl ', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
-                            onClick={() => setDayOrder(1)}
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl ', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
+                            onClick={() => {
+                                resetCk()
+                                setDayOrder(1)
+                            }}
                         >
-                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{firstDay.replace('年','年\r\n')}</View>
+                            <View className='mx-1 my-5 w-full h-14'>
+                                <Text className='font-bold text-lg text-white'>{firstDay.replace('年','年\r\n')}</Text>
+                            </View>
                         </View>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
-                            onClick={() => setDayOrder(2)}
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
+                            onClick={() => {
+                                resetCk()
+                                setDayOrder(2)
+                            }}
                         >
-                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{secondDay.replace('年','年\r\n')}</View>
+                            <View className='mx-1 my-5 w-full h-14'>
+                                <Text className='font-bold text-lg text-white'>{secondDay.replace('年','年\r\n')}</Text>
+                            </View>
                         </View>
                         <View 
-                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
-                            onClick={() => setDayOrder(3)}
+                            className={classNames('h-24 w-5 bg-gray-200 my-3 mx-4 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
+                            onClick={() => {
+                                resetCk()
+                                setDayOrder(3)
+                            }}
                         >
-                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{thirdDay.replace('年','年\r\n')}</View>
+                            <View className='mx-1 my-5 w-full h-14'>
+                                <Text className='font-bold text-lg text-white'>{thirdDay.replace('年','年\r\n')}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
 
                 <View className='h-65 w-screen '>
+                    {   flag ?
+                        <View className='h-px'></View> : ''
+                    }
                     <CheckboxGroup className='relative top-8' onChange={chooseTime}>
                         <Checkbox
                             value='08:30-10:00'
                             disabled={cb1 ? true : false}
+                            checked={ck1 ? true : false}
                             className=' font-semibold float-left ml-6 '
                         >
                             08:30-10:00
-                        </Checkbox>
+                        </Checkbox> 
 
                         <Checkbox
                             value='16:10-17:40'
                             disabled={cb2 ? true : false}
+                            checked={ck2 ? true : false}
                             className=' font-semibold float-right mr-6 '
                         >
                             16:10-17:40
@@ -227,6 +276,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='10:10-12:30'
                             disabled={cb3 ? true : false}
+                            checked={ck3 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             10:10-12:30
@@ -235,6 +285,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='17:50-18:50'
                             disabled={cb4 ? true : false}
+                            checked={ck4 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             17:50-18:50
@@ -243,6 +294,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='12:40-14:20'
                             disabled={cb5 ? true : false}
+                            checked={ck5 ? true : false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             12:40-14:20
@@ -251,6 +303,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='19:00-20:20'
                             disabled={cb6 ? true : false}
+                            checked={ck6 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             19:00-20:20
@@ -259,6 +312,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='14:30-16:00'
                             disabled={cb7 ? true : false}
+                            checked={ck7 ? true: false}
                             className=' font-semibold float-left ml-6 mt-5'
                         >
                             14:30-16:00
@@ -267,6 +321,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='20:30-21:50'
                             disabled={cb8 ? true : false}
+                            checked={ck8 ? true: false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             20:30-21:50
@@ -275,6 +330,7 @@ export default function RoomDetailBooking() {
                         <Checkbox
                             value='22:00-23:00'
                             disabled={cb9 ? true : false}
+                            checked={ck9 ? true : false}
                             className=' font-semibold float-right mr-6 mt-5'
                         >
                             22:00-23:00
