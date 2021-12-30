@@ -63,8 +63,7 @@ export default function EditRoom() {
                         scrollY
                         onScrollToLower={updateData}
                     >
-                    {   data.map((item: historyItemType, index) => {
-                            // item._id === idList[index] ?
+                    {   data.map((item: historyItemType) => {
                             <HistoryCard
                                 history
                                 key={item._id}

@@ -189,19 +189,19 @@ export default function RoomDetailBooking() {
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl ', {'primarybutton': DayOrder === 1 , ' bg-gray-300': DayOrder !== 1})} 
                             onClick={() => setDayOrder(1)}
                         >
-                            <View className=' m-2 my-4 font-bold text-lg text-white'>{firstDay}</View>
+                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{firstDay.replace('年','年\r\n')}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 2 , ' bg-gray-300': DayOrder !== 2})} 
                             onClick={() => setDayOrder(2)}
                         >
-                            <View className=' m-2 my-4 font-bold text-lg text-white'>{secondDay}</View>
+                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{secondDay.replace('年','年\r\n')}</View>
                         </View>
                         <View 
                             className={classNames('h-24 w-5 bg-gray-200 my-3 mx-5 flex-1 rounded-xl', {'primarybutton': DayOrder === 3 , ' bg-gray-300': DayOrder !== 3})} 
                             onClick={() => setDayOrder(3)}
                         >
-                            <View className=' m-2 my-4 font-bold text-lg text-white'>{thirdDay}</View>
+                            <View className=' m-1 my-5 font-bold text-lg text-white w-full h-14'>{thirdDay.replace('年','年\r\n')}</View>
                         </View>
                     </View>
                 </View>
