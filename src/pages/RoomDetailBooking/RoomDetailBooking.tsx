@@ -251,7 +251,7 @@ export default function RoomDetailBooking() {
                     <View className='h-28 w-screen pt-5 pb-3'>
                         <View className='min-w-screen h-12 relative'>
                             <View 
-                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -left-20', {'w-60 primarybutton': DayOrder === 1, 'w-50': DayOrder !== 1 })}
+                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 1, 'w-50': DayOrder !== 1 })}
                                 onClick={() => {
                                     resetCk()
                                     setDayOrder(1)
@@ -260,7 +260,7 @@ export default function RoomDetailBooking() {
                                 <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{firstDay.slice(5)}</View>
                             </View>
                             <View 
-                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -right-20 float-right', {'w-60 primarybutton': DayOrder === 2, 'w-50': DayOrder !==2 })}
+                                className={classNames(' rounded-full h-12 bg-gray-200 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 2, 'w-50': DayOrder !==2 })}
                                 onClick={() => {
                                     resetCk()
                                     setDayOrder(2)
@@ -271,7 +271,7 @@ export default function RoomDetailBooking() {
                         </View>
                         <View className='min-w-screen h-12 relative'>
                             <View 
-                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -left-20', {'w-60 primarybutton': DayOrder === 3, 'w-50': DayOrder !== 3 })}
+                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 3, 'w-50': DayOrder !== 3 })}
                                 onClick={() => {
                                     resetCk()
                                     setDayOrder(3)
@@ -280,7 +280,7 @@ export default function RoomDetailBooking() {
                                 <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{secondDay.slice(5)}</View>
                             </View>
                             <View 
-                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -right-20 float-right', {'w-60 primarybutton': DayOrder === 4, 'w-50': DayOrder !== 4 })}
+                                className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 4, 'w-50': DayOrder !== 4 })}
                                 onClick={() => {
                                     resetCk()
                                     setDayOrder(4)
