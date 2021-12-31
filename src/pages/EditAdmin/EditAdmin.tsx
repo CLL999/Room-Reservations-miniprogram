@@ -14,6 +14,7 @@ export default function EditAdmin() {
     const [data, setData] = useState([])
 
     function find() {
+        if (!key) return
         setKey('')
         Taro.showLoading()
         Taro.cloud.callFunction({
@@ -53,24 +54,26 @@ export default function EditAdmin() {
                     />
                 </View>
             </View>
-            <ScrollView
-                scrollY
-                scrollTop={0}
-                className=' h-120'
-            >
-            {   
-                data.map((item: userInfoType, index) => 
-                    <UserCard 
-                        clearData={setData}
-                        key={index}
-                        nickName={item.nickName}
-                        avatar={item.avatar}
-                        openid={item.openid}
-                    />
-                )
-                
+            {   data.length ? 
+                <ScrollView
+                    scrollY
+                    scrollTop={0}
+                    className=' h-120'
+                >
+                    {   data.map((item: userInfoType, index) => 
+                            <UserCard 
+                                clearData={setData}
+                                key={index}
+                                nickName={item.nickName}
+                                avatar={item.avatar}
+                                openid={item.openid}
+                            />) 
+                    }
+                </ScrollView> :
+                <View className='w-screen relative'>
+                    <View className=' mx-auto mt-30 w-50 h-14 font-semibold text-2xl'>请搜索名称关键字</View>
+                </View>
             }
-            </ScrollView>
         </View>
     )
 }

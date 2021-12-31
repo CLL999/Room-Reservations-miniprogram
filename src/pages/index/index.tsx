@@ -15,6 +15,7 @@ import history from "../../assets/images/history.png"
 import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
+import arrow from '../../assets/images/arrow.png'
 
 export default function Index() {
 
@@ -28,6 +29,7 @@ export default function Index() {
     const [isAdmin, setIsAdmin] = useState(false)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
     const [showHistory, setShowHistory] = useState(false)
+    const [hideArrow, setHideArrow] = useState(false)
 
     if (firstTime) {
         Taro.cloud.init()
@@ -143,11 +145,12 @@ export default function Index() {
                     </View>
 
                     <View className='w-screen h-100'>
-                        <Text className='relative left-8 top-3 font-bold text-white text-xl'>滑动选择活动室</Text>
+                        <Text className='relative left-8 top-3 font-bold text-white text-xl'>选择活动室</Text>
                         <ScrollView 
                             className='relative top-8 w-screen h-85 whitespace-nowrap' 
                             scrollX
                             scrollWithAnimation
+                            onScroll={() => {if (!hideArrow) setHideArrow(true)}}
                             scrollLeft={0}
                         >
                             {   
@@ -163,6 +166,12 @@ export default function Index() {
                                         showDelete={isAdmin || isSuperAdmin}
                                     />
                                 )
+                            }
+                            {   hideArrow ? '' :
+                                <Image 
+                                    src={arrow}
+                                    className='absolute right-0 top-35 w-15 h-15 bounce'
+                                />
                             }
                         </ScrollView>
 

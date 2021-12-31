@@ -14,6 +14,8 @@ export default function EditRoom() {
     const [page, setPage] = useState(0)
     const [idList, setIdList] = useState([])
 
+    const [showNoRes, setShowNoRes] = useState(false)
+
     if (firstTime)
         {
             setFirstTime(false)
@@ -26,6 +28,7 @@ export default function EditRoom() {
                 }
             }).then((res: any) => {
                 if (res.result.data.length) setIdList(res.result.data.reverse())
+                else setShowNoRes(true)
                 Taro.hideLoading()
             })
         }
@@ -59,35 +62,40 @@ export default function EditRoom() {
                             <Image src={key} className=' w-36 h-36 relative float-right top-2 right-3'></Image>
                             <Text className=' relative font-extrabold text-3xl left-17 top-8'>{`${router.params.isAdmin === 'true' ? '审批': '申请'}记录`}</Text> 
                         </View>
-                        <ScrollView
-                            scrollY
-                            scrollTop={0}
-                            onScrollToLower={updateData}
-                            className=' h-128 overflow-y-scroll'
-                        >
-                        {   data.map((item: historyItemType) => 
-                                <HistoryCard
-                                    admin={router.params.isAdmin === 'true' ? true : false}
-                                    history
-                                    key={item._id}
-                                    _id={item._id}
-                                    auditor={item.auditor}
-                                    date={item.date}
-                                    department={item.department}
-                                    time={item.time}
-                                    room={item.room}
-                                    id={item.id}
-                                    unit={item.unit}
-                                    sheet={item.sheet}
-                                    state={item.state}
-                                    student={item.student}
-                                    studentPhone={item.studentPhone}
-                                    teacher={item.teacher}
-                                    submitDate={item.submitDate}
-                                    teacherPhone={item.teacherPhone}                                
-                                />
-                            )}
-                        </ScrollView>
+                        {   showNoRes ? 
+                            <View className='w-screen h-60'>
+                                <View className=' relative mx-auto font-semibold text-center w-30 h-14 text-2xl top-30'>暂无记录</View> 
+                            </View> :
+                            <ScrollView
+                                scrollY
+                                scrollTop={0}
+                                onScrollToLower={updateData}
+                                className=' h-128 overflow-y-scroll'
+                            >
+                            {   data.map((item: historyItemType) => 
+                                    <HistoryCard
+                                        admin={router.params.isAdmin === 'true' ? true : false}
+                                        history
+                                        key={item._id}
+                                        _id={item._id}
+                                        auditor={item.auditor}
+                                        date={item.date}
+                                        department={item.department}
+                                        time={item.time}
+                                        room={item.room}
+                                        id={item.id}
+                                        unit={item.unit}
+                                        sheet={item.sheet}
+                                        state={item.state}
+                                        student={item.student}
+                                        studentPhone={item.studentPhone}
+                                        teacher={item.teacher}
+                                        submitDate={item.submitDate}
+                                        teacherPhone={item.teacherPhone}                                
+                                    />
+                                )}
+                            </ScrollView>
+                        }
                     </View>
             </View>
         </View>

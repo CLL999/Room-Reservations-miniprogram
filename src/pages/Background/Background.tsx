@@ -77,7 +77,8 @@ export default function EditRoom() {
                 />
                 </View>
             </View>
-            {   data.map((item: historyItemType) => 
+            {   data.length ?
+                data.map((item: historyItemType) => 
                     <HistoryCard
                         key={item._id}
                         _id={item._id}
@@ -98,7 +99,10 @@ export default function EditRoom() {
                         admin
                         background
                     />
-                )
+                ) :
+                <View className='w-screen'>
+                    <View className='h-14 w-60 mx-auto font-bold text-2xl text-center mt-45'>所有申请已批阅√</View>
+                </View>
             }
         </View>
     )
