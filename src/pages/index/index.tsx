@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { View, Text, ScrollView, Image, Button } from '@tarojs/components'
+import classNames from 'classnames'
 
 import { RoomCard } from '../../components'
 import { SET_USEROPENID,
@@ -26,6 +27,7 @@ export default function Index() {
     const [isLogin, setIsLogin] = useState(typeof Taro.getStorageSync('userInfo') == 'object')
     const [isAdmin, setIsAdmin] = useState(false)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+    const [showHistory, setShowHistory] = useState(false)
 
     if (firstTime) {
         Taro.cloud.init()
@@ -37,6 +39,7 @@ export default function Index() {
 
     if (refresh) {
         setRefresh(false)
+        if (isLogin) setTimeout(() => setShowHistory(true), 100)
         Taro.showLoading()
         Taro.cloud.callFunction({
             name: 'check'
@@ -89,51 +92,44 @@ export default function Index() {
             dispatch({type: SET_NICKNAME, payload: { nickName }})
             Taro.cloud.callFunction({name: 'login', data: {avatar, nickName}})
                       .then((res: any) => Taro.setStorage({ key: 'userInfo', data: { openid: res.result.openid, nickName } }))
-        }).then(() => setIsLogin(true)).catch(() => Taro.showToast({title: '请授权信息继续使用', icon:'none'}))
+        }).then(() => {
+            setIsLogin(true) 
+            setTimeout(() => setShowHistory(true), 100)
+        }).catch(() => Taro.showToast({title: '请授权信息继续使用', icon:'none'}))
     }
 
     return (
 
-        <View className='relative w-screen min-h-screen bg-gradient-to-b from-topColor to-bottomColor'>
+        <View className='relative w-screen min-h-screen bg-gradient-to-b from-topColor to-bottomColor overflow-hidden'>
 
             {   isLogin ?
                 <View>
                     <View className='w-screen h-80'>
                         <Text className='relative left-8 top-13 font-bold text-white text-xl'>注意事项</Text>
                         <View 
-                            className='relative rounded-full bg-white h-10 w-10 right-5 top-5 float-right'
+                            className={classNames('relative rounded-full bg-white right-5 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': showHistory, 'h-0 w-0': !showHistory})}
                             onClick={toHistory}
                         >
-                            <Image src={history} className='w-6 h-6 m-2'></Image>
+                            <Image src={history} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': showHistory, 'w-0 h-0': !showHistory})}></Image>
                         </View>
-
-                        {   (isAdmin || isSuperAdmin)?
-                            <View 
-                                className='relative rounded-full bg-white h-10 w-10 right-10 top-5 float-right'
-                                onClick={toBackground}
-                            >
-                                <Image src={background} className='w-6 h-6 m-2'></Image>
-                            </View> : ''
-                        }
-
-                        {   isSuperAdmin ?             
-                                <View 
-                                    className='relative rounded-full bg-white h-10 w-10 right-15 top-5 float-right'
-                                    onClick={toEditAdmin}
-                                >
-                                    <Image src={person} className='w-6 h-6 m-2'></Image>
-                                </View>  : ''
-                        }
-
-                        {   isSuperAdmin ?
-                                <View 
-                                className='relative rounded-full bg-white h-10 w-10 right-20 top-5 float-right'
-                                onClick={addRoom}
-                                >
-                                    <Image src={add} className='w-4 h-4 m-3'></Image>
-                                </View>  : ''
-
-                        }
+                        <View 
+                            className={classNames('relative rounded-full bg-white right-10 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
+                            onClick={toBackground}
+                        >
+                            <Image src={background} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
+                        </View>
+                        <View 
+                            className={classNames('relative rounded-full bg-white right-15 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            onClick={toEditAdmin}
+                        >
+                            <Image src={person} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
+                        </View>
+                        <View 
+                            className={classNames('relative rounded-full bg-white right-20 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            onClick={addRoom}
+                        >
+                            <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
+                        </View>
 
                         <View className='absolute top-23 w-screen'>
                             <View className='relative w-70 h-53 bg-white shadow-xl rounded-2xl mx-auto'>

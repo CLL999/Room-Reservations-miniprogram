@@ -63,7 +63,7 @@ export default function EditRoom() {
     }
 
     return (
-        <View className=' w-screen min-h-screen containerBackground'>
+        <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <Image src={key} className=' w-36 h-36 relative float-right top-2 right-3'></Image>
             <View className='w-screen h-43'>
                 <View className=' relative font-extrabold text-3xl left-17 top-8'>审批申请</View> 

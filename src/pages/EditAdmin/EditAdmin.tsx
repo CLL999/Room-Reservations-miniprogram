@@ -26,7 +26,7 @@ export default function EditAdmin() {
     }
 
     return (
-        <View className='w-screen min-h-screen containerBackground'>
+        <View className='w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className='w-screen h-45'>
                 <View className='bg-white z-10 w-screen h-90 rounded1 relative -top-45'>
                     <View className='w-screen relative top-33'>

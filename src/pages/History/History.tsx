@@ -52,7 +52,7 @@ export default function EditRoom() {
     }
 
     return (
-        <View className=' w-screen min-h-screen containerBackground'>
+        <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <Image src={key} className=' w-36 h-36 relative float-right top-2 right-3'></Image>
                 <View>
                     <View className='w-screen h-43'>

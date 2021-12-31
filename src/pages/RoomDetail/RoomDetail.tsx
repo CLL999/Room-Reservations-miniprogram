@@ -2,6 +2,7 @@ import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Image, Text, View } from '@tarojs/components';
+import classNames from 'classnames';
 
 
 
@@ -12,6 +13,8 @@ export default function RoomDetail() {
     const userInfo: any = useSelector(state => state)
 
     const [isAdmin, setisAdmin] = useState(() => (userInfo.index.admin || userInfo.index.superAdmin))
+
+    const [isLoading, setIsLoading] = useState(true)
 
     function toBook() {
         Taro.navigateTo({
@@ -25,15 +28,15 @@ export default function RoomDetail() {
         })
     }
 
-    Taro.showLoading()
+    // Taro.showLoading()
 
     return (
-        <View className=' h-screen overflow-hidden'>
+        <View className=' h-screen overflow-hidden relative'>
             {   router.params.photoUrl ?
                 <Image 
                     src={router.params.photoUrl} mode='aspectFill' 
-                    className='absolute right-0 top-5 w-70 h-58 shadow-2xl'
-                    onLoad={() => Taro.hideLoading()}
+                    className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-blue-400 bg-opacity-50', {'animate-pulse': isLoading})}
+                    onLoad={() => setIsLoading(false)}
                 />: ''
             }
             <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>

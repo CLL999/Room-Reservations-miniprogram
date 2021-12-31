@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
 import { Button, Image, Text, View } from '@tarojs/components';
+import classNames from 'classnames';
 
 import pot from "../../assets/images/pot.png"
 import deleteIcon from '../../assets/images/delete.png'
@@ -49,17 +50,15 @@ export default function RoomCard(props) {
                 <Text className=' text-4xl font-bold absolute top-24 left-5'>中心</Text>
                 <Text className=' text-6xl font-bold absolute top-38 left-4 text-black text-opacity-16 truncate w-65'>{props.name}</Text>
                 <Button className=' rounded-full py-0 px-4 absolute primarybutton bottom-2 right-3 w-28 h-12 text-center font-bold border-separate' onClick={toRoomDetail}>了解更多</Button>
-                {   hide ? '' :
-                    <View 
-                        className=' w-10 h-10 bg-orange-600 absolute top-56 left-5 rounded-full'
-                        onClick={deleteRoom}
-                    >
-                        <Image
-                            src={deleteIcon}
-                            className=' w-6 h-6 m-2'
-                        />
-                    </View>
-                }
+                <View 
+                    className={classNames('absolute rounded-full top-56 left-5', { 'w-10 h-10 bg-orange-600 transition duration-500 ease-out' : !hide, 'w-0 h-0 bg-white ' : hide })}
+                    onClick={deleteRoom}
+                >
+                    <Image
+                        src={deleteIcon}
+                        className={classNames({'w-6 h-6 m-2 transition ease-out duration-500' : !hide , 'w-0 h-0': hide})}
+                    />
+                </View>
             </View>
         </View>
     )

@@ -74,7 +74,7 @@ export default function EditRoom() {
     }
 
     return (
-        <View className=' w-screen min-h-screen containerBackground'>
+        <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className=' w-screen h-34 '>
                 <Text className=' relative font-extrabold text-3xl left-17 top-8'>信息修改</Text>
                 <Image src={editRoom} className=' w-40 h-40 relative float-right -top-10 -right-6'></Image>

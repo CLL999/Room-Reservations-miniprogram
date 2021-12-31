@@ -42,7 +42,7 @@ export default function Suggest() {
     }
 
     return (
-        <View className=' w-screen min-h-screen containerBackground'>
+        <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className='w-screen h-33'>
                 <Image src={suggest} className=' w-35 h-35 relative float-right right-5 -top-2'></Image>
                 <View className=' relative font-extrabold text-3xl left-17 top-2'>意见指引</View> 
