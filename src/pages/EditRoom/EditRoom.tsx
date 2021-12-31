@@ -107,24 +107,24 @@ export default function EditRoom() {
                 <View className='w-12 h-12 rounded-full bg-gray-100 relative float-right right-10 shadow-xl top-45'>
                     <Image 
                         src={update}
-                        className='w-8 h-8 m-2'
+                        className='w-6 h-6 m-3'
                         onClick={chooseImg}
                     />
                 </View>
                 
-                <Button 
-                    className=' font-bold w-54 mx-auto text-lg relative top-17 bg-orange-300 h-15 py-3 shadow-2xl rounded-xl'
+                <View 
+                    className=' font-bold w-54 mx-auto text-lg relative top-17 greenbutton h-14 shadow-2xl rounded-2xl'
                     onClick={updateDetail}
                 >
-                    确认修改
-                </Button>
+                    <View className='text-center w-24 h-8 mx-15 my-3 absolute'>确认修改</View>
+                </View>
 
-                <Button 
-                    className=' font-bold w-54 mx-auto text-lg relative top-23 bg-red-600 h-15 py-3 shadow-2xl rounded-xl'
+                <View 
+                    className='mt-7 font-bold w-54 mx-auto text-lg relative top-17 bg-red-600 h-14 shadow-2xl rounded-2xl'
                     onClick={deleteRoom}
                 >
-                    删除活动室
-                </Button>
+                    <View className='text-center w-24 h-8 mx-15 my-3 absolute'>删除活动室</View>
+                </View>
             </View>
         </View>
     )

@@ -40,7 +40,7 @@ export default function RoomDetail() {
                 {   router.params.photoUrl ?
                     <Image 
                         src={router.params.photoUrl} mode='aspectFill' 
-                        className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-blue-400 bg-opacity-50', {'animate-pulse': isLoading})}
+                        className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-gray-300 bg-opacity-50', {'animate-pulse': isLoading})}
                         onLoad={() => setIsLoading(false)}
                     />: ''
                 }
