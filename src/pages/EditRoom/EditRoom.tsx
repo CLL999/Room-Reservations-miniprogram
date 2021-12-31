@@ -19,7 +19,11 @@ export default function EditRoom() {
     
     function updateDetail() {
         Taro.showLoading()
-        let id = router.params.id
+        let id = ''
+        if (router.params.id)
+            id = router.params.id
+        else Taro.cloud.callFunction({ name: 'addRoom' }).then((res: any) => id = res.result._id)
+        console.log('id', id)
         Taro.cloud.uploadFile({
             cloudPath: `${name}预览图`,
             filePath: `${photoUrl}`
@@ -78,7 +82,7 @@ export default function EditRoom() {
     return (
         <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className=' w-screen h-34 '>
-                <Text className=' relative font-extrabold text-3xl left-17 top-8'>信息修改</Text>
+                <Text className=' relative font-extrabold text-3xl left-17 top-8'>{router.params.add ? '增加房间' : '信息修改'}</Text>
                 <Image src={editRoom} className=' w-40 h-40 relative float-right -top-10 -right-6'></Image>
             </View>
             <View className=' w-screen h-30'>
@@ -118,7 +122,7 @@ export default function EditRoom() {
                     className=' font-bold w-54 mx-auto text-lg relative top-17 greenbutton h-14 shadow-2xl rounded-2xl'
                     onClick={updateDetail}
                 >
-                    <View className='text-center w-24 h-8 mx-15 my-3 absolute'>确认修改</View>
+                    <View className='text-center w-24 h-8 mx-15 my-3 absolute'>{router.params.add ? '确认添加' : '确认修改'}</View>
                 </View>
                 {   router.params.add ? '' :
                     <View 

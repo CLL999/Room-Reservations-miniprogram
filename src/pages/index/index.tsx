@@ -80,13 +80,7 @@ export default function Index() {
     }
 
     function addRoom() {
-        Taro.showLoading()
-        Taro.cloud.callFunction({ name: 'addRoom' })
-                  .then((res: any) => 
-                      Taro.navigateTo({
-                        url: `../EditRoom/EditRoom?name=未命名&content=暂无内容，请编辑内容信息&photoUrl=${defaultBg}&id=${res.result._id}&add=true`
-                        })
-                  )
+        Taro.navigateTo({ url: `../EditRoom/EditRoom?name=未命名&content=暂无内容，请编辑内容信息&photoUrl=${defaultBg}&add=true` })
     }
 
     function Login() {

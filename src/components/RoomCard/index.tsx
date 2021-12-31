@@ -34,7 +34,6 @@ export default function RoomCard(props) {
             }).then(() => {
                 Taro.showToast({title: '删除成功', duration: 1000})
                 setTimeout(() => {
-                    Taro.navigateBack({ delta: 2 })
                     props.refresh(true)
                     Taro.hideLoading()
                 }, 1000)
