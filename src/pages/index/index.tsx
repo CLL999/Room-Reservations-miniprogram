@@ -107,25 +107,25 @@ export default function Index() {
                     <View className='w-screen h-80'>
                         <Text className='relative left-8 top-13 font-bold text-white text-xl'>注意事项</Text>
                         <View 
-                            className={classNames('relative rounded-full bg-white right-5 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': showHistory, 'h-0 w-0': !showHistory})}
+                            className={classNames('relative rounded-full bg-white right-5 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': showHistory, 'h-0 w-0': !showHistory})}
                             onClick={toHistory}
                         >
                             <Image src={history} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': showHistory, 'w-0 h-0': !showHistory})}></Image>
                         </View>
                         <View 
-                            className={classNames('relative rounded-full bg-white right-10 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
+                            className={classNames('relative rounded-full bg-white right-10 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
                             onClick={toBackground}
                         >
                             <Image src={background} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
                         </View>
                         <View 
-                            className={classNames('relative rounded-full bg-white right-15 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            className={classNames('relative rounded-full bg-white right-15 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
                             onClick={toEditAdmin}
                         >
                             <Image src={person} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
                         </View>
                         <View 
-                            className={classNames('relative rounded-full bg-white right-20 top-5 float-right', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            className={classNames('relative rounded-full bg-white right-20 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
                             onClick={addRoom}
                         >
                             <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>

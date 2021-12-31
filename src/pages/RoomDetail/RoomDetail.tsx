@@ -49,7 +49,7 @@ export default function RoomDetail() {
                 { isAdmin ?
                     <View className=' w-screen h-10 absolute top-89 '>
                         <View 
-                            className=' bg-yellow-300 bg-opacity-30 w-20 right-7 relative h-8 float-right text-xl font-semibold underline text-blue-600'
+                            className='bg-opacity-30 w-20 right-7 relative h-8 float-right text-xl font-semibold underline text-blue-600'
                             onClick={toEdit}
                         >
                             编辑信息
