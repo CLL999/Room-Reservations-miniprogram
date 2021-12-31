@@ -133,6 +133,12 @@ export default function RoomDetailBooking() {
                 Taro.showModal({title: '提示', content: '至少选择一个时段', showCancel: false}) 
                 return 
             }
+        
+        if (!(student && id && department && unit && studentPhone && teacher && teacherPhone))
+            {
+                Taro.showModal({title: '提示', content: '请填写完所有信息', showCancel: false}) 
+                return 
+            }
 
         Taro.showModal({
             title: '核对信息',
