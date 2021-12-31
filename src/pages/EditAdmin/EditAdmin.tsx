@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import { useState } from 'react';
-import { Image, Input, View } from '@tarojs/components';
+import { Image, Input, ScrollView, View } from '@tarojs/components';
 
 import { UserCard } from '../../components'
 
@@ -53,6 +53,11 @@ export default function EditAdmin() {
                     />
                 </View>
             </View>
+            <ScrollView
+                scrollY
+                scrollTop={0}
+                className=' h-120'
+            >
             {   
                 data.map((item: userInfoType, index) => 
                     <UserCard 
@@ -63,7 +68,9 @@ export default function EditAdmin() {
                         openid={item.openid}
                     />
                 )
+                
             }
+            </ScrollView>
         </View>
     )
 }

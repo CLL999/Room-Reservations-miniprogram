@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Image, Text, View } from '@tarojs/components'
+import { Image, ScrollView, View } from '@tarojs/components'
 
 import { SET_REFRESHBACKGROUND } from '../../constants'
 import { HistoryCard } from '../../components'
@@ -77,6 +77,11 @@ export default function EditRoom() {
                 />
                 </View>
             </View>
+            <ScrollView
+                scrollY
+                scrollTop={0}
+                className=' h-128 overflow-y-scroll'
+            >
             {   data.map((item: historyItemType) => 
                     <HistoryCard
                         key={item._id}
@@ -100,6 +105,7 @@ export default function EditRoom() {
                     />
                 )
             }
+            </ScrollView>
         </View>
     )
 }

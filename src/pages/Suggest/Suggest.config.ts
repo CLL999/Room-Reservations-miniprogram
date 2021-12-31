@@ -1,4 +1,4 @@
 export default {
     navigationBarTitleText: '填写意见指引',
-    navigationBarBackgroundColor: '#F6BB46'
-  }
+    navigationBarBackgroundColor: '#F6BB46',
+}

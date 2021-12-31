@@ -1,7 +1,7 @@
 import Taro, { useRouter } from '@tarojs/taro';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { Button, Checkbox, CheckboxGroup, Image, Input, Text, View } from '@tarojs/components';
+import { Button, Checkbox, CheckboxGroup, Image, Input, ScrollView, Text, View } from '@tarojs/components';
 import classNames from 'classnames';
 
 
@@ -232,265 +232,271 @@ export default function RoomDetailBooking() {
 
     return (
         <View className='relative overflow-hidden'>
-            <View className=' w-screen h-160'>
-                <Image 
-                    src={router.params.photoUrl} 
-                    mode='aspectFill' 
-                    onLoad={() => setIsLoading(false)}
-                    className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-blue-400 bg-opacity-50', {'animate-pulse': isLoading})}
-                />
-                <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
-                <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
-                <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
-            </View>
-            <View className=' w-screen overflow-hidden min-h-205 relative'>
-                <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-215 w-screen overflow-hidden'>
-                    <View className='h-40 w-screen'>
-                        <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
-                        <View className='h-28 w-screen pt-5 pb-3'>
-                            <View className='min-w-screen h-12 relative'>
-                                <View 
-                                    className={classNames(' rounded-full h-12 bg-gray-200 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 1, 'w-50': DayOrder !== 1 })}
-                                    onClick={() => {
-                                        resetCk()
-                                        setDayOrder(1)
-                                    }}
-                                >
-                                    <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{firstDay.slice(5)}</View>
+            <ScrollView
+                scrollY
+                scrollTop={0}
+                className=' h-screen  overflow-y-scroll'
+            >
+                <View className=' w-screen h-160'>
+                    <Image 
+                        src={router.params.photoUrl} 
+                        mode='aspectFill' 
+                        onLoad={() => setIsLoading(false)}
+                        className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-blue-400 bg-opacity-50', {'animate-pulse': isLoading})}
+                    />
+                    <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
+                    <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
+                    <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
+                </View>
+                <View className=' w-screen overflow-hidden min-h-205 relative'>
+                    <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-215 w-screen overflow-hidden'>
+                        <View className='h-40 w-screen'>
+                            <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
+                            <View className='h-28 w-screen pt-5 pb-3'>
+                                <View className='min-w-screen h-12 relative'>
+                                    <View 
+                                        className={classNames(' rounded-full h-12 bg-gray-200 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 1, 'w-50': DayOrder !== 1 })}
+                                        onClick={() => {
+                                            resetCk()
+                                            setDayOrder(1)
+                                        }}
+                                    >
+                                        <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{firstDay.slice(5)}</View>
+                                    </View>
+                                    <View 
+                                        className={classNames(' rounded-full h-12 bg-gray-200 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 2, 'w-50': DayOrder !==2 })}
+                                        onClick={() => {
+                                            resetCk()
+                                            setDayOrder(2)
+                                        }}
+                                    >
+                                        <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{thirdDay.slice(5)}</View>
+                                    </View>
                                 </View>
-                                <View 
-                                    className={classNames(' rounded-full h-12 bg-gray-200 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 2, 'w-50': DayOrder !==2 })}
-                                    onClick={() => {
-                                        resetCk()
-                                        setDayOrder(2)
-                                    }}
-                                >
-                                    <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{thirdDay.slice(5)}</View>
-                                </View>
-                            </View>
-                            <View className='min-w-screen h-12 relative'>
-                                <View 
-                                    className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 3, 'w-50': DayOrder !== 3 })}
-                                    onClick={() => {
-                                        resetCk()
-                                        setDayOrder(3)
-                                    }}
-                                >
-                                    <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{secondDay.slice(5)}</View>
-                                </View>
-                                <View 
-                                    className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 4, 'w-50': DayOrder !== 4 })}
-                                    onClick={() => {
-                                        resetCk()
-                                        setDayOrder(4)
-                                    }}
-                                >
-                                    <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{fourthDay.slice(5)}</View>
+                                <View className='min-w-screen h-12 relative'>
+                                    <View 
+                                        className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -left-20', {'w-60 primarybutton transition-transform duration-500': DayOrder === 3, 'w-50': DayOrder !== 3 })}
+                                        onClick={() => {
+                                            resetCk()
+                                            setDayOrder(3)
+                                        }}
+                                    >
+                                        <View className='text-center w-30 font-semibold h-10 my-3 absolute right-5'>{secondDay.slice(5)}</View>
+                                    </View>
+                                    <View 
+                                        className={classNames(' rounded-full h-12 bg-gray-200 mt-3 absolute -right-20 float-right', {'w-60 primarybutton transition-transform duration-500': DayOrder === 4, 'w-50': DayOrder !== 4 })}
+                                        onClick={() => {
+                                            resetCk()
+                                            setDayOrder(4)
+                                        }}
+                                    >
+                                        <View className='text-center w-30 font-semibold h-10 my-3 absolute left-5'>{fourthDay.slice(5)}</View>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
 
-                    <View className='h-65 w-screen '>
-                        {   flag ?
-                            <View className='h-px absolute'></View> : ''
-                        }
-                        <CheckboxGroup className='relative top-3' onChange={chooseTime}>
-                            <View className='w-screen h-7'>
-                                <View className='float-left ml-6 w-35'>
-                                    <Checkbox
-                                        value='08:30-10:00'
-                                        disabled={cb1 ? true : false}
-                                        checked={ck1 ? true : false}
-                                        className=' font-semibold '
-                                    >
-                                        08:30-10:00
-                                    </Checkbox>
-                                </View>
-                                <View className='float-right mr-6 w-35'>
-                                    <Checkbox
-                                        value='17:50-18:50'
-                                        disabled={cb2 ? true : false}
-                                        checked={ck2 ? true : false}
-                                        className=' font-semibold float-left'
-                                    >
-                                        17:50-18:50
-                                    </Checkbox>
-                                </View>
-                            </View>
-                            <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
-                                    <Checkbox
-                                        value='10:10-12:30'
-                                        disabled={cb3 ? true : false}
-                                        checked={ck3 ? true : false}
-                                        className=' font-semibold '
-                                    >
-                                        10:10-12:30
-                                    </Checkbox>
-                                </View>
-                                <View className='float-right mr-6 w-35'>
-                                    <Checkbox
-                                        value='19:00-20:20'
-                                        disabled={cb4 ? true : false}
-                                        checked={ck4 ? true : false}
-                                        className=' font-semibold float-left'
-                                    >
-                                        19:00-20:20
-                                    </Checkbox>
-                                </View>
-                            </View>
-                            <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
-                                    <Checkbox
-                                        value='12:40-14:20'
-                                        disabled={cb5 ? true : false}
-                                        checked={ck5 ? true : false}
-                                        className=' font-semibold'
-                                    >
-                                        12:40-14:20
-                                    </Checkbox>
-                                </View>
-                                <View className='float-right mr-6 w-35'>
-                                    <Checkbox
-                                        value='20:30-21:50'
-                                        disabled={cb6 ? true : false}
-                                        checked={ck6 ? true : false}
-                                        className=' font-semibold float-left'
-                                    >
-                                        20:30-21:50
-                                    </Checkbox>
-                                </View>
-                            </View>
-                            <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
-                                    <Checkbox
-                                        value='14:30-16:00'
-                                        disabled={cb7 ? true : false}
-                                        checked={ck7 ? true: false}
-                                        className=' font-semibold'
-                                    >
-                                        14:30-16:00
-                                    </Checkbox>
-                                </View>
-                                <View className='float-right mr-6 w-35'>
-                                    <Checkbox
-                                        value='22:00-23:00'
-                                        disabled={cb8 ? true : false}
-                                        checked={ck8 ? true: false}
-                                        className=' font-semibold float-left'
-                                    >
-                                        22:00-23:00
-                                    </Checkbox>
-                                </View>
-                            </View>
-                            <View className='w-screen h-7 mt-5'>
-                                <Checkbox
-                                    value='16:10-17:40'
-                                    disabled={cb9 ? true : false}
-                                    checked={ck9 ? true : false}
-                                    className=' font-semibold float-left ml-6'
-                                >
-                                    16:10-17:40
-                                </Checkbox>
-                            </View>
-                        </CheckboxGroup>
-                    </View>
-
-                    <View className=' w-screen h-80 '>
-                        <View className='w-screen h-16 '>
-                            <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
-                            <Text 
-                                className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
-                                onClick={downloadSheet}
-                            >
-                                下载申请表
-                            </Text>
-                        </View>
-
-                        <View className='w-screen h-12 '>
-                            <Input
-                                placeholder='申请人姓名'
-                                value={student}
-                                onInput={e => setStudent(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
-                            />
-                            <Input
-                                placeholder='申请人学号'
-                                value={id}
-                                type='digit'
-                                onInput={e => setId(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
-                            />
-                        </View>
-
-                        <View className='w-screen h-12 '>
-                            <Input
-                                placeholder='申请学院'
-                                value={department}
-                                onInput={e => setDepartment(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
-                            />
-                            <Input
-                                placeholder='申请单位名称'
-                                value={unit}
-                                onInput={e => setUnit(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
-                            />
-                        </View>
-
-                        <View className='w-screen h-12 '>
-                            <Input
-                                placeholder='联系电话'
-                                value={studentPhone}
-                                type='digit'
-                                onInput={e => setStudentPhone(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
-                            />
-                            <Input
-                                placeholder='负责老师姓名'
-                                value={teacher}
-                                onInput={e => setTeacher(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
-                            />
-                        </View>
-
-                        <View className='w-screen h-12 '>
-                            <Input
-                                placeholder='负责老师电话'
-                                value={teacherPhone}
-                                type='digit'
-                                onInput={e => setTeacherPhone(e.detail.value)}
-                                className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
-                            />
-                            { !sheet ?
-                                <Button
-                                    className='w-38 h-8 bg-yellow-200 relative right-6 rounded-lg font-bold text-lg float-right'
-                                    onClick={uploadSheet}
-                                >
-                                    上传申请表
-                                </Button> :
-                                <Button
-                                    className='w-38 h-8 bg-green-300 relative right-6 rounded-lg font-medium text-lg float-right'
-                                >
-                                    已选择申请表
-                                </Button>
+                        <View className='h-65 w-screen '>
+                            {   flag ?
+                                <View className='h-px absolute'></View> : ''
                             }
+                            <CheckboxGroup className='relative top-3' onChange={chooseTime}>
+                                <View className='w-screen h-7'>
+                                    <View className='float-left ml-6 w-35'>
+                                        <Checkbox
+                                            value='08:30-10:00'
+                                            disabled={cb1 ? true : false}
+                                            checked={ck1 ? true : false}
+                                            className=' font-semibold '
+                                        >
+                                            08:30-10:00
+                                        </Checkbox>
+                                    </View>
+                                    <View className='float-right mr-6 w-35'>
+                                        <Checkbox
+                                            value='17:50-18:50'
+                                            disabled={cb2 ? true : false}
+                                            checked={ck2 ? true : false}
+                                            className=' font-semibold float-left'
+                                        >
+                                            17:50-18:50
+                                        </Checkbox>
+                                    </View>
+                                </View>
+                                <View className='w-screen h-7 mt-5'>
+                                    <View className='float-left ml-6 w-35'>
+                                        <Checkbox
+                                            value='10:10-12:30'
+                                            disabled={cb3 ? true : false}
+                                            checked={ck3 ? true : false}
+                                            className=' font-semibold '
+                                        >
+                                            10:10-12:30
+                                        </Checkbox>
+                                    </View>
+                                    <View className='float-right mr-6 w-35'>
+                                        <Checkbox
+                                            value='19:00-20:20'
+                                            disabled={cb4 ? true : false}
+                                            checked={ck4 ? true : false}
+                                            className=' font-semibold float-left'
+                                        >
+                                            19:00-20:20
+                                        </Checkbox>
+                                    </View>
+                                </View>
+                                <View className='w-screen h-7 mt-5'>
+                                    <View className='float-left ml-6 w-35'>
+                                        <Checkbox
+                                            value='12:40-14:20'
+                                            disabled={cb5 ? true : false}
+                                            checked={ck5 ? true : false}
+                                            className=' font-semibold'
+                                        >
+                                            12:40-14:20
+                                        </Checkbox>
+                                    </View>
+                                    <View className='float-right mr-6 w-35'>
+                                        <Checkbox
+                                            value='20:30-21:50'
+                                            disabled={cb6 ? true : false}
+                                            checked={ck6 ? true : false}
+                                            className=' font-semibold float-left'
+                                        >
+                                            20:30-21:50
+                                        </Checkbox>
+                                    </View>
+                                </View>
+                                <View className='w-screen h-7 mt-5'>
+                                    <View className='float-left ml-6 w-35'>
+                                        <Checkbox
+                                            value='14:30-16:00'
+                                            disabled={cb7 ? true : false}
+                                            checked={ck7 ? true: false}
+                                            className=' font-semibold'
+                                        >
+                                            14:30-16:00
+                                        </Checkbox>
+                                    </View>
+                                    <View className='float-right mr-6 w-35'>
+                                        <Checkbox
+                                            value='22:00-23:00'
+                                            disabled={cb8 ? true : false}
+                                            checked={ck8 ? true: false}
+                                            className=' font-semibold float-left'
+                                        >
+                                            22:00-23:00
+                                        </Checkbox>
+                                    </View>
+                                </View>
+                                <View className='w-screen h-7 mt-5'>
+                                    <Checkbox
+                                        value='16:10-17:40'
+                                        disabled={cb9 ? true : false}
+                                        checked={ck9 ? true : false}
+                                        className=' font-semibold float-left ml-6'
+                                    >
+                                        16:10-17:40
+                                    </Checkbox>
+                                </View>
+                            </CheckboxGroup>
                         </View>
 
-                        <View className='w-screen h-30'>
-                            <Button
-                                className='mx-auto w-48 h-12 py-2 purplebutton relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
-                                onClick={submit}
-                            >
-                                提交
-                            </Button>
-                        </View>
+                        <View className=' w-screen h-80 '>
+                            <View className='w-screen h-16 '>
+                                <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
+                                <Text 
+                                    className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
+                                    onClick={downloadSheet}
+                                >
+                                    下载申请表
+                                </Text>
+                            </View>
 
-                        <View className='w-screen h-15'></View>
+                            <View className='w-screen h-12 '>
+                                <Input
+                                    placeholder='申请人姓名'
+                                    value={student}
+                                    onInput={e => setStudent(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                />
+                                <Input
+                                    placeholder='申请人学号'
+                                    value={id}
+                                    type='digit'
+                                    onInput={e => setId(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                />
+                            </View>
+
+                            <View className='w-screen h-12 '>
+                                <Input
+                                    placeholder='申请学院'
+                                    value={department}
+                                    onInput={e => setDepartment(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                />
+                                <Input
+                                    placeholder='申请单位名称'
+                                    value={unit}
+                                    onInput={e => setUnit(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                />
+                            </View>
+
+                            <View className='w-screen h-12 '>
+                                <Input
+                                    placeholder='联系电话'
+                                    value={studentPhone}
+                                    type='digit'
+                                    onInput={e => setStudentPhone(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                />
+                                <Input
+                                    placeholder='负责老师姓名'
+                                    value={teacher}
+                                    onInput={e => setTeacher(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                />
+                            </View>
+
+                            <View className='w-screen h-12 '>
+                                <Input
+                                    placeholder='负责老师电话'
+                                    value={teacherPhone}
+                                    type='digit'
+                                    onInput={e => setTeacherPhone(e.detail.value)}
+                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                />
+                                { !sheet ?
+                                    <Button
+                                        className='w-38 h-8 bg-yellow-200 relative right-6 rounded-lg font-bold text-lg float-right'
+                                        onClick={uploadSheet}
+                                    >
+                                        上传申请表
+                                    </Button> :
+                                    <Button
+                                        className='w-38 h-8 bg-green-300 relative right-6 rounded-lg font-medium text-lg float-right'
+                                    >
+                                        已选择申请表
+                                    </Button>
+                                }
+                            </View>
+
+                            <View className='w-screen h-30'>
+                                <Button
+                                    className='mx-auto w-48 h-12 py-2 purplebutton relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
+                                    onClick={submit}
+                                >
+                                    提交
+                                </Button>
+                            </View>
+
+                            <View className='w-screen h-15'></View>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }
