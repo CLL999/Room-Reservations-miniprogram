@@ -101,7 +101,7 @@ export default function EditRoom() {
                     />
                 ) :
                 <View className='w-screen'>
-                    <View className='h-14 w-60 mx-auto font-bold text-2xl text-center mt-45'>所有申请已批阅√</View>
+                    <View className='h-14 w-60 mx-auto font-bold text-2xl text-center mt-45'>所有申请已批阅</View>
                 </View>
             }
         </View>

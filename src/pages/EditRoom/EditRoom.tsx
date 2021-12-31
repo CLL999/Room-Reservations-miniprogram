@@ -1,7 +1,7 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Button, Image, Input, Text, Textarea, View } from '@tarojs/components'
+import { Image, Input, Text, Textarea, View } from '@tarojs/components'
 
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'
@@ -30,6 +30,7 @@ export default function EditRoom() {
                 data: { id, name, content, photoUrl: fileId }
             }).then(() => {
                 Taro.navigateBack({ delta: 2 })
+                refresh(true)
                 Taro.hideLoading()
             })
         }).catch(() => {
@@ -38,6 +39,7 @@ export default function EditRoom() {
                 data: { id, name, content, photoUrl }
             }).then(() => {
                 Taro.navigateBack({ delta: 2 })
+                refresh(true)
                 Taro.hideLoading()
             })
         })
@@ -118,13 +120,14 @@ export default function EditRoom() {
                 >
                     <View className='text-center w-24 h-8 mx-15 my-3 absolute'>确认修改</View>
                 </View>
-
-                <View 
-                    className='mt-7 font-bold w-54 mx-auto text-lg relative top-17 bg-red-600 h-14 shadow-2xl rounded-2xl'
-                    onClick={deleteRoom}
-                >
-                    <View className='text-center w-24 h-8 mx-15 my-3 absolute'>删除活动室</View>
-                </View>
+                {   router.params.add ? '' :
+                    <View 
+                        className='mt-7 font-bold w-54 mx-auto text-lg relative top-17 bg-red-600 h-14 shadow-2xl rounded-2xl'
+                        onClick={deleteRoom}
+                    >
+                        <View className='text-center w-24 h-8 mx-15 my-3 absolute'>删除活动室</View>
+                    </View>
+                }
             </View>
         </View>
     )

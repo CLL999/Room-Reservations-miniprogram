@@ -16,6 +16,7 @@ import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
 import arrow from '../../assets/images/arrow.png'
+import defaultBg from '../../assets/images/default.png'
 
 export default function Index() {
 
@@ -34,6 +35,7 @@ export default function Index() {
     if (firstTime) {
         Taro.cloud.init()
         setFirstTime(false)
+        setHideArrow(true)
         let nickName = Taro.getStorageSync('userInfo').nickName
         if (nickName) dispatch({ type: SET_NICKNAME, payload: { nickName }})
         dispatch({ type: SET_REFRESHROOM, payload: { refreshRoom: setRefresh }})
@@ -55,6 +57,7 @@ export default function Index() {
                 setIsSuperAdmin(superAdmin)
             }).then(() => Taro.cloud.callFunction({ name: 'feedRoom' })
                                     .then((res: any) => setRoomList(res.result.rooms.data))
+                                    .then(() => setHideArrow(false))
                                     .then(() => Taro.hideLoading()))
     }
 
@@ -79,10 +82,11 @@ export default function Index() {
     function addRoom() {
         Taro.showLoading()
         Taro.cloud.callFunction({ name: 'addRoom' })
-                  .then(() => {
-                      Taro.showToast({title: '添加房间成功', duration: 1000})
-                      setTimeout(() => setRefresh(true), 1000)
-                  })
+                  .then((res: any) => 
+                      Taro.navigateTo({
+                        url: `../EditRoom/EditRoom?name=未命名&content=暂无内容，请编辑内容信息&photoUrl=${defaultBg}&id=${res.result._id}&add=true`
+                        })
+                  )
     }
 
     function Login() {
