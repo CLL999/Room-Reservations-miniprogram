@@ -334,8 +334,7 @@ export default function RoomDetailBooking() {
             return 
         }
 
-        let content = `活动室：${router.params.name}\n
-                       时间\n${finalTime.map((item: any) => 
+        let content = `活动室：${router.params.name}\r\n时间\r\n${finalTime.map((item: any) => 
                       `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
         content = content.replace(/,/g, '\r\n')
 
