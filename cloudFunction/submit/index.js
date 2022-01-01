@@ -12,7 +12,6 @@ exports.main = async (event, context) => {
 
     db.collection('record').add({
         data: {
-            date: event.date,
             department: event.department, 
             id: event.id, 
             student: event.student, 

@@ -168,7 +168,7 @@ export default function Index() {
                             {   hideArrow ? '' :
                                 <Image 
                                     src={arrow}
-                                    className='absolute right-0 top-35 w-15 h-15 bounce'
+                                    className='absolute right-0 top-40 w-12 h-12 bounce'
                                 />
                             }
                         </ScrollView>

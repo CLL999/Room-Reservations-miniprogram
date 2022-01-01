@@ -11,7 +11,7 @@ exports.main = async ( event ) => {
     const _ = db.command
 
     return await db.collection('record')
-                   .where({ room: event.room, date: event.date, state: _.neq('fail') })
+                   .where({ room: event.room, state: _.neq('fail'), time: _.elemMatch({ date: event.date }) })
                    .field({time: true})
                    .get()
 
