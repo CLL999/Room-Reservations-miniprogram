@@ -143,7 +143,7 @@ export default function Index() {
                             className={classNames('relative rounded-full bg-white right-15 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
                             onClick={addRoom}
                         >
-                            <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
+                            <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
                         </View>
                         <View 
                             className={classNames('relative rounded-full bg-white right-20 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
