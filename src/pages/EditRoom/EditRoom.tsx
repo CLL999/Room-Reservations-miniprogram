@@ -5,6 +5,7 @@ import { Image, Input, Text, Textarea, View } from '@tarojs/components'
 
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'
+import defaultBg from '../../assets/images/default.png'
 
 
 export default function EditRoom() {
@@ -13,17 +14,25 @@ export default function EditRoom() {
     
     const refresh = useSelector((state: any) => state.index).refreshRoom
 
-    const [photoUrl, setPhotoUrl] = useState(router.params.photoUrl)
+    const [photoUrl, setPhotoUrl] = useState(router.params.photoUrl ? router.params.photoUrl : defaultBg)
     const [name, setName] = useState(router.params.name)
     const [content, setContent] = useState(router.params.content)
+    const [isChoosed, setIsChoosed] = useState(false)
     
     function updateDetail() {
         Taro.showLoading()
         let id = ''
-        if (router.params.id)
-            id = router.params.id
+        if (router.params.id) id = router.params.id
         else Taro.cloud.callFunction({ name: 'addRoom' }).then((res: any) => id = res.result._id)
-        console.log('id', id)
+        if (!isChoosed)
+            {
+                Taro.hideLoading()
+                Taro.showModal({
+                    title: '提示',
+                    content: '请选择活动室图片',
+                    showCancel: false
+                })
+            }
         Taro.cloud.uploadFile({
             cloudPath: `${name}预览图`,
             filePath: `${photoUrl}`
@@ -33,28 +42,24 @@ export default function EditRoom() {
                 name: 'updateRoomDetail',
                 data: { id, name, content, photoUrl: fileId }
             }).then(() => {
-                Taro.navigateBack({ delta: 2 })
-                refresh(true)
                 Taro.hideLoading()
-            })
-        }).catch(() => {
-            Taro.cloud.callFunction({
-                name: 'updateRoomDetail',
-                data: { id, name, content, photoUrl }
-            }).then(() => {
-                Taro.navigateBack({ delta: 2 })
-                refresh(true)
-                Taro.hideLoading()
+                Taro.showToast({
+                    title: '添加成功',
+                    duration: 600
+                })
+                setTimeout(() => {
+                    Taro.navigateBack({ delta: 2 })
+                    refresh(true)
+                }, 600)
             })
         })
-
     }
 
     function chooseImg() {
         Taro.chooseImage({
             count: 1,
             sizeType: ['compressed']
-        }).then(res => setPhotoUrl(res.tempFilePaths[0]))
+        }).then(res => setPhotoUrl(res.tempFilePaths[0])).then(() => setIsChoosed(true))
     }
 
     function deleteRoom() {

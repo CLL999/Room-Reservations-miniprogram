@@ -308,6 +308,11 @@ export default function RoomDetailBooking() {
     }, [DayOrder])
 
     function submit() {
+        if (userInfo.index.admin || userInfo.index.superAdmin)
+            {
+                Taro.showModal({title: '提示', content: '管理员不能提交申请', showCancel: false})
+                return 
+            }
 
         if (!sheet) 
             {

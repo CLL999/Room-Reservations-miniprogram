@@ -24,25 +24,26 @@ export default function RoomCard(props) {
     function deleteRoom() {
         Taro.showModal({
             title: '提示',
-            content: '确定要删除该活动室吗',
-            showCancel: false
-        }).then(() => {
-            Taro.showLoading()
-            Taro.cloud.callFunction({
-                name: 'deleteRoom',
-                data: { id: props.id }
-            }).then(() => {
-                Taro.showToast({title: '删除成功', duration: 1000})
-                setTimeout(() => {
-                    props.refresh(true)
-                    Taro.hideLoading()
-                }, 1000)
-            })
+            content: '确定要删除该活动室吗'
+        }).then((res) => {
+            if (res.confirm)
+                {               
+                    Taro.showLoading()
+                    Taro.cloud.callFunction({
+                        name: 'deleteRoom',
+                        data: { id: props.id }
+                    }).then(() => {
+                        Taro.showToast({title: '删除成功', duration: 1000})
+                        setTimeout(() => {
+                            props.refresh(true)
+                            Taro.hideLoading()
+                        }, 1000)
+            })}
         })
     }
 
     return (
-        <View className='h-78 w-screen inline-block ' onLongPress={showMore}>
+        <View className='h-78 w-screen inline-block' onLongPress={showMore}>
             <View className='w-62 h-70 bg-white shadow-2xl rounded-3xl mx-auto relative'>
                 <Image src={pot} className='absolute h-44 w-42 -top-8 left-27 overflow-visible z-50'></Image>
                 <Text className=' text-4xl font-bold absolute top-14 left-5'>活动</Text>

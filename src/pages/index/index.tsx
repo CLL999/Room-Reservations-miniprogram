@@ -16,7 +16,7 @@ import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
 import arrow from '../../assets/images/arrow.png'
-import defaultBg from '../../assets/images/default.png'
+import infomation from "../../assets/images/infomation.png"
 
 export default function Index() {
 
@@ -80,7 +80,7 @@ export default function Index() {
     }
 
     function addRoom() {
-        Taro.navigateTo({ url: `../EditRoom/EditRoom?name=未命名&content=暂无内容，请编辑内容信息&photoUrl=${defaultBg}&add=true` })
+        Taro.navigateTo({ url: `../EditRoom/EditRoom?name=未命名&content=暂无内容，请编辑内容信息&add=true` })
     }
 
     function Login() {
@@ -98,10 +98,31 @@ export default function Index() {
         }).catch(() => Taro.showToast({title: '请授权信息继续使用', icon:'none'}))
     }
 
+    function openInformation() {
+        let file = ''
+        if (isAdmin || isSuperAdmin)
+            file = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/活动室预约使用说明（管理员）.docx'
+        else
+            file = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/活动室预约使用说明（用户端）.docx'
+        Taro.showLoading()
+        Taro.cloud.downloadFile({ 'fileID': file })
+                  .then(res => {
+                      Taro.hideLoading()
+                      Taro.openDocument({
+                          filePath: res.tempFilePath,
+                          showMenu: true
+                      })
+                  })
+    }
+
     return (
 
         <View className='relative w-screen min-h-screen bg-gradient-to-b from-topColor to-bottomColor overflow-hidden'>
-
+            <Image
+                src={infomation}
+                onClick={openInformation}
+                className={classNames('z-10',{'absolute top-13 left-33 w-7 h-7 rounded-full': !isLogin, 'absolute top-168 left-7 w-10 h-10 rounded-full transition ease-out duration-3000': isLogin})}
+            />
             {   isLogin ?
                 <View>
                     <View className='w-screen h-80'>
@@ -119,16 +140,16 @@ export default function Index() {
                             <Image src={background} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
                         </View>
                         <View 
-                            className={classNames('relative rounded-full bg-white right-15 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
-                            onClick={toEditAdmin}
-                        >
-                            <Image src={person} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
-                        </View>
-                        <View 
-                            className={classNames('relative rounded-full bg-white right-20 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            className={classNames('relative rounded-full bg-white right-15 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
                             onClick={addRoom}
                         >
                             <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
+                        </View>
+                        <View 
+                            className={classNames('relative rounded-full bg-white right-20 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
+                            onClick={toEditAdmin}
+                        >
+                            <Image src={person} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
                         </View>
 
                         <View className='absolute top-23 w-screen'>
@@ -181,10 +202,10 @@ export default function Index() {
                         <Text className='relative left-8 top-13 font-bold text-white text-xl'>使用说明</Text>
                         <View className='absolute top-23 w-screen'>
                             <View className='relative w-70 h-53 bg-white shadow-xl rounded-2xl mx-auto'>
-                                <View className='p-3'>
-                                    <View className='text-lg py-3 font-semibold'>1.在此页面授权您的个人信息</View>
-                                    <View className='text-lg py-3 font-semibold'>2.选择需要预约的活动室</View>
-                                    <View className='text-lg py-3 font-semibold'>3.浏览活动室详情，选择合适的时间，并填写所需的信息</View>
+                                <View className='py-7 px-5'>
+                                    <View className='text-lg py-3 font-semibold'>1.欢迎使用活动室预约小程序</View>
+                                    <View className='text-lg py-3 font-semibold'>2.在此页面授权您的个人信息</View>
+                                    <View className='text-lg py-3 font-semibold'>3.点击上方图标查看使用教程</View>
                                 </View>
                             </View>
                         </View>

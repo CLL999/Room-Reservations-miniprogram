@@ -43,10 +43,11 @@ export default function EditRoom() {
         Taro.showModal({
             title: '注意',
             content: '确定要更换申请表吗？'
-        }).then(() => {
-            Taro.showToast({ title: '请在会话中选择文件' , icon: 'none', duration: 1000})
-            setTimeout(() => {
-                Taro.chooseMessageFile({
+        }).then((res) => {
+            if (res.confirm) {            
+                Taro.showToast({ title: '请在会话中选择文件' , icon: 'none', duration: 1000})
+                setTimeout(() => {
+                    Taro.chooseMessageFile({
                     count: 1,
                     type: 'file'
                 }).then(res => {
@@ -59,7 +60,7 @@ export default function EditRoom() {
                         setTimeout(() => Taro.showToast({ title: '更换成功', duration: 800 }), 100);
                     })
                 })
-            }, 1000)
+            }, 1000)}
         })
     }
 
