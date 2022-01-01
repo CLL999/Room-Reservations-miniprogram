@@ -481,7 +481,7 @@ export default function RoomDetailBooking() {
     function downloadSheet() {
         Taro.showLoading()
 
-        Taro.cloud.downloadFile({ fileID: 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/正义书院学生活动空间申请表.xlsx' })
+        Taro.cloud.downloadFile({ fileID: 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/正义书院学生活动空间申请表.xlsx' })
                   .then(res => {
                       console.log(res.tempFilePath)
                       Taro.hideLoading()

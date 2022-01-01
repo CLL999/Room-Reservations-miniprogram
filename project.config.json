@@ -2,7 +2,7 @@
   "miniprogramRoot": "dist/",
   "projectname": "room",
   "description": "room",
-  "appid": "touristappid",
+  "appid": "wxb951f4a2d8158509",
   "setting": {
     "urlCheck": false,
     "es6": false,
@@ -42,6 +42,6 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "condition": {},
-  "cloudfunctionRoot": "cloudFunction/"
+  "cloudfunctionRoot": "cloudFunction/",
+  "condition": {}
 }

@@ -24,7 +24,7 @@ export default function EditRoom() {
         let id = ''
         if (router.params.id) id = router.params.id
         else Taro.cloud.callFunction({ name: 'addRoom' }).then((res: any) => id = res.result._id)
-        if (!isChoosed)
+        if (!isChoosed && photoUrl === defaultBg)
             {
                 Taro.hideLoading()
                 Taro.showModal({
@@ -32,6 +32,7 @@ export default function EditRoom() {
                     content: '请选择活动室图片',
                     showCancel: false
                 })
+                return
             }
         Taro.cloud.uploadFile({
             cloudPath: `${name}预览图`,
@@ -45,6 +46,21 @@ export default function EditRoom() {
                 Taro.hideLoading()
                 Taro.showToast({
                     title: '添加成功',
+                    duration: 600
+                })
+                setTimeout(() => {
+                    Taro.navigateBack({ delta: 2 })
+                    refresh(true)
+                }, 600)
+            })
+        }).catch(() => {
+            Taro.cloud.callFunction({
+                name: 'updateRoomDetail',
+                data: { id, name, content, photoUrl }
+            }).then(() => {
+                Taro.hideLoading()
+                Taro.showToast({
+                    title: '更改成功',
                     duration: 600
                 })
                 setTimeout(() => {

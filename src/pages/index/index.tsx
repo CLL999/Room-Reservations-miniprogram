@@ -101,9 +101,9 @@ export default function Index() {
     function openInformation() {
         let file = ''
         if (isAdmin || isSuperAdmin)
-            file = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/活动室预约使用说明（管理员）.docx'
+            file = 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/活动室预约使用说明（管理员）.docx'
         else
-            file = 'cloud://cloud1-1gxif9p835c655f8.636c-cloud1-1gxif9p835c655f8-1308942285/活动室预约使用说明（用户端）.docx'
+            file = 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/活动室预约使用说明（用户端）.docx'
         Taro.showLoading()
         Taro.cloud.downloadFile({ 'fileID': file })
                   .then(res => {
