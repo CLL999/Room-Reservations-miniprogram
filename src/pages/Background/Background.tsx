@@ -23,6 +23,7 @@ export default function EditRoom() {
     const [refreshBackground, setRefreshBackground] = useState(true)
 
     if (firstTime) {
+        console.log(123)
         setFirstTime(false)
         dispatch({ type: SET_REFRESHBACKGROUND, payload: { refreshBackground: setRefreshBackground}})
     }
@@ -91,7 +92,6 @@ export default function EditRoom() {
                         teacher={item.teacher}
                         teacherPhone={item.teacherPhone}
                         unit={item.unit}
-                        date={item.date}
                         sheet={item.sheet}
                         submitDate={item.submitDate}
                         auditor={userInfo.index.nickName}

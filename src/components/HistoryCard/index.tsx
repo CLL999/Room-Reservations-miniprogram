@@ -1,8 +1,10 @@
-import { Image, View } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import { Image, View } from '@tarojs/components';
+import classNames from 'classnames';
 
 import reject from '../../assets/images/reject.png'
 import agree from '../../assets/images/agree.png'
+
 
 
 export default function HistoryCard(props) {
@@ -66,9 +68,15 @@ export default function HistoryCard(props) {
                 <View className='h-3'></View>
                 <View className=' w-60 min-h-60 mx-auto'>
                     <View className=' font-semibold text-4xl text-black w-full h-11'>{props.room}</View>
-                    <View className=' font-semibold text-3xl w-full h-10 text-center'>{props.date ? props.date.slice(5) : ''}</View>
+                    {/* <View className=' font-semibold text-3xl w-full h-10 text-center'>{props.date ? props.date.slice(5) : ''}</View> */}
                     { props.time.map((item, index) => 
-                       <View key={index} className=' font-semibold text-4xl text-black w-full h-11 text-center'>{item}</View> )
+                            <View key={index} className={classNames({' box0': index === 0 || index === 2 , ' box1': index === 1 || index === 3})}>
+                                <View className=' font-medium text-3xl w-full h-10 text-left'>{item.date.slice(5)}</View>
+                                {   item.time.map((ele, index) => 
+                                    <View key={index} className=' font-semibold text-3xl text-black w-full h-11 text-center'>{ele}</View> )
+                                }
+                            </View>
+                        )
                     }
                     <View className='w-full '>
                         <View className=' h-3'></View>
@@ -79,7 +87,7 @@ export default function HistoryCard(props) {
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${props.studentPhone}`}</View>
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`负责老师： ${props.teacher}`}</View>
                         <View className=' font-medium text-lg h-7 w-full truncate'>{`联系电话： ${props.teacherPhone}`}</View>
-                        <View className=' font-medium text-lg h-7 w-full truncate'>{`申请提交日期：${props.submitDate ? props.submitDate.slice(5) : ''}`}</View>
+                        <View className=' font-medium text-lg h-7 w-full truncate'>{`申请提交日期：${props.submitDate}`}</View>
                     </View>
                 </View>
                 <View className='h-13 w-60 mx-auto'>

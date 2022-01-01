@@ -38,6 +38,22 @@
     animation: bounceX 1s infinite;
 }
 
+.box0 {
+    background-color: #FFE5D9;
+}
+
+.box1 {
+    background-color: #FFD6C5;
+}
+
+.box2 {
+    background-color: #FFC4B8;
+}
+
+.box3 {
+    background-color: #FFB0B5;
+}
+
 @keyframes bounceX {
     0%, 100% {
       transform: translateX(-25%);

@@ -53,7 +53,13 @@ export default function Suggest() {
                     <View className=' w-60 min-h-60 mx-auto'>
                         <View className=' font-semibold text-4xl text-black w-full h-11'>{data.room}</View>
                         { data.time.map((item, index) => 
-                        <View key={index} className=' font-semibold text-4xl text-black w-full h-11 text-center'>{item}</View> )
+                            <View key={index}>
+                                <View className=' font-medium text-3xl w-full h-10 text-left'>{item.date.slice(5)}</View>
+                                {   item.time.map((ele, index) => 
+                                    <View key={index} className=' font-semibold text-3xl text-black w-full h-11 text-center'>{ele}</View> )
+                                }
+                            </View>
+                        )
                         }
                         <View className='w-full '>
                             <View className=' h-3'></View>
