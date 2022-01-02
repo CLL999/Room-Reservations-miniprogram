@@ -63,7 +63,7 @@ export default function Index() {
 
     function toHistory() {
         Taro.navigateTo({
-            url: `../History/History?isAdmin=${isAdmin}`
+            url: `../History/History?isAdmin=${isAdmin || isSuperAdmin}`
         })
     }
 

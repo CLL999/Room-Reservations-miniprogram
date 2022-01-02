@@ -344,9 +344,8 @@ export default function RoomDetailBooking() {
         content = content.replace(/,/g, '\r\n')
         Taro.requestSubscribeMessage({
             tmplIds: ['Q2z7sXK-myCrrPjtlKSlo1bqZU0wXFTdJX7M2mrtMe0'],
-        })
-
-        Taro.showModal({ title: '核对信息', content })
+        }).then(() => {
+            Taro.showModal({ title: '核对信息', content })
             .then(res => {
                 if (res.confirm) {
                     let openid = userInfo.index.openid 
@@ -387,7 +386,7 @@ export default function RoomDetailBooking() {
                         })   
                     })  
             }})
-
+        })
     }
 
     function chooseTime(e) {
