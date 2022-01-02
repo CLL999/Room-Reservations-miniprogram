@@ -72,6 +72,7 @@ export default function EditRoom() {
     }
 
     function updatePhone() {
+        if (addKey === '') return 
         Taro.showModal({
             title: '提示',
             content: `再次确定手机号:${addKey}`
@@ -94,6 +95,7 @@ export default function EditRoom() {
     }
 
     function DeletePhone() {
+        if (deleteKey === '') return 
         Taro.showModal({
             title: '提示',
             content: `再次确定手机号:${deleteKey}`

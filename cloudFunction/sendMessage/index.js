@@ -18,6 +18,9 @@ exports.main = async ( event ) => {
                 },
                 date3: {
                     value: event.date
+                },
+                phone_number4: {
+                    value: event.phone
                 }
             },
             templateId:'fKmnqu6gqVAl5HDgG-aSlx4kRUFwimIbrCgv5eMEaKA'
