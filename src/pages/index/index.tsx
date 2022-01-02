@@ -68,9 +68,11 @@ export default function Index() {
     }
 
     function toBackground() {
-        Taro.navigateTo({
-            url: '../Background/Background'
-        })
+        Taro.navigateTo({ url: '../Background/Background' })
+        Taro.requestSubscribeMessage({
+            tmplIds: ['fKmnqu6gqVAl5HDgG-aSlx4kRUFwimIbrCgv5eMEaKA'],
+        }).then(res => console.log("授权成功", res))
+          .catch(err => console.log("授权失败", err))
     }
 
     function toEditAdmin() {

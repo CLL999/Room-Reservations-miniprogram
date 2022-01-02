@@ -52,3 +52,8 @@ interface roomType {
     photoUrl: string
     _id: string
 }
+
+interface timeType {
+    date: string
+    time: Array<string>
+}

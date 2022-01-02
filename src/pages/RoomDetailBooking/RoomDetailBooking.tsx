@@ -308,11 +308,11 @@ export default function RoomDetailBooking() {
     }, [DayOrder])
 
     function submit() {
-        if (userInfo.index.admin || userInfo.index.superAdmin)
-            {
-                Taro.showModal({title: '提示', content: '管理员不能提交申请', showCancel: false})
-                return 
-            }
+        // if (userInfo.index.admin || userInfo.index.superAdmin)
+        //     {
+        //         Taro.showModal({title: '提示', content: '管理员不能提交申请', showCancel: false})
+        //         return 
+        //     }
 
         if (!sheet) 
             {
@@ -326,7 +326,7 @@ export default function RoomDetailBooking() {
                 return 
             }
 
-        let finalTime: Array<object> = []
+        let finalTime: Array<timeType> = []
         if (firstDayTime.length) finalTime.push({ date: firstDay, time: firstDayTime})
         if (secondDayTime.length) finalTime.push({ date: secondDay, time: secondDayTime})
         if (thirdDayTime.length) finalTime.push({ date: thirdDay, time: thirdDayTime})
@@ -362,8 +362,23 @@ export default function RoomDetailBooking() {
                                 state: 'waiting', 
                                 submitDate: `${new Date().getMonth()+1}月${new Date().getDate()}日`
                             }
-                        }).then(() => {
+                        }).then(async () => {
                             Taro.hideLoading()
+                            await Taro.cloud.callFunction({ name: 'getAdmin' })
+                                            .then((res: any) => {
+                                                    res.result.map(ele => {
+                                                        Taro.cloud.callFunction({
+                                                            name: 'sendMessage',
+                                                            data: {
+                                                                room: router.params.name,
+                                                                name: student,
+                                                                date: finalTime[0].date,
+                                                                phone: studentPhone,
+                                                                openid: ele
+                                                            }
+                                                        }).then(res => console.log(res))
+                                                    })
+                                            })
                             Taro.showToast({ title: '上传成功', duration: 500 })
                             setTimeout(() => Taro.navigateBack({ delta: 2 }), 500)
                         })   
