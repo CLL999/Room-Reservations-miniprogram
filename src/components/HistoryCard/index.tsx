@@ -46,6 +46,16 @@ export default function HistoryCard(props) {
                     icon: 'success',
                     duration: 1000
                 })
+                Taro.cloud.callFunction({
+                    name: 'sendApplicant',
+                    data: {
+                        openid: props.applicantOpenid,
+                        res: '申请成功',
+                        room: props.room,
+                        time: props.time[0].date,
+                        tips: '请提前10分钟到场'
+                    }
+                }).then(res => console.log(res))
                 setTimeout(() => props.refresh(true), 1000)
             })
     }

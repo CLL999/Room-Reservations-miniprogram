@@ -308,11 +308,11 @@ export default function RoomDetailBooking() {
     }, [DayOrder])
 
     function submit() {
-        if (userInfo.index.admin || userInfo.index.superAdmin)
-            {
-                Taro.showModal({title: '提示', content: '管理员不能提交申请', showCancel: false})
-                return 
-            }
+        // if (userInfo.index.admin || userInfo.index.superAdmin)
+        //     {
+        //         Taro.showModal({title: '提示', content: '管理员不能提交申请', showCancel: false})
+        //         return 
+        //     }
 
         if (!sheet) 
             {
@@ -342,6 +342,9 @@ export default function RoomDetailBooking() {
         let content = `活动室：${router.params.name}\r\n时间\r\n${finalTime.map((item: any) => 
                       `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
         content = content.replace(/,/g, '\r\n')
+        Taro.requestSubscribeMessage({
+            tmplIds: ['Q2z7sXK-myCrrPjtlKSlo1bqZU0wXFTdJX7M2mrtMe0'],
+        })
 
         Taro.showModal({ title: '核对信息', content })
             .then(res => {
@@ -376,7 +379,7 @@ export default function RoomDetailBooking() {
                                                                 phone: studentPhone,
                                                                 openid: ele
                                                             }
-                                                        }).then(res => console.log(res))
+                                                        }).then(res => console.log(res, 'send'))
                                                     })
                                             })
                             Taro.showToast({ title: '上传成功', duration: 500 })

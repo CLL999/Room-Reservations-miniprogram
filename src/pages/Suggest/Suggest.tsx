@@ -30,6 +30,16 @@ export default function Suggest() {
                     icon: 'success',
                     duration: 1000
                 })
+                Taro.cloud.callFunction({
+                    name: 'sendApplicant',
+                    data: {
+                        openid: data.applicantOpenid,
+                        res: '申请失败',
+                        room: data.room,
+                        time: data.time[0].date,
+                        tips: '请点此查看修改指引'
+                    }
+                })
                 setTimeout(() => {
                     Taro.navigateBack({ delta: 1 })
                 }, 1000)

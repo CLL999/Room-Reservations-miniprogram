@@ -10,17 +10,20 @@ exports.main = async ( event ) => {
             touser: event.openid,
             page: 'pages/index/index',
             data: {
+                phrase8: {
+                    value: event.res
+                },
                 thing2: {
                     value: event.room
                 },
-                name1: {
-                    value: event.name
+                time10: {
+                    value: event.time
                 },
-                date3: {
-                    value: event.date
+                thing19: {
+                    value: event.tips
                 }
             },
-            templateId:'fKmnqu6gqVAl5HDgG-aSlx4kRUFwimIbrCgv5eMEaKA'
+            templateId: 'Q2z7sXK-myCrrPjtlKSlo1bqZU0wXFTdJX7M2mrtMe0'
         })
         console.log(result)
         return result

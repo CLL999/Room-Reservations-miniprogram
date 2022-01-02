@@ -36,6 +36,7 @@ interface historyItemType {
     auditor?: string
     sheet?: string
     state?: string
+    applicantOpenid? :string
 }
 
 interface userInfoType {
