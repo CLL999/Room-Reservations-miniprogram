@@ -38,7 +38,7 @@ export default function HistoryCard(props) {
                 auditor: props.auditor,
                 _id: props._id
             }
-        }).then(() => 
+        }).then(async() => 
             {
                 Taro.hideLoading()
                 Taro.showToast({
@@ -56,6 +56,22 @@ export default function HistoryCard(props) {
                         tips: '请提前10分钟到场'
                     }
                 }).then(res => console.log(res))
+                await Taro.cloud.callFunction({ name: 'feedPhones' })
+                .then((res: any) => {
+                    let content = `\r\n${props.time.map((item: any) => `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
+                    content = content.replace(/,/g, '\r\n')                              
+                    res.result.data.map(async (item) => {
+                        await Taro.cloud.callFunction({ 
+                                            name: 'sendsms',
+                                            data: {
+                                                mobile: item.phone,
+                                                nationcode: '86',
+                                                time: content,
+                                                place: props.room
+                                            }})
+                                        .then(res => console.log(res))
+                    })
+                })
                 setTimeout(() => props.refresh(true), 1000)
             })
     }
