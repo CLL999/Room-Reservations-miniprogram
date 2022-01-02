@@ -1,9 +1,9 @@
 const cloud = require('wx-server-sdk')
 const QcloudSms = require("qcloudsms_js")
-const appid = 1400617486
-const appkey = "244ef73f730c65911447553ca5080516"
-const templateId = 1264361
-const smsSign = "丽湖活动空间预约"
+const appid = 
+const appkey = 
+const templateId = 
+const smsSign = 
 
 cloud.init()
 // 云函数入口函数
