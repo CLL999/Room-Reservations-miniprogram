@@ -51,12 +51,12 @@ export default function RoomCard(props) {
                 <Text className=' text-6xl font-bold absolute top-38 left-4 text-black text-opacity-16 truncate w-65'>{props.name}</Text>
                 <Button className=' rounded-full py-0 px-4 absolute primarybutton bottom-2 right-3 w-28 h-12 text-center font-bold border-separate' onClick={toRoomDetail}>了解更多</Button>
                 <View 
-                    className={classNames('absolute rounded-full top-56 left-5', { 'w-10 h-10 bg-orange-600 transition duration-500 ease-out' : !hide, 'w-0 h-0 bg-white ' : hide })}
+                    className={classNames('absolute rounded-full top-56 left-5', { 'w-10 h-10 bg-orange-600 transition duration-500 ease-out' : !hide, 'w-0 h-0 bg-white transition duration-500 ease-in' : hide })}
                     onClick={deleteRoom}
                 >
                     <Image
                         src={deleteIcon}
-                        className={classNames({'w-6 h-6 m-2 transition ease-out duration-500' : !hide , 'w-0 h-0': hide})}
+                        className={classNames({'w-6 h-6 m-2 transition ease-out duration-500' : !hide , 'w-0 h-0 transition duration-500 ease-in': hide})}
                     />
                 </View>
             </View>

@@ -9,3 +9,5 @@ export const SET_REFRESHROOM = 'set_refreshRoom'
 export const SET_NICKNAME = 'set_nickName'
 
 export * from './background'
+
+export * from './history'

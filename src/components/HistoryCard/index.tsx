@@ -1,13 +1,33 @@
 import Taro from '@tarojs/taro';
+import { useState } from 'react';
 import { Image, View } from '@tarojs/components';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import reject from '../../assets/images/reject.png'
 import agree from '../../assets/images/agree.png'
-
-
+import deleteIcon from '../../assets/images/delete.png'
+import withdrawIcon from '../../assets/images/withdraw.png'
 
 export default function HistoryCard(props) {
+
+    const [hide, setHide] = useState(true)
+    const [withdraw, setWithdraw] = useState(() => {
+        let firstDate = props.time[0].date.replace('年', '-').replace('月','-').slice(0,-1)
+        let firstTime = new Date(firstDate).getTime()
+        let localTime = +new Date(new Date().toLocaleDateString()).getTime()
+        let flag = true
+        if (localTime > firstTime) 
+            flag = false
+        else if (localTime === firstTime) {
+            let tmp = localTime + parseInt(props.time[0].time[0].slice(0,2)) * 60 * 60 * 1000
+            if (new Date(tmp).getHours() < new Date(+ new Date()).getHours() + 4)
+                flag = false
+        }
+        return flag
+    })
+
+    const history = useSelector((state: any) => state.history)
 
     function toSuggest() {
         Taro.navigateTo({
@@ -57,21 +77,21 @@ export default function HistoryCard(props) {
                         }
                     }).then(res => console.log(res))
                 await Taro.cloud.callFunction({ name: 'feedPhones' })
-                .then((res: any) => {
-                    let content = `\r\n${props.time.map((item: any) => `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
-                    content = content.replace(/,/g, '\r\n')                              
-                    res.result.data.map(async (item) => {
-                        await Taro.cloud.callFunction({ 
-                                            name: 'sendsms',
-                                            data: {
-                                                mobile: item.phone,
-                                                nationcode: '86',
-                                                time: content,
-                                                place: props.room
-                                            }})
-                                        .then(res => console.log(res))
-                    })
-                })
+                                .then((res: any) => {
+                                    let content = `\r\n${props.time.map((item: any) => `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
+                                    content = content.replace(/,/g, '\r\n')                              
+                                    res.result.data.map(async (item) => {
+                                        await Taro.cloud.callFunction({ 
+                                                            name: 'sendsms',
+                                                            data: {
+                                                                mobile: item.phone,
+                                                                nationcode: '86',
+                                                                time: content,
+                                                                place: props.room
+                                                            }})
+                                                        .then(res => console.log(res))
+                                    })
+                                })
                 setTimeout(() => props.refresh(true), 1000)
             })
     }
@@ -88,13 +108,80 @@ export default function HistoryCard(props) {
                             })})
     }
 
+    function deleteRecord() {
+        Taro.showLoading()
+        Taro.cloud.callFunction({ name: 'removeRecord', data: { _id: props._id} })
+                  .then(async () => {
+                      Taro.hideLoading()
+                      Taro.showToast({
+                          title: '删除成功',
+                          duration: 500
+                      })
+                      await history.refreshData([])
+                      await history.refreshPage(0)
+                      await history.refreshHistory(true)
+                  })
+    }
+
+    function withdrawHandle() {
+        Taro.showModal({
+            title: '提示',
+            content: '确定要撤回此条申请吗?',
+            showCancel: false
+        }).then(async res => {
+            if (res.confirm) {
+                Taro.showLoading()
+                await Taro.cloud.callFunction({
+                        name: 'removeRecord',
+                        data: {
+                            _id: props._id
+                        }
+                    })
+                if (props.state === 'success') {
+                    await Taro.cloud.callFunction({ name: 'feedPhones' })
+                                    .then((res: any) => {
+                                        let content = `\r\n${props.time.map((item: any) => `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
+                                        content = content.replace(/,/g, '\r\n')                              
+                                        res.result.data.map(async (item) => {
+                                            await Taro.cloud.callFunction({ 
+                                                                name: 'withdraw',
+                                                                data: {
+                                                                    mobile: item.phone,
+                                                                    nationcode: '86',
+                                                                    time: content,
+                                                                    place: props.room
+                                                                }})
+                                                            .then(res => console.log(res))
+                                        })
+                                    })
+                }
+                Taro.hideLoading()
+                Taro.showToast({
+                    title: '撤回成功',
+                    duration: 1000
+                })
+                await history.refreshData([])
+                await history.refreshPage(0)
+                await history.refreshHistory(true)
+            }
+        })
+    }
+
     return (
-        <View className=' w-screen min-h-80'>
+        <View className=' w-screen min-h-80' onLongPress={() => setHide(!hide)}>
             <View className=' bg-white rounded-2xl w-70 mx-auto min-h-75 shadow-2xl'>
                 <View className='h-3'></View>
                 <View className=' w-60 min-h-60 mx-auto'>
                     <View className=' font-semibold text-4xl text-black w-full h-11'>{props.room}</View>
-                    {/* <View className=' font-semibold text-3xl w-full h-10 text-center'>{props.date ? props.date.slice(5) : ''}</View> */}
+                    <View 
+                    className={classNames('relative rounded-full -top-11 -right-2 float-right', { 'w-10 h-10 bg-orange-600 transition duration-500 ease-out' : !hide, 'w-0 h-0 bg-white transition ease-in duration-500' : hide })}
+                    onClick={deleteRecord}
+                    >
+                        <Image
+                            src={deleteIcon}
+                            className={classNames({'w-6 h-6 m-2 transition ease-out duration-500' : !hide , 'w-0 h-0 transition duration-500 ease-in': hide})}
+                        />
+                    </View>
                     { props.time.map((item, index) => 
                             <View key={index} className={classNames({' box0': index === 0 || index === 2 , ' box1': index === 1 || index === 3})}>
                                 <View className=' font-medium text-3xl w-full h-10 text-left'>{item.date.slice(5)}</View>
@@ -153,9 +240,35 @@ export default function HistoryCard(props) {
                         <View className='font-semibold text-x1 float-left truncate w-32'>{props.auditor}</View>
                         </View> :
                         props.state === 'waiting' ? 
-                        <View className='h-9 bg-yellow-300 w-24 my-2 float-right text-center font-medium text-xl'>审核中</View> :
+                        <View>
+                            {   withdraw ?
+                                <View 
+                                    className=' bg-yellow-200 w-10 h-10 rounded-full relative bottom-0 float-left top-2'
+                                    onClick={withdrawHandle}
+                                >
+                                    <Image
+                                        src={withdrawIcon}
+                                        className=' w-6 h-6 m-2 absolute'
+                                    />
+                                </View> : ''
+                            }
+                            <View className='h-9 bg-yellow-300 w-24 my-2 float-right text-center font-medium text-xl'>审核中</View> 
+                        </View> :
                         props.state === 'success' ?
-                        <View className='h-9 bg-green-400 w-24 my-2 float-right text-center font-medium text-xl'>已通过</View> :
+                        <View>
+                            {   withdraw ?
+                                <View 
+                                    className=' bg-yellow-200 w-10 h-10 rounded-full relative bottom-0 float-left top-2'
+                                    onClick={withdrawHandle}
+                                >
+                                    <Image
+                                        src={withdrawIcon}
+                                        className=' w-6 h-6 m-2 absolute'
+                                    />
+                                </View> : ''
+                            }
+                            <View className='h-9 bg-green-400 w-24 my-2 float-right text-center font-medium text-xl'>已通过</View>
+                        </View> :
                         <View className='w-full h-full'>
                             <View className='h-9 rejectColor w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
                             <View 

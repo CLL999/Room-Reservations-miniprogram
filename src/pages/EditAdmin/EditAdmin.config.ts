@@ -1,3 +1,3 @@
 export default {
-    navigationBarTitleText: '人员权限授予',
+    navigationBarTitleText: '超级管理员后台',
 }

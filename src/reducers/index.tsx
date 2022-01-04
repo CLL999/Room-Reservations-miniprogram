@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 
 import background from './background'
+import history from './history'
 
 import {
     SET_USEROPENID,
@@ -40,5 +41,5 @@ function index(state = INITIAL_STATE, action) {
 }
 
 export default combineReducers({
-    index, background
+    index, background, history
 })

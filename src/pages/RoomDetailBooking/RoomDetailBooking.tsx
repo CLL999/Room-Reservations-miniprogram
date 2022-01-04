@@ -381,6 +381,15 @@ export default function RoomDetailBooking() {
                                                         }).then(res => console.log(res, 'send'))
                                                     })
                                             })
+                            await Taro.cloud.callFunction({ name: 'feedPhonesToAdmin'})
+                                            .then((res: any) => {
+                                                        res.result.data.map(async item => {
+                                                            await Taro.cloud.callFunction({ name: 'sendsmsToAdmin', data: {
+                                                                mobile: item.phone,
+                                                                nationcode: '86'
+                                                            }}).then(res => console.log(res))
+                                                        })
+                                            })
                             Taro.showToast({ title: '上传成功', duration: 500 })
                             setTimeout(() => Taro.navigateBack({ delta: 2 }), 500)
                         })   
@@ -553,11 +562,20 @@ export default function RoomDetailBooking() {
     }
 
     function pickerChange(e) {
+        let pickerDate = e.detail.value
+        let firstDayTime = new Date(pickerDate).getTime() - 8 * 60 * 60 * 1000
+        if (firstDayTime < +new Date() - 24 * 60 * 60 * 1000)
+            {
+                Taro.showModal({
+                    title: '提示',
+                    content: '不能选择以前的时间',
+                    showCancel: false
+                })
+                return 
+            }
         resetCb()
         resetCk()
 
-        let pickerDate = e.detail.value
-        let firstDayTime = new Date(pickerDate).getTime() - 8 * 60 * 60 * 1000
         let secondDayTime = firstDayTime + 24 * 60 * 60 * 1000
         let thirdDayTime = secondDayTime + 24 * 60 * 60 * 1000
         let fourthDayTime = thirdDayTime + 24 * 60 * 60 * 1000

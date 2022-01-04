@@ -1,12 +1,15 @@
 import Taro, { useRouter } from '@tarojs/taro'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Image, ScrollView, Text, View } from '@tarojs/components'
 
 import { HistoryCard } from '../../components'
 import key from '../../assets/images/key.png'
-
+import { SET_REFRESHHISTORY, SET_REFRESHPAGE, SET_REFRESHDATA } from '../../constants'
 
 export default function EditRoom() {
+
+    const dispatch = useDispatch()
 
     const router = useRouter()
     const [firstTime, setFirstTime] = useState(true)
@@ -15,6 +18,15 @@ export default function EditRoom() {
     const [idList, setIdList] = useState([])
 
     const [showNoRes, setShowNoRes] = useState(false)
+    const [dispatched, setDispatched] = useState(false)
+
+    if (!dispatched)
+        {
+            setDispatched(true)
+            dispatch({type: SET_REFRESHHISTORY, payload: { refreshHistory: setFirstTime }})
+            dispatch({type: SET_REFRESHPAGE, payload: { refreshPage: setPage }})
+            dispatch({type: SET_REFRESHDATA, payload: { refreshData: setData }})
+        }
 
     if (firstTime)
         {
