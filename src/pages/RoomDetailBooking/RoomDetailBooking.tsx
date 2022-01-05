@@ -615,8 +615,8 @@ export default function RoomDetailBooking() {
                     </Picker>
 
                 </View>
-                <View className=' w-screen overflow-hidden min-h-222'>
-                    <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-236 w-screen overflow-hidden'>
+                <View className=' w-screen overflow-hidden min-h-286'>
+                    <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-300 w-screen overflow-hidden'>
                         <View className='h-40 w-screen'>
                             <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                             <View className='h-28 w-screen pt-5 pb-3'>
@@ -1072,14 +1072,16 @@ export default function RoomDetailBooking() {
                                     placeholder='申请人姓名'
                                     value={student}
                                     onInput={e => setStudent(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
+                            </View>
+                            <View className='w-screen h-12'>
                                 <Input
                                     placeholder='申请人学号'
                                     value={id}
                                     type='digit'
                                     onInput={e => setId(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
                             </View>
 
@@ -1088,13 +1090,15 @@ export default function RoomDetailBooking() {
                                     placeholder='申请学院'
                                     value={department}
                                     onInput={e => setDepartment(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
+                            </View>
+                            <View className='w-screen h-12 '>
                                 <Input
                                     placeholder='申请单位名称'
                                     value={unit}
                                     onInput={e => setUnit(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
                             </View>
 
@@ -1104,13 +1108,15 @@ export default function RoomDetailBooking() {
                                     value={studentPhone}
                                     type='digit'
                                     onInput={e => setStudentPhone(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
+                            </View>
+                            <View className=' w-screen h-12'>
                                 <Input
                                     placeholder='负责老师姓名'
                                     value={teacher}
                                     onInput={e => setTeacher(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
                             </View>
 
@@ -1120,17 +1126,19 @@ export default function RoomDetailBooking() {
                                     value={teacherPhone}
                                     type='digit'
                                     onInput={e => setTeacherPhone(e.detail.value)}
-                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
+                                    className='w-38 h-8 pl-3 bg-white mx-auto rounded-lg'
                                 />
+                            </View>
+                            <View className='w-screen h-12 '>
                                 { !sheet ?
                                     <Button
-                                        className='w-35 h-8 bg-yellow-200 relative right-4 rounded-lg font-bold text-lg float-right'
+                                        className='w-43 h-8 bg-yellow-200 mx-auto rounded-lg font-bold text-lg'
                                         onClick={uploadSheet}
                                     >
                                         上传申请表
                                     </Button> :
                                     <Button
-                                        className='w-35 h-8 bg-green-300 relative right-4 rounded-lg font-medium text-lg float-right'
+                                        className='w-43 h-8 bg-green-300 mx-auto rounded-lg font-medium text-lg'
                                     >
                                         已选择申请表
                                     </Button>
@@ -1139,7 +1147,7 @@ export default function RoomDetailBooking() {
 
                             <View className='w-screen h-30'>
                                 <Button
-                                    className='mx-auto w-48 h-12 py-2 purplebutton relative top-3 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
+                                    className='mx-auto w-48 h-12 py-2 purplebutton relative top-8 rounded-xl font-bold text-black text-xl shadow-2xl items-center justify-center'
                                     onClick={submit}
                                 >
                                     提交
