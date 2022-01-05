@@ -49,7 +49,7 @@ export default function Index() {
             name: 'check'
         }).then((res: any) => 
             {
-                let { openid, admin, superAdmin} = res.result
+                let { openid, admin, superAdmin } = res.result
                 dispatch({ type: SET_USEROPENID, payload: { openid }})
                 dispatch({ type: SET_ISADMIN, payload: { admin }})
                 dispatch({ type: SET_ISSUPERADMIN, payload: { superAdmin }})
@@ -220,6 +220,15 @@ export default function Index() {
                             onClick={Login}
                         >
                             点我授权
+                        </Button>
+                        <Button 
+                            className=' rounded-full py-0 px-4 bg-gray-400 w-28 h-12 text-center font-bold border-separate relative top-25 shadow-2xl' 
+                            onClick={() => {
+                                setIsLogin(true)
+                                setShowHistory(true)
+                            }}
+                        >
+                            暂不授权
                         </Button>
                     </View>
                 </View>
