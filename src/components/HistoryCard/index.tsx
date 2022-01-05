@@ -167,8 +167,14 @@ export default function HistoryCard(props) {
         })
     }
 
+    function handleDelete() {
+        if (!props.admin)
+            return 
+        setHide(!hide)
+    }
+
     return (
-        <View className=' w-screen min-h-80' onLongPress={() => setHide(!hide)}>
+        <View className=' w-screen min-h-80' onLongPress={handleDelete}>
             <View className=' bg-white rounded-2xl w-70 mx-auto min-h-75 shadow-2xl'>
                 <View className='h-3'></View>
                 <View className=' w-60 min-h-60 mx-auto'>

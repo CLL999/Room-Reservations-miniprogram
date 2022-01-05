@@ -7,5 +7,7 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async ( event ) => {
-    db.collection('msgPhone').add({data: { phone: event.phone }})
+    const res = await db.collection('msgPhone').where({ phone: event.phone }).get()
+    if (!res.data.length)
+        db.collection('msgPhone').add({data: { phone: event.phone }})
 }

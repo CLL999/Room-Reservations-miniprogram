@@ -366,6 +366,8 @@ export default function RoomDetailBooking() {
                             }
                         }).then(async () => {
                             Taro.hideLoading()
+                            Taro.showToast({ title: '上传成功', duration: 500 })
+                            setTimeout(() => Taro.navigateBack({ delta: 2 }), 500)
                             await Taro.cloud.callFunction({ name: 'getAdmin' })
                                             .then((res: any) => {
                                                     res.result.map(ele => {
@@ -390,8 +392,6 @@ export default function RoomDetailBooking() {
                                                             }}).then(res => console.log(res))
                                                         })
                                             })
-                            Taro.showToast({ title: '上传成功', duration: 500 })
-                            setTimeout(() => Taro.navigateBack({ delta: 2 }), 500)
                         })   
                     })  
             }})
@@ -597,7 +597,7 @@ export default function RoomDetailBooking() {
                             src={router.params.photoUrl} 
                             mode='aspectFill' 
                             onLoad={() => setIsLoading(false)}
-                            className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-blue-400 bg-opacity-50', {'animate-pulse': isLoading})}
+                            className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-gray-300 bg-opacity-50', {'animate-pulse': isLoading})}
                         />
                         <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
                         <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
@@ -615,8 +615,8 @@ export default function RoomDetailBooking() {
                     </Picker>
 
                 </View>
-                <View className=' w-screen overflow-hidden min-h-205'>
-                    <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-215 w-screen overflow-hidden'>
+                <View className=' w-screen overflow-hidden min-h-222'>
+                    <View className=' bg-gradient-to-b from-bottomColor to-topColor absolute timeChoose h-236 w-screen overflow-hidden'>
                         <View className='h-40 w-screen'>
                             <View className=' w-24 font-bold mx-auto relative top-2 text-black text-2xl'>时间选择</View>
                             <View className='h-28 w-screen pt-5 pb-3'>
@@ -655,7 +655,7 @@ export default function RoomDetailBooking() {
                             {   DayOrder === 1 ?
                                 <CheckboxGroup className='relative top-3' onChange={chooseTime}>
                                     <View className='w-screen h-7'>
-                                        <View className='float-left ml-6 w-35'>
+                                        <View className='float-left ml-6 w-34'>
                                             <Checkbox
                                                 value='0'
                                                 disabled={cb10 ? true : false}
@@ -665,7 +665,7 @@ export default function RoomDetailBooking() {
                                                 08:30-10:00
                                             </Checkbox>
                                         </View>
-                                        <View className='float-right mr-6 w-35'>
+                                        <View className='float-right mr-6 w-34'>
                                             <Checkbox
                                                 value='5'
                                                 disabled={cb15 ? true : false}
@@ -677,7 +677,7 @@ export default function RoomDetailBooking() {
                                         </View>
                                     </View>
                                     <View className='w-screen h-7 mt-5'>
-                                        <View className='float-left ml-6 w-35'>
+                                        <View className='float-left ml-6 w-34'>
                                             <Checkbox
                                                 value='1'
                                                 disabled={cb11 ? true : false}
@@ -687,7 +687,7 @@ export default function RoomDetailBooking() {
                                                 10:10-12:30
                                             </Checkbox>
                                         </View>
-                                        <View className='float-right mr-6 w-35'>
+                                        <View className='float-right mr-6 w-34'>
                                             <Checkbox
                                                 value='6'
                                                 disabled={cb16 ? true : false}
@@ -699,7 +699,7 @@ export default function RoomDetailBooking() {
                                         </View>
                                     </View>
                                     <View className='w-screen h-7 mt-5'>
-                                        <View className='float-left ml-6 w-35'>
+                                        <View className='float-left ml-6 w-34'>
                                             <Checkbox
                                                 value='2'
                                                 disabled={cb12 ? true : false}
@@ -709,7 +709,7 @@ export default function RoomDetailBooking() {
                                                 12:40-14:20
                                             </Checkbox>
                                         </View>
-                                        <View className='float-right mr-6 w-35'>
+                                        <View className='float-right mr-6 w-34'>
                                             <Checkbox
                                                 value='7'
                                                 disabled={cb17 ? true : false}
@@ -721,7 +721,7 @@ export default function RoomDetailBooking() {
                                         </View>
                                     </View>
                                     <View className='w-screen h-7 mt-5'>
-                                        <View className='float-left ml-6 w-35'>
+                                        <View className='float-left ml-6 w-34'>
                                             <Checkbox
                                                 value='3'
                                                 disabled={cb13 ? true : false}
@@ -731,7 +731,7 @@ export default function RoomDetailBooking() {
                                                 14:30-16:00
                                             </Checkbox>
                                         </View>
-                                        <View className='float-right mr-6 w-35'>
+                                        <View className='float-right mr-6 w-34'>
                                             <Checkbox
                                                 value='8'
                                                 disabled={cb18 ? true : false}
@@ -755,7 +755,7 @@ export default function RoomDetailBooking() {
                                 </CheckboxGroup> :  DayOrder === 2 ?
                                 <CheckboxGroup className='relative top-3' onChange={chooseTime}>
                                 <View className='w-screen h-7'>
-                                    <View className='float-left ml-6 w-35'>
+                                    <View className='float-left ml-6 w-34'>
                                         <Checkbox
                                             value='0'
                                             disabled={cb20 ? true : false}
@@ -765,7 +765,7 @@ export default function RoomDetailBooking() {
                                             08:30-10:00
                                         </Checkbox>
                                     </View>
-                                    <View className='float-right mr-6 w-35'>
+                                    <View className='float-right mr-6 w-34'>
                                         <Checkbox
                                             value='5'
                                             disabled={cb25 ? true : false}
@@ -777,7 +777,7 @@ export default function RoomDetailBooking() {
                                     </View>
                                 </View>
                                 <View className='w-screen h-7 mt-5'>
-                                    <View className='float-left ml-6 w-35'>
+                                    <View className='float-left ml-6 w-34'>
                                         <Checkbox
                                             value='1'
                                             disabled={cb21 ? true : false}
@@ -787,7 +787,7 @@ export default function RoomDetailBooking() {
                                             10:10-12:30
                                         </Checkbox>
                                     </View>
-                                    <View className='float-right mr-6 w-35'>
+                                    <View className='float-right mr-6 w-34'>
                                         <Checkbox
                                             value='6'
                                             disabled={cb26 ? true : false}
@@ -799,7 +799,7 @@ export default function RoomDetailBooking() {
                                     </View>
                                 </View>
                                 <View className='w-screen h-7 mt-5'>
-                                    <View className='float-left ml-6 w-35'>
+                                    <View className='float-left ml-6 w-34'>
                                         <Checkbox
                                             value='2'
                                             disabled={cb22 ? true : false}
@@ -809,7 +809,7 @@ export default function RoomDetailBooking() {
                                             12:40-14:20
                                         </Checkbox>
                                     </View>
-                                    <View className='float-right mr-6 w-35'>
+                                    <View className='float-right mr-6 w-34'>
                                         <Checkbox
                                             value='7'
                                             disabled={cb27 ? true : false}
@@ -821,7 +821,7 @@ export default function RoomDetailBooking() {
                                     </View>
                                 </View>
                                 <View className='w-screen h-7 mt-5'>
-                                    <View className='float-left ml-6 w-35'>
+                                    <View className='float-left ml-6 w-34'>
                                         <Checkbox
                                             value='3'
                                             disabled={cb23 ? true : false}
@@ -831,7 +831,7 @@ export default function RoomDetailBooking() {
                                             14:30-16:00
                                         </Checkbox>
                                     </View>
-                                    <View className='float-right mr-6 w-35'>
+                                    <View className='float-right mr-6 w-34'>
                                         <Checkbox
                                             value='8'
                                             disabled={cb28 ? true : false}
@@ -855,7 +855,7 @@ export default function RoomDetailBooking() {
                             </CheckboxGroup> : DayOrder === 3 ?
                             <CheckboxGroup className='relative top-3' onChange={chooseTime}>
                             <View className='w-screen h-7'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='0'
                                         disabled={cb30 ? true : false}
@@ -865,7 +865,7 @@ export default function RoomDetailBooking() {
                                         08:30-10:00
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='5'
                                         disabled={cb35 ? true : false}
@@ -877,7 +877,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='1'
                                         disabled={cb31 ? true : false}
@@ -887,7 +887,7 @@ export default function RoomDetailBooking() {
                                         10:10-12:30
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='6'
                                         disabled={cb36 ? true : false}
@@ -899,7 +899,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='2'
                                         disabled={cb32 ? true : false}
@@ -909,7 +909,7 @@ export default function RoomDetailBooking() {
                                         12:40-14:20
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='7'
                                         disabled={cb37 ? true : false}
@@ -921,7 +921,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='3'
                                         disabled={cb33 ? true : false}
@@ -931,7 +931,7 @@ export default function RoomDetailBooking() {
                                         14:30-16:00
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='8'
                                         disabled={cb38 ? true : false}
@@ -955,7 +955,7 @@ export default function RoomDetailBooking() {
                             </CheckboxGroup> :
                             <CheckboxGroup className='relative top-3' onChange={chooseTime}>
                             <View className='w-screen h-7'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='0'
                                         disabled={cb40 ? true : false}
@@ -965,7 +965,7 @@ export default function RoomDetailBooking() {
                                         08:30-10:00
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='5'
                                         disabled={cb45 ? true : false}
@@ -977,7 +977,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='1'
                                         disabled={cb41 ? true : false}
@@ -987,7 +987,7 @@ export default function RoomDetailBooking() {
                                         10:10-12:30
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='6'
                                         disabled={cb46 ? true : false}
@@ -999,7 +999,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='2'
                                         disabled={cb42 ? true : false}
@@ -1009,7 +1009,7 @@ export default function RoomDetailBooking() {
                                         12:40-14:20
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='7'
                                         disabled={cb47 ? true : false}
@@ -1021,7 +1021,7 @@ export default function RoomDetailBooking() {
                                 </View>
                             </View>
                             <View className='w-screen h-7 mt-5'>
-                                <View className='float-left ml-6 w-35'>
+                                <View className='float-left ml-6 w-34'>
                                     <Checkbox
                                         value='3'
                                         disabled={cb43 ? true : false}
@@ -1031,7 +1031,7 @@ export default function RoomDetailBooking() {
                                         14:30-16:00
                                     </Checkbox>
                                 </View>
-                                <View className='float-right mr-6 w-35'>
+                                <View className='float-right mr-6 w-34'>
                                     <Checkbox
                                         value='8'
                                         disabled={cb48 ? true : false}
@@ -1060,7 +1060,7 @@ export default function RoomDetailBooking() {
                             <View className='w-screen h-16 '>
                                 <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
                                 <Text 
-                                    className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
+                                    className=' text-blue-800 font-bold text-lg underline relative float-right right-7'
                                     onClick={downloadSheet}
                                 >
                                     下载申请表
@@ -1072,14 +1072,14 @@ export default function RoomDetailBooking() {
                                     placeholder='申请人姓名'
                                     value={student}
                                     onInput={e => setStudent(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
                                 />
                                 <Input
                                     placeholder='申请人学号'
                                     value={id}
                                     type='digit'
                                     onInput={e => setId(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
                                 />
                             </View>
 
@@ -1088,13 +1088,13 @@ export default function RoomDetailBooking() {
                                     placeholder='申请学院'
                                     value={department}
                                     onInput={e => setDepartment(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
                                 />
                                 <Input
                                     placeholder='申请单位名称'
                                     value={unit}
                                     onInput={e => setUnit(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
                                 />
                             </View>
 
@@ -1104,13 +1104,13 @@ export default function RoomDetailBooking() {
                                     value={studentPhone}
                                     type='digit'
                                     onInput={e => setStudentPhone(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
                                 />
                                 <Input
                                     placeholder='负责老师姓名'
                                     value={teacher}
                                     onInput={e => setTeacher(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative right-6 rounded-lg float-right'
+                                    className='w-32 h-8 pl-3 bg-white relative right-4 rounded-lg float-right'
                                 />
                             </View>
 
@@ -1120,17 +1120,17 @@ export default function RoomDetailBooking() {
                                     value={teacherPhone}
                                     type='digit'
                                     onInput={e => setTeacherPhone(e.detail.value)}
-                                    className='w-35 h-8 pl-3 bg-white relative left-6 rounded-lg float-left'
+                                    className='w-32 h-8 pl-3 bg-white relative left-4 rounded-lg float-left'
                                 />
                                 { !sheet ?
                                     <Button
-                                        className='w-38 h-8 bg-yellow-200 relative right-6 rounded-lg font-bold text-lg float-right'
+                                        className='w-35 h-8 bg-yellow-200 relative right-4 rounded-lg font-bold text-lg float-right'
                                         onClick={uploadSheet}
                                     >
                                         上传申请表
                                     </Button> :
                                     <Button
-                                        className='w-38 h-8 bg-green-300 relative right-6 rounded-lg font-medium text-lg float-right'
+                                        className='w-35 h-8 bg-green-300 relative right-4 rounded-lg font-medium text-lg float-right'
                                     >
                                         已选择申请表
                                     </Button>
@@ -1145,8 +1145,6 @@ export default function RoomDetailBooking() {
                                     提交
                                 </Button>
                             </View>
-
-                            <View className='w-screen h-15'></View>
                         </View>
                     </View>
                 </View>
