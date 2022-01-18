@@ -44,7 +44,7 @@ export default function Index() {
     if (refresh) {
         setRefresh(false)
         if (isLogin) setTimeout(() => setShowHistory(true), 100)
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({
             name: 'check'
         }).then((res: any) => 
@@ -106,7 +106,7 @@ export default function Index() {
             file = 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/活动室预约使用说明（管理员）.docx'
         else
             file = 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/活动室预约使用说明（用户端）.docx'
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.downloadFile({ 'fileID': file })
                   .then(res => {
                       Taro.hideLoading()
@@ -185,6 +185,7 @@ export default function Index() {
                                         index={index}
                                         refresh={setRefresh}
                                         showDelete={isAdmin || isSuperAdmin}
+                                        tags={item.tags ? item.tags : ''}
                                     />
                                 )
                             }

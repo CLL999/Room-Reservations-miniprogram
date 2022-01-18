@@ -20,7 +20,7 @@ export default function EditRoom() {
     const [isChoosed, setIsChoosed] = useState(false)
     
     function updateDetail() {
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         let id = ''
         if (router.params.id) id = router.params.id
         else Taro.cloud.callFunction({ name: 'addRoom' }).then((res: any) => id = res.result._id)
@@ -39,9 +39,12 @@ export default function EditRoom() {
             filePath: `${photoUrl}`
         }).then(res => {
             let fileId = res.fileID
+            let tags: string[] = []
+            if (tag1) tags.push(tag1)
+            if (tag2) tags.push(tag2)
             Taro.cloud.callFunction({
                 name: 'updateRoomDetail',
-                data: { id, name, content, photoUrl: fileId }
+                data: { id, name, content, photoUrl: fileId, tags }
             }).then(() => {
                 Taro.hideLoading()
                 Taro.showToast({
@@ -54,9 +57,12 @@ export default function EditRoom() {
                 }, 600)
             })
         }).catch(() => {
+            let tags: string[] = []
+            if (tag1) tags.push(tag1)
+            if (tag2) tags.push(tag2)
             Taro.cloud.callFunction({
                 name: 'updateRoomDetail',
-                data: { id, name, content, photoUrl }
+                data: { id, name, content, photoUrl, tags }
             }).then(() => {
                 Taro.hideLoading()
                 Taro.showToast({
@@ -84,7 +90,7 @@ export default function EditRoom() {
             content: '确定要删除该活动室吗',
             showCancel: false
         }).then(() => {
-            Taro.showLoading()
+            Taro.showLoading({ title: '加载中'})
             Taro.cloud.callFunction({
                 name: 'deleteRoom',
                 data: { id: router.params.id }
@@ -99,7 +105,8 @@ export default function EditRoom() {
         })
 
     }
-
+    const [tag1, setTag1] = useState(router.params.tag1 !== 'undefined' ? router.params.tag1 : '')
+    const [tag2, setTag2] = useState(router.params.tag2 !== 'undefined' ? router.params.tag2 : '')
     return (
         <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className=' w-screen h-34 '>
@@ -111,6 +118,7 @@ export default function EditRoom() {
                 <Input
                     placeholder='请填写活动室名称（三字以内）'
                     value={name}
+                    maxlength={4}
                     onInput={(e) => setName(e.detail.value)}
                     className=' mx-auto w-56 bg-gray-100 rounded-xl h-7 py-1 font-semibold relative top-3 px-5'
                 />
@@ -122,6 +130,23 @@ export default function EditRoom() {
                     value={content}
                     onInput={(e) => setContent(e.detail.value)}
                     className=' mx-auto w-51 bg-gray-100 rounded-2xl h-50 py-7 font-semibold relative top-3 px-7 leading-7 text-lg'
+                />
+            </View>
+            <View className=' w-screen h-40'>
+                <View className=' mx-auto w-20 whitespace-nowrap font-semibold text-xl text-black'>添加标签</View>
+                <Input
+                    className=' rounded-xl mx-auto w-56 bg-gray-100 h-7 py-1 font-semibold px-5 mt-5'
+                    placeholder='可选标签1(六字以内)'
+                    maxlength={6}
+                    value={tag1}
+                    onInput={e => setTag1(e.detail.value)}
+                />
+                <Input
+                    className=' rounded-xl mx-auto w-56 bg-gray-100 h-7 py-1 font-semibold px-5 mt-5'
+                    placeholder='可选标签2(六字以内)'
+                    maxlength={6}
+                    value={tag2}
+                    onInput={e => setTag2(e.detail.value)}
                 />
             </View>
             <View className=' w-screen h-130'>
@@ -138,7 +163,6 @@ export default function EditRoom() {
                         onClick={chooseImg}
                     />
                 </View>
-                
                 <View 
                     className=' font-bold w-54 mx-auto text-lg relative top-17 greenbutton h-14 shadow-2xl rounded-2xl'
                     onClick={updateDetail}

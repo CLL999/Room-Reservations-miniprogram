@@ -52,6 +52,7 @@ interface roomType {
     content: string
     photoUrl: string
     _id: string
+    tags: string[]
 }
 
 interface timeType {

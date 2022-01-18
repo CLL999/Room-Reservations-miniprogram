@@ -24,7 +24,7 @@ export default function RoomDetail() {
 
     function toEdit() {
         Taro.navigateTo({
-            url: `../EditRoom/EditRoom?name=${router.params.name}&content=${router.params.content}&photoUrl=${router.params.photoUrl}&id=${router.params.id}`
+            url: `../EditRoom/EditRoom?name=${router.params.name}&content=${router.params.content}&photoUrl=${router.params.photoUrl}&id=${router.params.id}&tag1=${router.params.tag1}&tag2=${router.params.tag2}`
         })
     }
 
@@ -57,7 +57,7 @@ export default function RoomDetail() {
                             </View>
                         </View> : ''
                     }
-                    <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
+                    <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content ? router.params.content: '暂无介绍'}</View>
                 </View>
             </ScrollView>
             <View className=' bg-purple-600 fixed rounded-full -bottom-22 w-screen h-46'>

@@ -30,13 +30,21 @@ export default function HistoryCard(props) {
     const history = useSelector((state: any) => state.history)
 
     function toSuggest() {
+        if (props.bounce) {
+            Taro.showModal({
+                title: '注意',
+                content: '请先添加您的手机再继续审批',
+                showCancel: false
+            })
+            return 
+        }
         Taro.navigateTo({
             url: `../Suggest/Suggest?data=${JSON.stringify(props)}`
         })
     }
 
     function previewGuide() {
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
 
         Taro.cloud.callFunction({
             name: 'feedGuide',
@@ -51,7 +59,15 @@ export default function HistoryCard(props) {
     }
 
     function toPass() {
-        Taro.showLoading()
+        if (props.bounce) {
+            Taro.showModal({
+                title: '注意',
+                content: '请先添加您的手机再继续审批',
+                showCancel: false
+            })
+            return 
+        }
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({
             name: 'pass',
             data: {
@@ -97,7 +113,7 @@ export default function HistoryCard(props) {
     }
 
     function downloadSheet() {
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
 
         Taro.cloud.downloadFile({ fileID: props.sheet })
                   .then(res => {
@@ -109,7 +125,15 @@ export default function HistoryCard(props) {
     }
 
     function deleteRecord() {
-        Taro.showLoading()
+        if (props.bounce) {
+            Taro.showModal({
+                title: '注意',
+                content: '请先添加您的手机再继续审批',
+                showCancel: false
+            })
+            return 
+        }
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({ name: 'removeRecord', data: { _id: props._id} })
                   .then(async () => {
                       Taro.hideLoading()
@@ -130,7 +154,7 @@ export default function HistoryCard(props) {
             showCancel: false
         }).then(async res => {
             if (res.confirm) {
-                Taro.showLoading()
+                Taro.showLoading({ title: '加载中'})
                 await Taro.cloud.callFunction({
                         name: 'removeRecord',
                         data: {

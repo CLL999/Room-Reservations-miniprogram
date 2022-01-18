@@ -21,10 +21,15 @@ export default function EditAdmin() {
     const [deleteKey, setDeleteKey] = useState('')
     const [showPhoneHandle, setShowPhoneHandle] = useState(false)
 
+    const [firstTime, setFirstTime] = useState(true)
+    if (firstTime) {
+        setFirstTime(false)
+    }
+
     function find() {
         if (!key) return
         setKey('')
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({
             name: 'searchUser',
             data: { key }
@@ -41,9 +46,9 @@ export default function EditAdmin() {
             content: `再次确定手机号:${addKey}`
         }).then((res: any) => {
             if (res.confirm) {
-                Taro.showLoading()
+                Taro.showLoading({ title: '加载中'})
                 Taro.cloud.callFunction({
-                    name: 'addPhoneToAdmin',
+                    name: 'addPhone',
                     data: { phone: addKey }
                 }).then(() => {
                     Taro.hideLoading()
@@ -64,9 +69,9 @@ export default function EditAdmin() {
             content: `再次确定手机号:${deleteKey}`
         }).then((res: any) => {
             if (res.confirm) {
-                Taro.showLoading()
+                Taro.showLoading({ title: '加载中'})
                 Taro.cloud.callFunction({
-                    name: 'deletePhoneToAdmin',
+                    name: 'deletePhone',
                     data: { phone: deleteKey }
                 }).then(() => {
                     Taro.hideLoading()
@@ -94,7 +99,7 @@ export default function EditAdmin() {
             </View>
             <View 
                     className={classNames(' overflow-hidden', {' w-10 h-10 bg-red-400 rounded-full right-5 top-5 z-10 absolute shadow-lg': !showPhoneHandle, 'h-0 w-0': showPhoneHandle})}
-                    onLongPress={() => setShowPhoneHandle(true)}
+                    onClick={() => setShowPhoneHandle(true)}
                 >
                     <Image
                         src={phone}
@@ -132,10 +137,11 @@ export default function EditAdmin() {
                         />
                     </View>
                 </View>
-                <View className={classNames(' overflow-hidden', {'h-20 w-screen mb-5 transition duration-1000': addFlag, 'h-0 transition duration-1000': !addFlag})}>
-                <View className=' bg-gray-200 w-60 h-9 rounded-xl relative mx-auto top-3 '>
+                <View className={classNames(' overflow-hidden', {'h-28 w-screen mb-5 transition duration-1000': addFlag, 'h-0 transition duration-1000': !addFlag})}>
+                <View className='mx-auto font-semibold relative text-sm w-50 whitespace-nowrap'>注意：添加物业手机以下发通知</View>
+                <View className=' bg-gray-200 w-60 h-9 rounded-xl relative mx-auto top-5 '>
                     <Input
-                        placeholder='填写需要添加的通知手机号'
+                        placeholder='填写需要添加的物业手机号'
                         value={addKey}
                         type='digit'
                         onConfirm={updatePhone}
@@ -152,7 +158,7 @@ export default function EditAdmin() {
             <View className={classNames(' overflow-hidden',{'h-20 w-screen mb-5 transition duration-1000': deleteFlag, 'h-0 transition duration-1000': !deleteFlag})}>
                 <View className=' bg-gray-200 w-60 h-9 rounded-xl relative mx-auto top-3 '>
                     <Input
-                        placeholder='填写需要删除的通知手机号'
+                        placeholder='填写需要删除的物业手机号'
                         value={deleteKey}
                         type='digit'
                         onConfirm={DeletePhone}

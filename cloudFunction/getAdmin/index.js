@@ -10,11 +10,11 @@ exports.main = async () => {
     let result = []
     let list = []
 
-    list.push(await db.collection('admin').field({ openid: true }).get())
-    list.push(await db.collection('superAdmin').field({ openid : true}).get())
+    list.push(await db.collection('admin').field({ openid: true, status: true }).get())
+    list.push(await db.collection('superAdmin').field({ openid : true, status: true }).get())
 
     let c = await Promise.all(list)
-    c.forEach(item => result.push(...item.data))
+    c.forEach(item =>  result.push(...item.data))
     let res = []
     result.forEach(item => res.push(item.openid))
     return Array.from(new Set(res))

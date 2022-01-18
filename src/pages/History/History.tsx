@@ -31,7 +31,7 @@ export default function EditRoom() {
     if (firstTime)
         {
             setFirstTime(false)
-            Taro.showLoading()
+            Taro.showLoading({ title: '加载中'})
             Taro.cloud.callFunction({
                 name: 'getIdList',
                 data: {
@@ -56,7 +56,7 @@ export default function EditRoom() {
                 Taro.showToast({ title: '已经到底了哦', icon: 'none'})
                 return ;
             }
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({ name: 'searchHistory' , data: { newData }})
         .then((res: any) => 
           {

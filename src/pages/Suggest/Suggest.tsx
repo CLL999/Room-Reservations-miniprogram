@@ -16,7 +16,7 @@ export default function Suggest() {
     const [guide, setGuide] = useState('')
 
     function sendGuide() {
-        Taro.showLoading()
+        Taro.showLoading({title: '加载中'})
 
         Taro.cloud.callFunction({
             name: 'reject',

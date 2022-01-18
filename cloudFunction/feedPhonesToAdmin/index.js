@@ -7,5 +7,5 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async () => {
-    return db.collection('msgPhoneToAdmin').get()
+    return db.collection('msgPhoneToAdmin').where({status: 'allow'}).get()
 }

@@ -203,7 +203,7 @@ export default function RoomDetailBooking() {
         if (isToday && DayOrder === 1) setToday()
 
         let date = (DayOrder === 1 ? firstDay : DayOrder === 2 ? secondDay : DayOrder === 3 ? thirdDay : fourthDay)
-        Taro.showLoading()
+        Taro.showLoading({ title: '加载中'})
         Taro.cloud.callFunction({
             name: 'setCheckbox',
             data: { room: router.params.name, date }
@@ -307,6 +307,54 @@ export default function RoomDetailBooking() {
             })
     }, [DayOrder])
 
+    function selectAllDay1() {
+        if (!cb10) setCk10(true)
+        if (!cb11) setCk11(true)
+        if (!cb12) setCk12(true)
+        if (!cb13) setCk13(true)
+        if (!cb14) setCk14(true)
+        if (!cb15) setCk15(true)
+        if (!cb16) setCk16(true)
+        if (!cb17) setCk17(true)
+        if (!cb18) setCk18(true)
+    }
+
+    function selectAllDay2() {
+        if (!cb20) setCk20(true)
+        if (!cb21) setCk21(true)
+        if (!cb22) setCk22(true)
+        if (!cb23) setCk23(true)
+        if (!cb24) setCk24(true)
+        if (!cb25) setCk25(true)
+        if (!cb26) setCk26(true)
+        if (!cb27) setCk27(true)
+        if (!cb28) setCk28(true)
+    }
+
+    function selectAllDay3() {
+        if (!cb30) setCk30(true)
+        if (!cb31) setCk31(true)
+        if (!cb32) setCk32(true)
+        if (!cb33) setCk33(true)
+        if (!cb34) setCk34(true)
+        if (!cb35) setCk35(true)
+        if (!cb36) setCk36(true)
+        if (!cb37) setCk37(true)
+        if (!cb38) setCk38(true)
+    }
+
+    function selectAllDay4() {
+        if (!cb40) setCk40(true)
+        if (!cb41) setCk41(true)
+        if (!cb42) setCk42(true)
+        if (!cb43) setCk43(true)
+        if (!cb44) setCk44(true)
+        if (!cb45) setCk45(true)
+        if (!cb46) setCk46(true)
+        if (!cb47) setCk47(true)
+        if (!cb48) setCk48(true)
+    }
+
     function submit() {
         if (userInfo.index.admin || userInfo.index.superAdmin)
             {
@@ -350,7 +398,7 @@ export default function RoomDetailBooking() {
                 if (res.confirm) {
                     let openid = userInfo.index.openid 
 
-                    Taro.showLoading()
+                    Taro.showLoading({ title: '加载中'})
                     Taro.cloud.uploadFile({
                         cloudPath: `sheets/${openid}${+new Date()}.xlsx`,
                         filePath: sheet
@@ -505,7 +553,7 @@ export default function RoomDetailBooking() {
     }
 
     function downloadSheet() {
-        Taro.showLoading()
+        Taro.showLoading({title: '加载中'})
 
         Taro.cloud.downloadFile({ fileID: 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/正义书院学生活动空间申请表.xlsx' })
                   .then(res => {
@@ -601,7 +649,7 @@ export default function RoomDetailBooking() {
                         />
                         <Text className=' text-6xl absolute right-7 top-70 font-bold'>{router.params.name}</Text>
                         <View className=' text-purple-600 font-semibold text-xl relative top-93 left-9'>相关介绍：</View>
-                        <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content}</View>
+                        <View className=' font-semibold text-xl relative top-98 mx-9 leading-7'>{router.params.content ? router.params.content : '暂无介绍'}</View>
                     </View>
                     <Picker
                         mode='date'
@@ -1060,7 +1108,22 @@ export default function RoomDetailBooking() {
                             <View className='w-screen h-16 '>
                                 <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
                                 <Text 
-                                    className=' text-blue-800 font-bold text-lg underline relative float-right right-7'
+                                    className=' text-lime-400 font-bold text-lg underline float-left left-13 relative '
+                                    onClick={() => { switch (DayOrder) {
+                                        case 1: selectAllDay1()
+                                                break;
+                                        case 2: selectAllDay2()
+                                                break;
+                                        case 3: selectAllDay3()
+                                                break;
+                                        case 4: selectAllDay4()
+                                                break;
+                                    }}}
+                                >
+                                    一键全选
+                                </Text>
+                                <Text 
+                                    className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
                                     onClick={downloadSheet}
                                 >
                                     下载申请表
@@ -1132,13 +1195,13 @@ export default function RoomDetailBooking() {
                             <View className='w-screen h-12 '>
                                 { !sheet ?
                                     <Button
-                                        className='w-43 h-8 bg-yellow-200 mx-auto rounded-lg font-bold text-lg'
+                                        className='w-41 h-8 bg-yellow-200 mx-auto rounded-lg font-bold text-lg'
                                         onClick={uploadSheet}
                                     >
                                         上传申请表
                                     </Button> :
                                     <Button
-                                        className='w-43 h-8 bg-green-300 mx-auto rounded-lg font-medium text-lg'
+                                        className='w-41 h-8 bg-green-300 mx-auto rounded-lg font-medium text-lg'
                                     >
                                         已选择申请表
                                     </Button>
