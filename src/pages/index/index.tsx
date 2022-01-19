@@ -16,6 +16,7 @@ import background from "../../assets/images/background.png"
 import person from "../../assets/images/person.png"
 import add from "../../assets/images/add.png"
 import arrow from '../../assets/images/arrow.png'
+import feedback from '../../assets/images/feedback.png'
 import infomation from "../../assets/images/infomation.png"
 
 export default function Index() {
@@ -31,6 +32,7 @@ export default function Index() {
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
     const [showHistory, setShowHistory] = useState(false)
     const [hideArrow, setHideArrow] = useState(false)
+    const [showTeacherPhone, setShowTeacherPhone] = useState('')
 
     if (firstTime) {
         Taro.cloud.init()
@@ -57,6 +59,9 @@ export default function Index() {
                 setIsSuperAdmin(superAdmin)
             }).then(() => Taro.cloud.callFunction({ name: 'feedRoom' })
                                     .then((res: any) => setRoomList(res.result.rooms.data))
+                                    .then(() => {
+                                        Taro.cloud.callFunction({ name: 'feedShowTeacherPhone' })
+                                                  .then((res: any) => setShowTeacherPhone(res.result.data[0].phone))})
                                     .then(() => setHideArrow(false))
                                     .then(() => Taro.hideLoading()))
     }
@@ -68,7 +73,7 @@ export default function Index() {
     }
 
     function toBackground() {
-        Taro.navigateTo({ url: '../Background/Background' })
+        Taro.navigateTo({ url: `../Background/Background?showPhone=${showTeacherPhone}` })
         Taro.requestSubscribeMessage({
             tmplIds: ['fKmnqu6gqVAl5HDgG-aSlx4kRUFwimIbrCgv5eMEaKA'],
         }).then(res => console.log("授权成功", res))
@@ -125,6 +130,18 @@ export default function Index() {
                 onClick={openInformation}
                 className={classNames('z-10',{'absolute top-13 left-33 w-7 h-7 rounded-full': !isLogin, 'absolute top-168 left-7 w-10 h-10 rounded-full transition ease-out duration-3000': isLogin})}
             />
+            {isLogin && <View 
+                className='z-10 w-10 h-10 bg-white rounded-full absolute top-168 left-20'
+                onClick={() => Taro.navigateTo({ url:'../Feedback/Feedback' })}
+            >
+                <Image
+                    src={feedback}
+                    className=' w-6 h-6 m-2 rounded-full '
+                />
+            </View>}
+            {showTeacherPhone &&
+                <Text className=' text-sm font-semibold absolute top-171 right-2 text-white'>{`负责老师电话：${showTeacherPhone}`}</Text>
+            }
             {   isLogin ?
                 <View>
                     <View className='w-screen h-80'>
@@ -135,30 +152,33 @@ export default function Index() {
                         >
                             <Image src={history} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': showHistory, 'w-0 h-0': !showHistory})}></Image>
                         </View>
+                        <Text className=' text-xs font-semibold absolute top-15 right-7 text-gray-700'>记录</Text>
                         <View 
                             className={classNames('relative rounded-full bg-white right-10 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
                             onClick={toBackground}
                         >
                             <Image src={background} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
                         </View>
+                        {(isAdmin || isSuperAdmin) && <Text className=' text-xs font-semibold absolute top-15 right-22 text-gray-700'>审批</Text>}
                         <View 
                             className={classNames('relative rounded-full bg-white right-15 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': (isAdmin || isSuperAdmin), 'h-0 w-0': !(isAdmin || isSuperAdmin)})}
                             onClick={addRoom}
                         >
                             <Image src={add} className={classNames({'w-4 h-4 m-3 transition duration-500 ease-out': (isAdmin || isSuperAdmin), 'w-0 h-0': !(isAdmin || isSuperAdmin)})}></Image>
                         </View>
+                        {(isAdmin || isSuperAdmin) && <Text className=' text-xs font-semibold absolute top-15 right-34 text-gray-700'>增加房间</Text>}
                         <View 
                             className={classNames('relative rounded-full bg-white right-20 top-4 float-right shadow-xl', {'h-10 w-10 transition ease-out duration-500': isSuperAdmin, 'h-0 w-0': !isSuperAdmin})}
                             onClick={toEditAdmin}
                         >
                             <Image src={person} className={classNames({'w-6 h-6 m-2 transition duration-500 ease-out': isSuperAdmin, 'w-0 h-0': !isSuperAdmin})}></Image>
                         </View>
-
+                        {isSuperAdmin && <Text className=' text-xs font-semibold absolute top-15 right-52 text-gray-700'>超管</Text>}
                         <View className='absolute top-23 w-screen'>
-                            <View className='relative w-70 h-53 bg-white shadow-xl rounded-2xl mx-auto'>
+                            <View className='relative w-70 h-59 bg-white shadow-xl rounded-2xl mx-auto'>
                                 <View className='p-3'>
-                                    <View className='text-lg'>1.请尽量控制会议声音，不要大声喧哗，以免影响其他同学。</View>
-                                    <View className='text-lg'>2.使用完请把木椅归位，保持室内卫生。</View>
+                                    <View className='text-lg'>1.请控制会议声音，不要大声喧哗，以免影响其他同学。使用完请把木椅归位，保持室内卫生。</View>
+                                    <View className='text-lg'>2.至少提前1小时预约，申请时间前4小时可撤回。</View>
                                     <View className='text-lg'>3.请提前10分钟到场，超过预定时间15分钟之后将不再保留场地（场地将提供给其他同学自习）</View>
                                 </View>
                             </View>
@@ -166,7 +186,7 @@ export default function Index() {
                     </View>
 
                     <View className='w-screen h-100'>
-                        <Text className='relative left-8 top-3 font-bold text-white text-xl'>选择活动室</Text>
+                        <Text className='relative left-8 top-5 font-bold text-white text-xl'>选择活动室</Text>
                         <ScrollView 
                             className='relative top-8 w-screen h-85 whitespace-nowrap' 
                             scrollX

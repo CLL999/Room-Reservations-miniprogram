@@ -6,7 +6,7 @@ import { Image, Input, Text, Textarea, View } from '@tarojs/components'
 import editRoom from '../../assets/images/editRoom.png'
 import update from '../../assets/images/update.png'
 import defaultBg from '../../assets/images/default.png'
-
+import infomation from '../../assets/images/infomation.png'
 
 export default function EditRoom() {
 
@@ -107,6 +107,19 @@ export default function EditRoom() {
     }
     const [tag1, setTag1] = useState(router.params.tag1 !== 'undefined' ? router.params.tag1 : '')
     const [tag2, setTag2] = useState(router.params.tag2 !== 'undefined' ? router.params.tag2 : '')
+
+    function openInformation() {
+        Taro.showLoading({ title: '加载中'})
+        Taro.cloud.downloadFile({ 'fileID': 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/增加房间指南.docx' })
+                  .then(res => {
+                      Taro.hideLoading()
+                      Taro.openDocument({
+                          filePath: res.tempFilePath,
+                          showMenu: true
+                      })
+                  })
+    }
+
     return (
         <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <View className=' w-screen h-34 '>
@@ -124,6 +137,11 @@ export default function EditRoom() {
                 />
             </View>
             <View className=' w-screen h-84'>
+                <Image
+                    src={infomation}
+                    onClick={openInformation}
+                    className='absolute top-63 left-5 w-10 h-10 rounded-full'
+                />
                 <View className='mx-auto w-20 whitespace-nowrap font-semibold text-xl text-black'>相关介绍</View>
                 <Textarea
                     placeholder='请填写相关介绍'

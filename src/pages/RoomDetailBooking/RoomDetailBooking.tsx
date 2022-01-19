@@ -18,7 +18,7 @@ export default function RoomDetailBooking() {
 
 
     const [DayOrder, setDayOrder] = useState(1)
-    const [timeList, setTimeList] = useState(['08:30-10:00', '10:10-12:30', '12:40-14:20', '14:30-16:00', '16:10-17:40', '17:50-18:50', '19:00-20:20', '20:30-21:50', '22:00-23:00'])
+    const [timeList] = useState(['08:30-10:00', '10:10-12:30', '12:40-14:20', '14:30-16:00', '16:10-17:40', '17:50-18:50', '19:00-20:20', '20:30-21:50', '22:00-23:00'])
 
     const [firstDayTime, setFirstDayTime] = useState<Array<string>>([])
     const [secondDayTime, setSecondDayTime] = useState<Array<string>>([])
@@ -391,7 +391,7 @@ export default function RoomDetailBooking() {
                       `${item.date}\r\n${item.time.join().replace(/,/g,' ')}`)}`
         content = content.replace(/,/g, '\r\n')
         Taro.requestSubscribeMessage({
-            tmplIds: ['Q2z7sXK-myCrrPjtlKSlo1bqZU0wXFTdJX7M2mrtMe0'],
+            tmplIds: ['Q2z7sXK-myCrrPjtlKSlown5u4jcppRCzvu5hvPNCeo'],
         }).then(() => {
             Taro.showModal({ title: '核对信息', content })
             .then(res => {
@@ -588,7 +588,7 @@ export default function RoomDetailBooking() {
     }
 
     function setToday() {
-        let nowTime = +new Date()
+        let nowTime = +new Date() + 1 * 60 * 60 * 1000
         if (nowTime > +new Date(new Date().toLocaleDateString()) + 8.5 * 60 * 60 * 1000)
             setCb10(true)
         if (nowTime > +new Date(new Date().toLocaleDateString()) + 10.16 * 60 * 60 * 1000)
@@ -642,7 +642,7 @@ export default function RoomDetailBooking() {
                 <View className=' w-screen min-h-160'>
                     <View className=' min-h-140'>
                         <Image 
-                            src={router.params.photoUrl} 
+                            src={router.params.photoUrl ?? ''} 
                             mode='aspectFill' 
                             onLoad={() => setIsLoading(false)}
                             className={classNames('absolute right-0 top-5 w-70 h-58 shadow-2xl bg-gray-300 bg-opacity-50', {'animate-pulse': isLoading})}
@@ -1102,26 +1102,28 @@ export default function RoomDetailBooking() {
                             </View>
                             </CheckboxGroup>
                         }
+                            <View className='float-right mr-14 w-19 h-8 relative -top-5'>
+                                <Text 
+                                    className=' text-lime-400 font-bold text-lg underline relative '
+                                    onClick={() => { 
+                                        switch (DayOrder) {
+                                            case 1: selectAllDay1()
+                                            break;
+                                            case 2: selectAllDay2()
+                                            break;
+                                            case 3: selectAllDay3()
+                                            break;
+                                            case 4: selectAllDay4()
+                                            break; }}}
+                                >
+                                    一键全选
+                                </Text>
+                            </View>
                         </View>
 
                         <View className=' w-screen h-80 '>
                             <View className='w-screen h-16 '>
                                 <View className=' w-24 font-bold mx-auto relative top-3 text-black text-2xl'>填写信息</View>
-                                <Text 
-                                    className=' text-lime-400 font-bold text-lg underline float-left left-13 relative '
-                                    onClick={() => { switch (DayOrder) {
-                                        case 1: selectAllDay1()
-                                                break;
-                                        case 2: selectAllDay2()
-                                                break;
-                                        case 3: selectAllDay3()
-                                                break;
-                                        case 4: selectAllDay4()
-                                                break;
-                                    }}}
-                                >
-                                    一键全选
-                                </Text>
                                 <Text 
                                     className=' text-blue-800 font-bold text-lg underline relative float-right right-9'
                                     onClick={downloadSheet}

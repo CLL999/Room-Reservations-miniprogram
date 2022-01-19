@@ -12,7 +12,7 @@ import withdrawIcon from '../../assets/images/withdraw.png'
 export default function HistoryCard(props) {
 
     const [hide, setHide] = useState(true)
-    const [withdraw, setWithdraw] = useState(() => {
+    const [withdraw] = useState(() => {
         let firstDate = props.time[0].date.replace('年', '-').replace('月','-').slice(0,-1)
         let firstTime = new Date(firstDate).getTime()
         let localTime = +new Date(new Date().toLocaleDateString()).getTime()
@@ -89,7 +89,8 @@ export default function HistoryCard(props) {
                             res: '申请成功',
                             room: props.room,
                             time: props.time[0].date,
-                            tips: '请提前10分钟到场'
+                            tips: '请提前10分钟到场',
+                            phone: props.showPhone
                         }
                     }).then(res => console.log(res))
                 await Taro.cloud.callFunction({ name: 'feedPhones' })
@@ -108,6 +109,15 @@ export default function HistoryCard(props) {
                                                         .then(res => console.log(res))
                                     })
                                 })
+                console.log('studentPhone', props.studentPhone)
+                await Taro.cloud.callFunction({ 
+                                    name: 'resMsg',
+                                    data: {
+                                        mobile: props.studentPhone,
+                                        nationcode: '86',
+                                        res: '通过'
+                                    }})
+                                .then(res => console.log(res, '调用结果！'))
                 setTimeout(() => props.refresh(true), 1000)
             })
     }
@@ -265,6 +275,17 @@ export default function HistoryCard(props) {
                             {   props.state === 'success' ?
                                 <View className='h-9 bg-green-400 w-24 my-2 float-right text-center font-medium text-xl'>已通过</View> :
                                 <View className='h-9 rejectColor w-24 my-2 float-right text-center font-semibold text-xl'>未通过</View>
+                            }
+                            { props.state === 'success' && 
+                                <View 
+                                    className=' w-8 h-8 float-right bg-orange-600 right-3 relative top-2 rounded-full'
+                                    onClick={toSuggest}
+                                >
+                                    <Image
+                                        src={reject}
+                                        className=' w-4 h-4 m-2'
+                                    />
+                                </View>
                             }
                         <View className='font-semibold text-xl float-left mt-2 mb-1'>审批人：</View>
                         <View className='font-semibold text-x1 float-left truncate w-32'>{props.auditor}</View>

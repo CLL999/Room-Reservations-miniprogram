@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Image, Input, Switch, Text, View } from '@tarojs/components'
@@ -11,11 +11,15 @@ import key from '../../assets/images/key.png'
 import replace from '../../assets/images/replace.png'
 import phone from '../../assets/images/phone.png'
 import add from '../../assets/images/add.png'
+import setting from '../../assets/images/set.png'
+import infomation from '../../assets/images/infomation.png'
 import deletePhone from '../../assets/images/deletePhone.png'
 
 export default function EditRoom() {
 
     const dispatch = useDispatch()
+
+    const router = useRouter()
 
     const userInfo: any = useSelector(state => state)
 
@@ -29,6 +33,8 @@ export default function EditRoom() {
     const [showPhoneHandle, setShowPhoneHandle] = useState(false)
     const [bounce, setBounce] = useState(false)
     const [allow, setAllow] = useState(false)
+    const [phoneList, setPhoneList] = useState([])
+    const [showPhoneList, setShowPhoneList] = useState(false)
 
     if (firstTime) {
         setFirstTime(false)
@@ -43,6 +49,10 @@ export default function EditRoom() {
                 setBounce(true)
             }
             else setAllow(res.result.data[0].status === 'allow')
+        })
+        Taro.cloud.callFunction({ name: 'feedPhonesToAdmin' }).then((res: any) => {
+            if (res.result.data.length)
+                setPhoneList(res.result.data)
         })
     }
 
@@ -174,10 +184,27 @@ export default function EditRoom() {
             })
     }
 
+    function openInformation() {
+        Taro.showLoading({ title: '加载中'})
+        Taro.cloud.downloadFile({ 'fileID': 'cloud://room-cloud-1gy3i3f9c2ecb8e8.726f-room-cloud-1gy3i3f9c2ecb8e8-1309075220/审批后台指南.docx' })
+                  .then(res => {
+                      Taro.hideLoading()
+                      Taro.openDocument({
+                          filePath: res.tempFilePath,
+                          showMenu: true
+                      })
+                  })
+    }
+
     return (
         <View className=' w-screen min-h-screen containerBackground relative overflow-hidden'>
             <Image src={key} className=' w-36 h-36 relative float-right top-2 right-3'></Image>
             <View className='w-screen h-47'>
+                <Image
+                    src={infomation}
+                    onClick={openInformation}
+                    className='absolute top-2 left-4 w-7 h-7 rounded-full'
+                />
                 <View className=' relative font-extrabold text-3xl left-17 top-8'>审批申请</View> 
                 <View 
                     className=' w-10 h-10 bg-orange-600 rounded-full -bottom-2 mt-14 ml-9 z-10 relative shadow-lg'
@@ -234,6 +261,21 @@ export default function EditRoom() {
                         />
                     </View>
                 </View>
+                <View 
+                    className={classNames({' w-10 h-10 bg-red-400 rounded-full left-56 top-25 z-10 absolute shadow-lg transition duration-1000': showPhoneHandle, 'h-0 w-0': !showPhoneHandle})}
+                    onClick={() => setShowPhoneList(!showPhoneList)}
+                >
+                    <Image
+                        src={phone}
+                        className={classNames({'w-6 h-6 m-2 z-10': showPhoneHandle, 'w-0 h-0': !showPhoneHandle})}
+                    />
+                    <View className={classNames({' w-5 h-5 rounded-full bg-red-300 absolute -right-2 -top-1 z-10': showPhoneHandle, 'h-0 w-0': !showPhoneHandle})}>
+                        <Image
+                            src={setting}
+                            className={classNames({' w-3 h-3 m-1 z-10 transition duration-1000': showPhoneHandle, 'w-0 h-0': !showPhoneHandle})}
+                        />
+                    </View>
+                </View>
             </View>
             <View className={classNames(' overflow-hidden', {'h-40 w-screen mb-5 transition duration-1000': addFlag, 'h-0 transition duration-1000': !addFlag})}>
                 <View className='text-center w-screen text-sm font-bold mt-3'>提示：登记手机后，每条新申请都将自动以短信通知。</View>
@@ -252,7 +294,7 @@ export default function EditRoom() {
                         onClick={updatePhone}
                     />
                     <Button 
-                        className=' w-50 h-10 font-medium rounded-full bg-amber-100'
+                        className=' w-40 h-6 font-medium rounded-full bg-amber-100 text-sm mx-auto'
                         openType='getPhoneNumber'
                         onGetPhoneNumber={getPhoneNumber}
                     >
@@ -277,6 +319,19 @@ export default function EditRoom() {
                     />
                 </View>
             </View>
+            <View className={classNames(' overflow-hidden',{' w-screen mb-5 transition duration-1000': showPhoneList, 'h-0 transition duration-1000': !showPhoneList})}>
+                <View className=' mx-auto w-80 font-semibold text-center'>下列为正在接收短信的电话</View>
+                { phoneList.length &&
+                    phoneList.map((item: any, index) => 
+                        <View
+                            className=' h-6 w-30 mx-auto bg-orange-400 text-center my-2 rounded-lg'
+                            key={index}
+                        >
+                            {item.phone}
+                        </View>
+                    )
+                }
+            </View>
             {   data.length ?
                 data.map((item: historyItemType) => 
                     <HistoryCard
@@ -299,6 +354,7 @@ export default function EditRoom() {
                         admin
                         background
                         bounce={bounce}
+                        showPhone={router.params.showPhone}
                     />
                 ) :
                 <View className='w-screen'>

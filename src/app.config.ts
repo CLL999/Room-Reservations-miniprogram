@@ -7,7 +7,8 @@ export default {
     'pages/EditAdmin/EditAdmin',
     'pages/History/History',
     'pages/Background/Background',
-    'pages/Suggest/Suggest'
+    'pages/Suggest/Suggest',
+    'pages/Feedback/Feedback'
   ],
   window: {
     backgroundTextStyle: 'light',

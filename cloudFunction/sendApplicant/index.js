@@ -21,9 +21,12 @@ exports.main = async ( event ) => {
                 },
                 thing19: {
                     value: event.tips
+                },
+                phone_number18: {
+                    value: event.phone
                 }
             },
-            templateId: 'Q2z7sXK-myCrrPjtlKSlo1bqZU0wXFTdJX7M2mrtMe0'
+            templateId: 'Q2z7sXK-myCrrPjtlKSlown5u4jcppRCzvu5hvPNCeo'
         })
         console.log(result)
         return result

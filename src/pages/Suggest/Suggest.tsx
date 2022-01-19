@@ -11,8 +11,9 @@ export default function Suggest() {
     const router: any = useRouter()
 
     const refreshBackground = useSelector((state: any) => state.background).refreshBackground
+    const history = useSelector((state: any) => state.history)
     
-    const [data, setData] = useState(JSON.parse(router.params.data))
+    const [data] = useState(JSON.parse(router.params.data))
     const [guide, setGuide] = useState('')
 
     function sendGuide() {
@@ -37,9 +38,21 @@ export default function Suggest() {
                         res: '申请失败',
                         room: data.room,
                         time: data.time[0].date,
-                        tips: '请点此查看修改指引'
+                        tips: '请点此查看修改指引',
+                        phone: data.showPhone
                     }
                 })
+                Taro.cloud.callFunction({
+                    name: 'resMsg',
+                    data: {
+                        mobile: data.studentPhone,
+                        nationcode: '86',
+                        res: '被拒绝'
+                    }
+                }).then(res => console.log(res))
+                history.refreshData([])
+                history.refreshPage(0)
+                history.refreshHistory(true)
                 setTimeout(() => {
                     Taro.navigateBack({ delta: 1 })
                 }, 1000)
@@ -112,13 +125,13 @@ export default function Suggest() {
                                 className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'
                                 onClick={goBack}
                             >
-                            确定
+                                确定
                             </Button> :
                             <Button 
                                 className='mx-auto font-bold text-xl shadow-2xl confirmbutton h-10 w-35 pt-1'
                                 onClick={sendGuide}
                             >
-                            发送
+                                发送
                             </Button>
                         }
                     </View>
